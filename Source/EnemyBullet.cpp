@@ -1,9 +1,9 @@
 #include "EnemyBullet.h"
 
-EnemyBullet::EnemyBullet(Vector2 pos)
+EnemyBullet::EnemyBullet(Vector2 pos, Vector2 direction)
 {
 	isPendingDestroy = false;
-	speed = Vector2(0, 300);
+	speed = direction * 2;
 
 	// TRANSFORM
 	transform.size = Vector2(4, 16);
@@ -20,10 +20,14 @@ EnemyBullet::EnemyBullet(Vector2 pos)
 
 void EnemyBullet::Update(float dt)
 {
+	Object::Update(dt);
+
 	rb->SetVeclocity(speed);
-	rb->Update(dt);
 
 	// Out of window
-	if (transform.position.y >= RENDERER.GetSizeWindow().y)
+	if (transform.position.y > RENDERER.GetSizeWindow().y + transform.size.y
+		|| transform.position.y < -transform.size.y
+		|| transform.position.x < -transform.size.x
+		|| transform.position.x > RENDERER.GetSizeWindow().x + transform.size.x)
 		Destroy();
 }

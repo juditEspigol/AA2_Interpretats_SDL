@@ -20,6 +20,14 @@ void EnemyPlane::Update(float dt)
 
 	lastFireTime += dt;
 	Shoot(); 
+
+	if (transform.position.y > RENDERER.GetSizeWindow().y + transform.size.y
+		|| transform.position.y < -transform.size.y 
+		|| transform.position.x < -transform.size.x
+		|| transform.position.x > RENDERER.GetSizeWindow().x + transform.size.x)
+	{
+		Destroy();
+	}
 }
 
 void EnemyPlane::Shoot()
@@ -27,7 +35,7 @@ void EnemyPlane::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-		SPAWNER.SpawnObject(new EnemyBullet(transform.position));
+		SPAWNER.SpawnObject(new EnemyBullet(transform.position, rb->GetVelocity()));
 	}
 }
 

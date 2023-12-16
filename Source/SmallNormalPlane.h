@@ -5,12 +5,14 @@ class SmallNormalPlane : public EnemyPlane
 {
 public: 
 	enum MovementType { V, CURVE, STRAIGHT };
-	MovementType currentMove;
 
 private:
+	MovementType currentMove;
+	bool isRight; 
+
 	virtual void UpdateMovementPattern(float dt);
 
 public:
-	SmallNormalPlane();
+	SmallNormalPlane(MovementType movement, bool isRight);
 	virtual void Update(float dt) override; 
 };

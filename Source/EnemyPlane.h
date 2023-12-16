@@ -13,6 +13,7 @@ protected:
 
 	float lastFireTime; 
 	float fireTime; 
+	Vector2 speed; 
 
 	int movementStage;
 	float movementTime;

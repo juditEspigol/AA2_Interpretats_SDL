@@ -17,7 +17,7 @@ WaterBackGround::WaterBackGround(float _offset)
 	transform.centered = false;
 
 	//RENDER
-	renderer = new ImageRenderer(&transform, Vector2(22, 646), Vector2(16, 16));
+	renderer = new ImageRenderer(&transform, Vector2(102, 646), Vector2(16, 16));
 
 	//RIGIDBODY
 	rb = new RigidBody(&transform);
