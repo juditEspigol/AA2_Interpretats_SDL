@@ -26,6 +26,10 @@ public:
 		rb->Update(dt); 
 	}
 	RigidBody* GetRigidBody() { return rb; }
+	virtual void OnCollisionEnter(Object* other)
+	{
+
+	}
 
 	// SETTERS & GETTERS
 	inline void SetPosition(Vector2 _position) { transform.position = _position; }

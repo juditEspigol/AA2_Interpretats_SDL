@@ -30,7 +30,14 @@ void Scene::Update(float dt)
 		objects.push_back(SPAWNER.DequeueObjectToSpawn());
 	
 	for (Object* object : objects)
+	{
 		object->Update(dt);
+
+		// Detect Collisions
+		for (Object* other : objects)
+			object->OnCollisionEnter(other);
+		
+	}
 	for (Object* gameUI : ui)
 		gameUI->Update(dt);
 }

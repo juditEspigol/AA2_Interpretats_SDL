@@ -1,13 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
-class PlayerBullet : public GameObject
+class EnemyBullet : public GameObject
 {
 private:
-	Vector2 speed; 
+	Vector2 speed;
 
 public:
-	PlayerBullet(Vector2 pos);
+	EnemyBullet(Vector2 pos);
 	virtual void Update(float dt) override;
 };
-

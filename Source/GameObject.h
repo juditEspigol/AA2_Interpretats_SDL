@@ -22,4 +22,9 @@ public:
 	{
 		renderer->Render();
 	}
+
+	virtual void OnCollisionEnter(Object* other) override
+	{
+
+	}
 };
