@@ -7,6 +7,6 @@ private:
 	Vector2 speed;
 
 public:
-	EnemyBullet(Vector2 pos);
+	EnemyBullet(Vector2 pos, Vector2 direction);
 	virtual void Update(float dt) override;
 };

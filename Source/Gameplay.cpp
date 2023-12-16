@@ -5,10 +5,11 @@ Gameplay::Gameplay()
 	objects.push_back(new WaterBackGround());
 	objects.push_back(new WaterBackGround(RENDERER.GetSizeWindow().x));
 	objects.push_back(new Player());  
-	objects.push_back(new SmallNormalPlane());
-	objects.push_back(new SmallRedPlane());
-	objects.push_back(new MediumYellowPlane());
-	objects.push_back(new BigGreenPlane());
+	objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true));
+	//objects.push_back(new SmallRedPlane(false, true));
+	//objects.push_back(new MediumYellowPlane(false));
+	//objects.push_back(new MediumYellowPlane(true));
+
 
 	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 
