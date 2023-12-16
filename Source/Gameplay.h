@@ -9,6 +9,9 @@ class Gameplay : public Scene
 private:
 	int sfxID;
 
+	float timeToSpawnIsland;
+	float currentTimeToSpawnIsland;
+
 public:
 	Gameplay();
 	virtual void OnEnter() override;

@@ -7,8 +7,8 @@ void WaterBackGround::Movement()
 
 WaterBackGround::WaterBackGround(float _offset)
 {
-
 	posToRestart = RENDERER.GetSizeWindow().x;
+
 	//TRANSFORM
 	transform.position = Vector2(0,0 - _offset);
 	transform.angle = 0.0f;
@@ -33,8 +33,6 @@ void WaterBackGround::Update(float dt)
 	{
 		ScrollFinished();
 	}
-
-
 }
 
 void WaterBackGround::ScrollFinished()

@@ -2,16 +2,16 @@
 
 void IslandBackground::Movement()
 {
-	rb->SetVeclocity(Vector2(0, 106));
+	rb->SetVeclocity(Vector2(0, 16));
 }
 
-IslandBackground::IslandBackground(Vector2 pos)
+IslandBackground::IslandBackground(float posX, float posY)
 {
 	//TRANSFORM 
-	transform.position = pos;
+	transform.position = Vector2(posX, posY - RENDERER.GetSizeWindow().y);
 	transform.angle = 0.0f;
 	transform.scale = Vector2(1.0f, 1.0f);
-	transform.size = Vector2(64, 64);
+	transform.size = Vector2(164, 124);
 	transform.centered = false;
 
 	//RENDER
@@ -24,5 +24,15 @@ IslandBackground::IslandBackground(Vector2 pos)
 void IslandBackground::Update(float dt)
 {
 	Object::Update(dt);
+
 	Movement();
+
+	Die();
 }
+
+void IslandBackground::Die()
+{
+	if (transform.position.y >= RENDERER.GetSizeWindow().y)
+		Destroy();
+}
+

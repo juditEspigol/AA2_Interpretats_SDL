@@ -9,6 +9,8 @@ private:
 
 public:
 
-	IslandBackground(Vector2 pos);
+	IslandBackground(float posX, float posY);
 	void Update(float dt) override;
+
+	void Die();
 };
