@@ -1,13 +1,23 @@
 #include "Player.h"
 
+// OnCollisionEnter
+#include "EnemyPlane.h"
+#include "EnemyBullet.h"
+
 Player::Player()
 {
 	isPendingDestroy = false;
+
 	// PLAYER SETTINGS 
 	isRolling = false;
 	force = 40; 
+
+	health = 3;
+	iFrames = 1.00f;
+	lastIFrames = iFrames;
+
 	fireTime = 1.00f;
-	lastFireTime = 1.10f;
+	lastFireTime = fireTime;
 	doubleFire = false;
 
 	// TRANSFORM
@@ -17,15 +27,15 @@ Player::Player()
 	transform.size = Vector2(16, 16);
 
 	// RENDER
-	//renderer = new ImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16));
-	delete renderer; 
+	renderer = new ImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16));
+	/*delete renderer; 
 	std::vector<Vector2> deltas { 
 		Vector2(0, 0), 
 		Vector2(32, 0), 
 		Vector2(32 * 2, 0)
 	};
 	animImageRenderer = new AnimatedImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16), deltas, true, 3); 
-	renderer = animImageRenderer; 
+	renderer = animImageRenderer; */
 	// RIGID BODY 
 	rb = new RigidBody(&transform);
 	Vector2 topLeft = transform.position - transform.size / 2;
@@ -37,13 +47,12 @@ void Player::Update(float dt)
 {
 	Object::Update(dt); 
 
-	animImageRenderer->Update(dt); 
+	lastIFrames += dt;
 
 	lastFireTime += dt;
+	ShootInputs();
 
 	MovementInputs();
-
-	ShootInputs(); 
 }
 
 void Player::MovementInputs()
@@ -79,4 +88,51 @@ void Player::ShootInputs()
 {
 	if (IM.CheckKeyState(SDLK_SPACE, HOLD))
 		Shoot();
+}
+
+void Player::EnableDoubleFire()
+{
+}
+
+void Player::OnCollisionEnter(Object* other)
+{
+	if (rb->CheckCollision(other->GetRigidBody()))
+	{
+		if (IsEnemyPlane(other))
+			return;
+		if (IsPlayerBullet(other))
+			return;
+	}
+}
+
+bool Player::IsEnemyPlane(Object* other)
+{
+	if (dynamic_cast<EnemyPlane*>(other))
+	{
+		GetDamage(1);
+		return true;
+	}
+
+	return false; 
+}
+bool Player::IsPlayerBullet(Object* other)
+{
+	if (dynamic_cast<EnemyBullet*>(other))
+	{
+		GetDamage(1);
+		return true;
+	}
+	return false;
+}
+
+void Player::GetDamage(const int amount)
+{
+	if (lastIFrames >= iFrames)
+	{
+		lastIFrames = 0;
+		health -= amount;
+
+		if (health <= 0)
+			Destroy();
+	}
 }

@@ -188,8 +188,11 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AudioManager.cpp" />
+    <ClCompile Include="Source\BigGreenPlane.cpp" />
+    <ClCompile Include="Source\EnemyBullet.cpp" />
     <ClCompile Include="Source\EnemyPlane.cpp" />
     <ClCompile Include="Source\Gameplay.cpp" />
+    <ClCompile Include="Source\MediumYellowPlane.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerBullet.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
@@ -203,6 +206,8 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\SmallNormalPlane.cpp" />
+    <ClCompile Include="Source\SmallRedPlane.cpp" />
     <ClCompile Include="Source\TextRenderer.cpp" />
     <ClCompile Include="Source\TimeManager.cpp" />
     <ClCompile Include="Source\Vector2.cpp" />
@@ -210,6 +215,9 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BigGreenPlane.h" />
+    <ClInclude Include="Source\EnemyBullet.h" />
+    <ClInclude Include="Source\SmallNormalPlane.h" />
     <ClInclude Include="Source\AnimatedImageRenderer.h" />
     <ClInclude Include="Source\EnemyPlane.h" />
     <ClInclude Include="Source\AudioManager.h" />
@@ -227,6 +235,8 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Renderer.h" />
     <ClInclude Include="Source\RenderManager.h" />
+    <ClInclude Include="Source\SmallRedPlane.h" />
+    <ClInclude Include="Source\MediumYellowPlane.h" />
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\TimeManager.h" />
     <ClInclude Include="Source\Vector2.h" />

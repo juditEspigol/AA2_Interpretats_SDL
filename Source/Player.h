@@ -11,18 +11,24 @@ class Player : public GameObject
 private:
 	bool isRolling;
 	float force; 
-	float fireTime; 
-	float lastFireTime;
 
-	AnimatedImageRenderer* animImageRenderer; 
+	int health; 
+	float iFrames, lastIFrames;
 
+	float fireTime, lastFireTime;
 	bool doubleFire; 
 	//std::vector<SupportPlane> supportPlanes; 
 
 	inline void AddMovement(Vector2 dir) { rb->AddForce(dir); }
 	void MovementInputs(); 
+
 	void Shoot();
 	void ShootInputs(); 
+
+	bool IsEnemyPlane(Object* other);
+	bool IsPlayerBullet(Object* other);
+
+	void GetDamage(const int amount);
 
 	void PlayDeathAnimation();
 	void PlayRollAnimation(); 
@@ -31,9 +37,8 @@ private:
 	void EnableDoubleFire(); 
 	void AddSupportPlanes(); 
 
-	virtual void OnCollisionEnter(Object* other) {}
-
 public:
 	Player(); 
 	void Update(float dt) override; 
+	virtual void OnCollisionEnter(Object* other) override;
 };
