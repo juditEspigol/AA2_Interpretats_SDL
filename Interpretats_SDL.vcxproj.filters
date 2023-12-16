@@ -46,6 +46,9 @@
     <Filter Include="Header Files\Model\GameObjects\PowerUps">
       <UniqueIdentifier>{88de6166-a261-4802-9332-b1983691c3df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model\Background">
+      <UniqueIdentifier>{7439807e-17b0-4c11-b0a1-9970922879a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -109,6 +112,12 @@
       <Filter>Source Files\Model\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WaterBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IslandBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -178,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="Source\AnimatedImageRenderer.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaterBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IslandBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
