@@ -192,6 +192,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\EnemyBullet.cpp" />
     <ClCompile Include="Source\EnemyPlane.cpp" />
     <ClCompile Include="Source\Gameplay.cpp" />
+    <ClCompile Include="Source\IslandBackground.cpp" />
     <ClCompile Include="Source\MediumYellowPlane.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerBullet.cpp" />
@@ -213,6 +214,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Vector2.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Spawner.cpp" />
+    <ClCompile Include="Source\WaterBackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BigGreenPlane.h" />
@@ -223,6 +225,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Gameplay.h" />
+    <ClInclude Include="Source\IslandBackground.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerBullet.h" />
     <ClInclude Include="Source\ImageRenderer.h" />
@@ -242,6 +245,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />
+    <ClInclude Include="Source\WaterBackground.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

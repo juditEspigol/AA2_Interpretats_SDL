@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -48,6 +48,9 @@
     </Filter>
     <Filter Include="Source Files\Model\Bullet">
       <UniqueIdentifier>{f74b0e49-d633-47c8-855b-b61238e82653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Background">
+      <UniqueIdentifier>{7439807e-17b0-4c11-b0a1-9970922879a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +132,12 @@
     <ClCompile Include="Source\BigGreenPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\WaterBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IslandBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -196,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="Source\AnimatedImageRenderer.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaterBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IslandBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
     </ClInclude>
     <ClInclude Include="Source\SmallNormalPlane.h">
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
