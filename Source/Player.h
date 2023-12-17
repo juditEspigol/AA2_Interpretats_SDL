@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "PlayerBullet.h"
 #include "AnimatedImageRenderer.h"
+#include "ScoreManager.h"
 
 class Player : public GameObject
 {

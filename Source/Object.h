@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "ImageRenderer.h"
 #include "Vector2.h"
 #include "Transform.h"
 #include "RigidBody.h"
@@ -8,7 +7,6 @@
 class Object
 {
 protected:
-	Renderer* renderer; 
 	Transform transform; 
 	RigidBody* rb;
 	bool isPendingDestroy; 
@@ -16,7 +14,10 @@ protected:
 public:
 	//TODO:: SourceOffset and sourceSize is form gameObject
 	Object() = default; 
-	virtual ~Object() {}
+	virtual ~Object() 
+	{
+		delete rb; 
+	}
 
 	virtual void Render() = 0; 
 	virtual void Destroy() { isPendingDestroy = true; }

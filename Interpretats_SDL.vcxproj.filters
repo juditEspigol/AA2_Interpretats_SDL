@@ -227,5 +227,11 @@
     <ClInclude Include="Source\BigGreenPlane.h">
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TextObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScoreManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "EnemyBullet.h"
 #include "Spawner.h"
+#include "ScoreManager.h"
 
 class EnemyPlane : public GameObject
 {

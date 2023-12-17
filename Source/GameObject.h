@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "ImageRenderer.h"
 
 class GameObject : public Object
 {
@@ -10,7 +11,6 @@ public:
 	GameObject() = default;
 	~GameObject()
 	{
-		delete rb;
 		delete renderer;
 	}
 

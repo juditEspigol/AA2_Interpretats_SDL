@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include "Object.h"
+#include "TextObject.h"
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "AudioManager.h"
-#include "TextRenderer.h"
 #include "Spawner.h"
 
 //Scenes names
