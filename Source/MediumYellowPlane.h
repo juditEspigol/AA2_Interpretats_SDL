@@ -11,6 +11,6 @@ private:
 	virtual void UpdateMovementPattern(float dt);
 
 public:
-	MediumYellowPlane(bool isRight);
+	MediumYellowPlane(bool isRight, Player* playerReference);
 	virtual void Update(float dt) override;
 };

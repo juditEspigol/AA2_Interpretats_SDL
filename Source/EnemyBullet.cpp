@@ -1,9 +1,10 @@
 #include "EnemyBullet.h"
 
-EnemyBullet::EnemyBullet(Vector2 pos, Vector2 direction)
+EnemyBullet::EnemyBullet(Vector2 pos, Player* _playerReference)
 {
+	player = _playerReference;
+
 	isPendingDestroy = false;
-	speed = direction * 2;
 
 	// TRANSFORM
 	transform.size = Vector2(4, 16);
@@ -16,6 +17,15 @@ EnemyBullet::EnemyBullet(Vector2 pos, Vector2 direction)
 	rb = new RigidBody(&transform);
 	Vector2 topLeft = transform.position - transform.size / 2;
 	rb->AddCollision(new AABB(topLeft, transform.size));
+
+	//Calculate direction of the bullet
+	directionToShoot = player->GetPosition() - transform.position;
+
+	
+	speed = directionToShoot;
+	speed.Normalize();
+
+	speed = speed * 160;
 }
 
 void EnemyBullet::Update(float dt)

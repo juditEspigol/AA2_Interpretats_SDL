@@ -1,7 +1,7 @@
 #include "SmallRedPlane.h"
 
-SmallRedPlane::SmallRedPlane(bool isRight, bool isUp)
-	: EnemyPlane(1, 100), isRight(isRight), isUp(isUp)
+SmallRedPlane::SmallRedPlane(bool isRight, bool isUp, Player* playerReference)
+	: EnemyPlane(1, 100, playerReference), isRight(isRight), isUp(isUp)
 {
 	fireTime = 1.10f;
 	lastFireTime = 0.0f;

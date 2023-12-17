@@ -1,7 +1,7 @@
 #include "SmallNormalPlane.h"
 
-SmallNormalPlane::SmallNormalPlane(MovementType movement, bool isRight)
-	: EnemyPlane(1, 50), currentMove(movement), isRight(isRight)
+SmallNormalPlane::SmallNormalPlane(MovementType movement, bool isRight, Player* playerReference)
+	: EnemyPlane(1, 50, playerReference), currentMove(movement), isRight(isRight)
 {
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;

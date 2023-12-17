@@ -1,7 +1,7 @@
 #include "BigGreenPlane.h"
 
-BigGreenPlane::BigGreenPlane()
-	: EnemyPlane(32, 4400)
+BigGreenPlane::BigGreenPlane(Player* playerReference)
+	: EnemyPlane(32, 4400, playerReference)
 {
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;

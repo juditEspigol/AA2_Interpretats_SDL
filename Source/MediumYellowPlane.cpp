@@ -1,7 +1,7 @@
 #include "MediumYellowPlane.h"
 
-MediumYellowPlane::MediumYellowPlane(bool isRight)
-	: EnemyPlane(12, 2530), isRight(isRight)
+MediumYellowPlane::MediumYellowPlane(bool isRight, Player* playerReference)
+	: EnemyPlane(12, 2530, playerReference), isRight(isRight)
 {
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
