@@ -6,6 +6,7 @@
 #include "PlayerBullet.h"
 #include "AnimatedImageRenderer.h"
 #include "ScoreManager.h"
+#include "SupportPlane.h"
 
 class Player : public GameObject
 {
@@ -18,7 +19,7 @@ private:
 
 	float fireTime, lastFireTime;
 	bool doubleFire; 
-	//std::vector<SupportPlane> supportPlanes; 
+	std::vector<SupportPlane*> supportPlanes; 
 
 	inline void AddMovement(Vector2 dir) { rb->AddForce(dir); }
 	void MovementInputs(); 
@@ -27,7 +28,7 @@ private:
 	void ShootInputs(); 
 
 	bool IsEnemyPlane(Object* other);
-	bool IsPlayerBullet(Object* other);
+	bool IsEnemyBullet(Object* other);
 
 	void GetDamage(const int amount);
 

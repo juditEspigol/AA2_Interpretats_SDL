@@ -41,6 +41,14 @@ Player::Player()
 	Vector2 topLeft = transform.position - transform.size / 2;
 	rb->AddCollision(new AABB(topLeft, transform.size));
 	rb->SetLinearDrag(7);
+
+	SupportPlane* support = new SupportPlane(Vector2(transform.size.x * 2, 0), transform.position);
+	SPAWNER.SpawnObject(support);
+	supportPlanes.push_back(support);
+
+	SupportPlane* support2 = new SupportPlane(Vector2(-(transform.size.x * 2), 0), transform.position);
+	SPAWNER.SpawnObject(support2);
+	supportPlanes.push_back(support2);
 }
 
 void Player::Update(float dt)
@@ -53,6 +61,12 @@ void Player::Update(float dt)
 	ShootInputs();
 
 	MovementInputs();
+
+	for (auto supportPlane : supportPlanes)
+	{
+		int posX = transform.position.x - supportPlane->GetOffset().x;
+		supportPlane->SetPosition(Vector2(posX, transform.position.y));
+	}
 }
 
 void Player::MovementInputs()
@@ -80,8 +94,17 @@ void Player::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x + 5, transform.position.y)));
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x - 5, transform.position.y)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x + 4, transform.position.y)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x - 4, transform.position.y)));
+		if (doubleFire)
+		{
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x + 11, transform.position.y + 2)));
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x - 11, transform.position.y + 2)));
+		}
+		for (auto supportPlane : supportPlanes)
+		{
+			supportPlane->Shoot();
+		}
 	}
 }
 
@@ -101,7 +124,7 @@ void Player::OnCollisionEnter(Object* other)
 	{
 		if (IsEnemyPlane(other))
 			return;
-		if (IsPlayerBullet(other))
+		if (IsEnemyBullet(other))
 			return;
 	}
 }
@@ -116,7 +139,7 @@ bool Player::IsEnemyPlane(Object* other)
 
 	return false; 
 }
-bool Player::IsPlayerBullet(Object* other)
+bool Player::IsEnemyBullet(Object* other)
 {
 	if (dynamic_cast<EnemyBullet*>(other))
 	{

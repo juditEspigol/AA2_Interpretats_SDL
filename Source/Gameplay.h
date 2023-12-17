@@ -9,6 +9,8 @@
 #include "MediumYellowPlane.h"
 #include "BigGreenPlane.h"
 
+#include "GreenPowerUp.h"
+
 class Gameplay : public Scene
 {
 private:
