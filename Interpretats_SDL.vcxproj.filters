@@ -132,10 +132,10 @@
     <ClCompile Include="Source\BigGreenPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WaterBackground.cpp">
+    <ClCompile Include="Source\IslandBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\IslandBackground.cpp">
+    <ClCompile Include="Source\SeaBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -206,9 +206,6 @@
     <ClInclude Include="Source\AnimatedImageRenderer.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WaterBackground.h">
-      <Filter>Header Files\Model\Background</Filter>
-    </ClInclude>
     <ClInclude Include="Source\IslandBackground.h">
       <Filter>Header Files\Model\Background</Filter>
     </ClInclude>
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="Source\BigGreenPlane.h">
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SeaBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

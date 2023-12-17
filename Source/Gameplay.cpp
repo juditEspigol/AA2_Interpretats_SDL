@@ -4,14 +4,13 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
-	objects.push_back(new WaterBackGround());
-	objects.push_back(new WaterBackGround(RENDERER.GetSizeWindow().x));
+	objects.push_back(new SeaBackground());
+	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
 	objects.push_back(player);  
 	objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player));
 	//objects.push_back(new SmallRedPlane(false, true));
 	//objects.push_back(new MediumYellowPlane(false));
 	//objects.push_back(new MediumYellowPlane(true));
-
 
 	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 
@@ -37,6 +36,9 @@ void Gameplay::Update(float dt)
 	Scene::Update(dt); 
 
 	isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
+
+	/*if (IM.CheckKeyState(SDLK_SPACE, PRESSED))
+		AUDIO.PlayClip(sfxID);*/
 
 	currentTimeToSpawnIsland += dt;
 

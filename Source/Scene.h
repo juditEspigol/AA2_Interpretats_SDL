@@ -17,12 +17,13 @@ class Scene
 {
 protected:
 	std::vector<Object*> ui; 
-	std::vector<Object*> objects;
+	std::vector<Object*> objects; 
 
 	bool isFinished; 
 	std::string nextScene; 
 
 public:
+
 	Scene() = default; 
 	virtual void OnEnter() = 0; 
 	virtual std::string OnExit(); 

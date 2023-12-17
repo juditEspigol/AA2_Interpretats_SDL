@@ -207,6 +207,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\SeaBackground.cpp" />
     <ClCompile Include="Source\SmallNormalPlane.cpp" />
     <ClCompile Include="Source\SmallRedPlane.cpp" />
     <ClCompile Include="Source\TextRenderer.cpp" />
@@ -214,11 +215,11 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Vector2.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Spawner.cpp" />
-    <ClCompile Include="Source\WaterBackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
+    <ClInclude Include="Source\SeaBackground.h" />
     <ClInclude Include="Source\SmallNormalPlane.h" />
     <ClInclude Include="Source\AnimatedImageRenderer.h" />
     <ClInclude Include="Source\EnemyPlane.h" />
@@ -245,7 +246,6 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />
-    <ClInclude Include="Source\WaterBackground.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

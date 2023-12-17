@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-class WaterBackGround : public GameObject
+class SeaBackground : public GameObject
 {
 private:
 
@@ -11,7 +11,8 @@ private:
 
 public:
 
-	WaterBackGround(float offset = 0);
+	SeaBackground(float offset = 0);
+
 	void Update(float dt) override;
 
 	void ScrollFinished();
