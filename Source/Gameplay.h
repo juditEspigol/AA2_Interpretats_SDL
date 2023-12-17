@@ -16,7 +16,10 @@ private:
 	float timeToSpawnIsland;
 	float currentTimeToSpawnIsland;
 
+	Player* player;
+
 public:
+
 	Gameplay();
 	virtual void OnEnter() override;
 	virtual void Render() override; 

@@ -3,13 +3,15 @@
 // OnCollisionEnter
 #include "PlayerBullet.h"
 
-EnemyPlane::EnemyPlane(int hp, int score)
+EnemyPlane::EnemyPlane(int hp, int score, Player* _playerReference)
 	: health(hp),  score(score)
 {
 	isPendingDestroy = false; 
 
 	iFrames = 1.0f; 
 	lastIFrames = iFrames; 
+
+	playerReference = _playerReference;
 }
 
 void EnemyPlane::Update(float dt)
@@ -18,7 +20,7 @@ void EnemyPlane::Update(float dt)
 
 	lastIFrames += dt;  
 
-	lastFireTime += dt;
+	lastFireTime += dt;  
 	Shoot(); 
 
 	if (transform.position.y > RENDERER.GetSizeWindow().y + transform.size.y
@@ -35,7 +37,8 @@ void EnemyPlane::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-		SPAWNER.SpawnObject(new EnemyBullet(transform.position, rb->GetVelocity()));
+
+		SPAWNER.SpawnObject(new EnemyBullet(transform.position, playerReference));
 	}
 }
 

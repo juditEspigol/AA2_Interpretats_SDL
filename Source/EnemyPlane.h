@@ -3,10 +3,14 @@
 #include "Object.h"
 #include "EnemyBullet.h"
 #include "Spawner.h"
+#include "Player.h"
 
 class EnemyPlane : public GameObject
 {
 protected:
+
+	Player* playerReference;
+
 	int health;
 	float iFrames, lastIFrames; 
 	int score;
@@ -27,7 +31,7 @@ protected:
 	virtual void UpdateMovementPattern(float dt) = 0; 
 
 public:
-	EnemyPlane(int hp, int score); 
+	EnemyPlane(int hp, int score, Player* playerReference);
 	virtual void Update(float dt) override; 
-	void OnCollisionEnter(Object* other) override;
+	void OnCollisionEnter(Object* other) override; 
 };
