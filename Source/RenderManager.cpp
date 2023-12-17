@@ -17,7 +17,7 @@ void RenderManager::Init()
 void RenderManager::LoadGameTexture()
 {
 	// 1. Load a surface (.png -> .bitmap)
-	SDL_Surface* surface = IMG_Load("Resources/1942.png");
+	SDL_Surface* surface = IMG_Load("Resources/1942WSea.png");
 	assert(surface);
 
 	// 2. From bitmap to texture (can be rendered on a rect)
