@@ -16,7 +16,7 @@ Player::Player()
 	iFrames = 1.00f;
 	lastIFrames = iFrames;
 
-	fireTime = 1.00f;
+	fireTime = 0.15f;
 	lastFireTime = fireTime;
 	doubleFire = false;
 
@@ -80,7 +80,8 @@ void Player::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-		SPAWNER.SpawnObject(new PlayerBullet(transform.position));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x + 5, transform.position.y)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform.position.x - 5, transform.position.y)));
 	}
 }
 
