@@ -13,6 +13,18 @@ Gameplay::Gameplay()
 	//objects.push_back(new MediumYellowPlane(true));
 
 
+	// TEXT OBJECTS
+		// SCORE
+	ui.push_back(SCORE.GetScoreUI());
+		// NAME PLAYER
+	ui.push_back(new TextObject("Player 01", 15, { 255, 255, 255 },
+		new Transform(Vector2(10, 5), 0, Vector2(1, 1), Vector2(15, 15), false),
+		"Resources/PixelPowerline-11Mg.ttf"));
+		// LIVES PLAYER
+	ui.push_back(new TextObject("000", 15, { 255, 0, 0 },
+		new Transform(Vector2(10, RENDERER.GetSizeWindow().y - 30), 0, Vector2(1, 1), Vector2(15, 15), false),
+		"Resources/PixelPowerline-11Mg.ttf"));
+
 	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 
 	nextScene = MAIN;

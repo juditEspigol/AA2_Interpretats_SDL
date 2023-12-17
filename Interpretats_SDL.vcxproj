@@ -219,6 +219,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
   <ItemGroup>
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
+    <ClInclude Include="Source\ScoreManager.h" />
     <ClInclude Include="Source\SmallNormalPlane.h" />
     <ClInclude Include="Source\AnimatedImageRenderer.h" />
     <ClInclude Include="Source\EnemyPlane.h" />
@@ -240,6 +241,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\SmallRedPlane.h" />
     <ClInclude Include="Source\MediumYellowPlane.h" />
+    <ClInclude Include="Source\TextObject.h" />
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\TimeManager.h" />
     <ClInclude Include="Source\Vector2.h" />

@@ -1,4 +1,5 @@
 #include "EnemyPlane.h"
+#include "ScoreManager.h"
 
 // OnCollisionEnter
 #include "PlayerBullet.h"
@@ -59,7 +60,11 @@ void EnemyPlane::GetDamage(const int amount)
 		health -= amount;
 
 		if (health <= 0)
+		{
+			SCORE.AddScore(score); 
+			SCORE.GetScoreUI()->GetRenderer()->NewText(std::to_string(SCORE.GetScore())); 
 			Destroy();
+		}
 	}
 }
 

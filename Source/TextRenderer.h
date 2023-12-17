@@ -18,4 +18,5 @@ public:
 		SDL_DestroyTexture(texture);
 	}
 	void SetText(std::string text, int fontSize = 20, SDL_Color color = {0, 0, 0});
+	void NewText(std::string text) { SetText(text, fontSize, color); }
 };

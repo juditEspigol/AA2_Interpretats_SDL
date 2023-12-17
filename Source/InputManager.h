@@ -27,7 +27,6 @@ private:
 	InputManager& operator =(const InputManager&) = delete; 
 
 public:
-
 	inline static InputManager& Instance() 
 	{
 		static InputManager manager; 

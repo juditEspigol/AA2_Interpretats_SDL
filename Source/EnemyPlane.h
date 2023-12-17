@@ -4,6 +4,7 @@
 #include "EnemyBullet.h"
 #include "Spawner.h"
 #include "Player.h"
+#include "ScoreManager.h"
 
 class EnemyPlane : public GameObject
 {
