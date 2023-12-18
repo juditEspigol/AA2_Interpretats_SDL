@@ -20,11 +20,9 @@ private:
 	std::vector<EnemyPlane*> planesToSpawn;
 	bool isFinished;
 
-	
-
 public:
 
-	Wave(float _startTime, WaveType _waveType, int _amount);
+	Wave(float _startTime, WaveType _waveType, int _amount, Transform* _playerTransform);
 
 	void Update(float dt, const Player* p, Spawner* spawner);
 
