@@ -6,8 +6,7 @@ class ImageRenderer : public Renderer
 public:
 	ImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize);
 
-	virtual void Update(float dt)
-	{
+	virtual void Reset() {}; 
 
-	}
+	virtual void Update(float dt) {}
 };

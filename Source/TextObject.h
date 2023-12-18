@@ -17,8 +17,9 @@ public:
 		delete renderer; 
 	}
 
-	virtual void Update(float dt)
-	{}
+	virtual void Update(float dt) override
+	{
+	}
 	virtual void Render()
 	{
 		renderer->Render(); 

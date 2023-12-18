@@ -27,7 +27,7 @@ private:
 	void ShootInputs(); 
 
 	bool IsEnemyPlane(Object* other);
-	bool IsPlayerBullet(Object* other);
+	bool IsEnemyBullet(Object* other);
 
 	void GetDamage(const int amount);
 
@@ -37,6 +37,8 @@ private:
 	void PlayTakeOffAnimation(); 
 	void EnableDoubleFire(); 
 	void AddSupportPlanes(); 
+
+	void CreateAnimations(); 
 
 public:
 	Player(); 

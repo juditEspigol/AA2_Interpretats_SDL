@@ -20,12 +20,12 @@ public:
 	}
 
 	virtual void Render() = 0; 
+	virtual void Update(float dt) 
+	{
+		rb->Update(dt); 
+	};
 	virtual void Destroy() { isPendingDestroy = true; }
 	inline bool IsPendingDestroy() { return isPendingDestroy; }
-	virtual void Update(float dt) 
-	{ 
-		rb->Update(dt); 
-	}
 	RigidBody* GetRigidBody() { return rb; }
 	virtual void OnCollisionEnter(Object* other)
 	{

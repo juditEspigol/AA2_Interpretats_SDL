@@ -28,17 +28,9 @@ Player::Player()
 	transform->size = Vector2(16, 16);
 
 	// RENDER
-	//renderer = new ImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16));
-	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 6), Vector2(25, 16))); 
+	CreateAnimations(); 
 	renderer = renderers["Idle"]; 
-	/*delete renderer; 
-	std::vector<Vector2> deltas { 
-		Vector2(0, 0), 
-		Vector2(32, 0), 
-		Vector2(32 * 2, 0)
-	};
-	animImageRenderer = new AnimatedImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16), deltas, true, 3); 
-	renderer = animImageRenderer; */
+
 	// RIGID BODY 
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;
@@ -46,9 +38,26 @@ Player::Player()
 	rb->SetLinearDrag(7);
 }
 
+void Player::CreateAnimations()
+{
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 6), Vector2(25, 16)));
+	std::vector<Vector2> rightDeltas {
+		Vector2(32, 0),
+		Vector2(32 * 3, 0),
+		Vector2(32 * 5, 0)
+	};
+	renderers.emplace("Right", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), rightDeltas, false, 20));
+	std::vector<Vector2> leftDeltas {
+		Vector2(32 * 2, 0),
+		Vector2(32 * 4, 0),
+		Vector2(32 * 6, 0)
+	};
+	renderers.emplace("Left", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), leftDeltas, false, 20));
+}
+
 void Player::Update(float dt)
 {
-	Object::Update(dt); 
+	GameObject::Update(dt); 
 
 	lastIFrames += dt;
 
@@ -69,9 +78,20 @@ void Player::MovementInputs()
 		inputForce.y += 1;
 	//HORIZONTAL
 	if (IM.CheckKeyState(SDLK_LEFT, HOLD))
+	{
 		inputForce.x -= 1;
-	if (IM.CheckKeyState(SDLK_RIGHT, HOLD))
+		ChangeAnimation("Left"); 
+	}
+	else if (IM.CheckKeyState(SDLK_RIGHT, HOLD))
+	{
 		inputForce.x += 1;
+		ChangeAnimation("Right");
+	}
+	else
+	{
+		ChangeAnimation("Idle");
+	}
+
 
 	inputForce.Normalize();
 	inputForce = inputForce * force;
@@ -104,7 +124,7 @@ void Player::OnCollisionEnter(Object* other)
 	{
 		if (IsEnemyPlane(other))
 			return;
-		if (IsPlayerBullet(other))
+		if (IsEnemyBullet(other))
 			return;
 	}
 }
@@ -119,11 +139,12 @@ bool Player::IsEnemyPlane(Object* other)
 
 	return false; 
 }
-bool Player::IsPlayerBullet(Object* other)
+bool Player::IsEnemyBullet(Object* other)
 {
 	if (dynamic_cast<EnemyBullet*>(other))
 	{
 		GetDamage(1);
+		other->Destroy();
 		return true;
 	}
 	return false;

@@ -23,7 +23,7 @@ public:
 	{
 		frameTime = 1.0f / (float)fps; 
 	}
-	void Update(float dt)
+	virtual void Update(float dt) override
 	{
 		currentFrameTime += dt; 
 
@@ -42,5 +42,11 @@ public:
 			sourceRect.x = initialSourceOffset.x + deltas[currentFrame].x;
 			sourceRect.y = initialSourceOffset.y + deltas[currentFrame].y;
 		}
+	}
+
+	virtual void Reset() override
+	{
+		currentFrame = 0; 
+		currentFrameTime = 0.0f; 
 	}
 };

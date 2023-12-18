@@ -8,7 +8,7 @@ PlayerBullet::PlayerBullet(Vector2 pos)
 	// TRANSFORM
 	transform = new Transform();
 	transform->size = Vector2(4, 16);
-	transform->position = Vector2(pos.x, pos.y - transform->size.y * 0.5);
+	transform->position = Vector2(pos.x, pos.y - transform->size.y * 2);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(1.0f, 1.0f);
 	// RENDER

@@ -16,10 +16,10 @@ public:
 		delete renderer;
 	}
 
-	virtual void Update(float dt) 
+	virtual void Update(float dt) override
 	{
+		rb->Update(dt);
 		renderer->Update(dt); 
-		rb->Update(dt); 
 	};
 	virtual void Render()
 	{
@@ -29,5 +29,13 @@ public:
 	virtual void OnCollisionEnter(Object* other) override
 	{
 
+	}
+	void ChangeAnimation(std::string animID)
+	{
+		if (renderers[animID] == renderer)
+			return; 
+
+		renderers[animID]->Reset(); 
+		renderer = renderers[animID]; 
 	}
 };
