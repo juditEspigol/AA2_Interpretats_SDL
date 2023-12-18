@@ -3,14 +3,11 @@
 #include "Object.h"
 #include "EnemyBullet.h"
 #include "Spawner.h"
-#include "Player.h"
 #include "ScoreManager.h"
 
 class EnemyPlane : public GameObject
 {
 protected:
-
-	Player* playerReference;
 
 	int health;
 	float iFrames, lastIFrames; 
@@ -23,6 +20,8 @@ protected:
 	int movementStage;
 	float movementTime;
 
+	Transform* playerTransform;
+
 	virtual void Shoot(); 
 
 	bool IsPlayerBullet(Object* other); 
@@ -32,7 +31,7 @@ protected:
 	virtual void UpdateMovementPattern(float dt) = 0; 
 
 public:
-	EnemyPlane(int hp, int score, Player* playerReference);
+	EnemyPlane(int hp, int score, Transform* transform);
 	virtual void Update(float dt) override; 
 	void OnCollisionEnter(Object* other) override; 
 };
