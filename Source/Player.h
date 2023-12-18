@@ -31,7 +31,7 @@ private:
 
 	void GetDamage(const int amount);
 
-	void PlayDeathAnimation();
+	void PlayDeathAnimation(); 
 	void PlayRollAnimation(); 
 	void PlayLandingAnimation(); 
 	void PlayTakeOffAnimation(); 

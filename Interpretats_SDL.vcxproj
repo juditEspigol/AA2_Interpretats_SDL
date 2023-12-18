@@ -215,10 +215,12 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Vector2.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Spawner.cpp" />
+    <ClCompile Include="Source\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
+    <ClInclude Include="Source\MovementPattern.h" />
     <ClInclude Include="Source\ScoreManager.h" />
     <ClInclude Include="Source\SeaBackground.h" />
     <ClInclude Include="Source\SmallNormalPlane.h" />
@@ -248,6 +250,8 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />
+    <ClInclude Include="Source\Wave.h" />
+    <ClInclude Include="Source\WaveType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

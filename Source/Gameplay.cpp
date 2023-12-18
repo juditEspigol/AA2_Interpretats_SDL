@@ -29,7 +29,7 @@ Gameplay::Gameplay()
 
 	nextScene = MAIN;
 
-	timeToSpawnIsland = 11 + rand() % 7;
+	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
 }
 
@@ -64,7 +64,7 @@ void Gameplay::Update(float dt)
 
 void Gameplay::SpawnIsland()
 {
-	timeToSpawnIsland += 10;
+	timeToSpawnIsland = 20 + rand() % 20;
 
 	int maxX = RENDERER.GetSizeWindow().x;
 	int maxY = RENDERER.GetSizeWindow().y;
