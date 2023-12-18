@@ -7,6 +7,8 @@ class GameObject : public Object
 protected: 
 	ImageRenderer* renderer; 
 
+	std::unordered_map<std::string, ImageRenderer*> renderers; 
+
 public: 
 	GameObject() = default;
 	~GameObject()
@@ -16,6 +18,7 @@ public:
 
 	virtual void Update(float dt) 
 	{
+		renderer->Update(dt); 
 		rb->Update(dt); 
 	};
 	virtual void Render()
