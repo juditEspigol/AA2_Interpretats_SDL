@@ -4,15 +4,15 @@
 // OnCollisionEnter
 #include "PlayerBullet.h"
 
-EnemyPlane::EnemyPlane(int hp, int score, Player* _playerReference)
-	: health(hp),  score(score)
+EnemyPlane::EnemyPlane(int _hp, int _score, Transform* _playerTransform)
+	: health(_hp),  score(_score)
 {
 	isPendingDestroy = false; 
 
 	iFrames = 1.0f; 
 	lastIFrames = iFrames; 
 
-	playerReference = _playerReference;
+	playerTransform = _playerTransform;
 }
 
 void EnemyPlane::Update(float dt)
@@ -24,10 +24,10 @@ void EnemyPlane::Update(float dt)
 	lastFireTime += dt;  
 	Shoot(); 
 
-	if (transform.position.y > RENDERER.GetSizeWindow().y + transform.size.y
-		|| transform.position.y < -transform.size.y 
-		|| transform.position.x < -transform.size.x
-		|| transform.position.x > RENDERER.GetSizeWindow().x + transform.size.x)
+	if (transform->position.y > RENDERER.GetSizeWindow().y + transform->size.y
+		|| transform->position.y < -transform->size.y 
+		|| transform->position.x < -transform->size.x
+		|| transform->position.x > RENDERER.GetSizeWindow().x + transform->size.x)
 	{
 		Destroy();
 	}
@@ -39,7 +39,7 @@ void EnemyPlane::Shoot()
 	{
 		lastFireTime = 0;
 
-		SPAWNER.SpawnObject(new EnemyBullet(transform.position, playerReference));
+		SPAWNER.SpawnObject(new EnemyBullet(transform->position, playerTransform->position));
 	}
 }
 

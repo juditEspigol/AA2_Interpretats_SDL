@@ -1,7 +1,7 @@
 #include "SmallNormalPlane.h"
 
-SmallNormalPlane::SmallNormalPlane(MovementType movement, bool isRight, Player* playerReference)
-	: EnemyPlane(1, 50, playerReference), currentMove(movement), isRight(isRight)
+SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform)
+	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight)
 {
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
@@ -10,19 +10,20 @@ SmallNormalPlane::SmallNormalPlane(MovementType movement, bool isRight, Player* 
 	movementTime = 0.0f; 
 
 	// TRANSFORM
+	transform = new Transform();
 	if(isRight)
-		transform.position = Vector2(10 +rand() % (int)RENDERER.GetSizeWindow().x * 0.40, 0);
+		transform->position = Vector2(10 +rand() % (int)RENDERER.GetSizeWindow().x * 0.40, 0);
 	else
-		transform.position = Vector2((int)RENDERER.GetSizeWindow().x * 0.6 + rand() % (int)RENDERER.GetSizeWindow().x * 0.30, 0);
-	transform.angle = 180.0f;
-	transform.scale = Vector2(2.0f, 2.0f);
-	transform.size = Vector2(16, 16);
+		transform->position = Vector2((int)RENDERER.GetSizeWindow().x * 0.6 + rand() % (int)RENDERER.GetSizeWindow().x * 0.30, 0);
+	transform->angle = 180.0f;
+	transform->scale = Vector2(2.0f, 2.0f);
+	transform->size = Vector2(16, 16);
 	// RENDER
-	renderer = new ImageRenderer(&transform, Vector2(5, 161), Vector2(15, 15));
+	renderer = new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15));
 	// RIGID BODY 
-	rb = new RigidBody(&transform);
-	Vector2 topLeft = transform.position - transform.size / 2;
-	rb->AddCollision(new AABB(topLeft, transform.size));
+	rb = new RigidBody(transform);
+	Vector2 topLeft = transform->position - transform->size / 2;
+	rb->AddCollision(new AABB(topLeft, transform->size));
 	rb->SetLinearDrag(7);
 }
 

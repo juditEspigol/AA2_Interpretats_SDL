@@ -7,7 +7,7 @@
 class Object
 {
 protected:
-	Transform transform; 
+	Transform* transform; 
 	RigidBody* rb;
 	bool isPendingDestroy; 
 
@@ -33,14 +33,15 @@ public:
 	}
 
 	// SETTERS & GETTERS
-	inline void SetPosition(Vector2 _position) { transform.position = _position; }
-	inline void SetScale(Vector2 _scale) { transform.scale = _scale; }
-	inline void SetRotation(float _rotation) { transform.angle = _rotation; }
+	inline void SetPosition(Vector2 _position) { transform->position = _position; }
+	inline void SetScale(Vector2 _scale) { transform->scale = _scale; }
+	inline void SetRotation(float _rotation) { transform->angle = _rotation; }
 
-	inline Vector2 GetPosition() { return transform.position; }
-	inline float GetRotation() { return transform.angle; }
-	inline Vector2 GetScale() { return transform.scale; }
-	inline Vector2 GetSize() { return transform.size; }
+	inline Vector2 GetPosition() { return transform->position; }
+	inline float GetRotation() { return transform->angle; }
+	inline Vector2 GetScale() { return transform->scale; }
+	inline Vector2 GetSize() { return transform->size; }
+	inline Transform* GetTransform() { return transform; }
 };
 
 

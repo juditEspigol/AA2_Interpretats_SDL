@@ -6,16 +6,17 @@ PlayerBullet::PlayerBullet(Vector2 pos)
 	speed = Vector2(0, -300); 
 
 	// TRANSFORM
-	transform.size = Vector2(4, 16);
-	transform.position = Vector2(pos.x, pos.y - transform.size.y * 0.5);
-	transform.angle = 0.0f;
-	transform.scale = Vector2(1.0f, 1.0f);
+	transform = new Transform();
+	transform->size = Vector2(4, 16);
+	transform->position = Vector2(pos.x, pos.y - transform->size.y * 0.5);
+	transform->angle = 0.0f;
+	transform->scale = Vector2(1.0f, 1.0f);
 	// RENDER
-	renderer = new ImageRenderer(&transform, Vector2(92, 84), Vector2(2, 10));
+	renderer = new ImageRenderer(transform, Vector2(92, 84), Vector2(2, 10));
 	// RIGID BODY
-	rb = new RigidBody(&transform);
-	Vector2 topLeft = transform.position - transform.size / 2;
-	rb->AddCollision(new AABB(topLeft, transform.size));
+	rb = new RigidBody(transform);
+	Vector2 topLeft = transform->position - transform->size / 2;
+	rb->AddCollision(new AABB(topLeft, transform->size));
 }
 
 void PlayerBullet::Update(float dt)  
@@ -24,6 +25,6 @@ void PlayerBullet::Update(float dt)
 	rb->Update(dt);
 
 	// Out of window
-	if (transform.position.y <= 0)
+	if (transform->position.y <= 0)
 		Destroy();
 }

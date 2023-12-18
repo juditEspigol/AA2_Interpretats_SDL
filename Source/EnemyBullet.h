@@ -6,15 +6,13 @@ class EnemyBullet : public GameObject
 {
 private:
 
-	Player* player;
-
 	Vector2 speed;
 
 	Vector2 directionToShoot;
 
 public:
 
-	EnemyBullet(Vector2 pos, Player* _playerReference);
+	EnemyBullet(Vector2 pos, Vector2 _posToGo);
 
 	virtual void Update(float dt) override;
 };

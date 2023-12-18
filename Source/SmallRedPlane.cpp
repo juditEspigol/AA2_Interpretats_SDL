@@ -1,7 +1,7 @@
 #include "SmallRedPlane.h"
 
-SmallRedPlane::SmallRedPlane(bool isRight, bool isUp, Player* playerReference)
-	: EnemyPlane(1, 100, playerReference), isRight(isRight), isUp(isUp)
+SmallRedPlane::SmallRedPlane(bool _isRight, bool _isUp, Transform* _playerTransform)
+	: EnemyPlane(1, 100, _playerTransform), isRight(_isRight), isUp(_isUp)
 {
 	fireTime = 1.10f;
 	lastFireTime = 0.0f;
@@ -10,26 +10,27 @@ SmallRedPlane::SmallRedPlane(bool isRight, bool isUp, Player* playerReference)
 	startLoop = 2.0f; 
 
 	// TRANSFORM
-	transform.size = Vector2(16, 16);
+	transform = new Transform();
+	transform->size = Vector2(16, 16);
 	float randomPosY = 120 + rand() % (int)RENDERER.GetSizeWindow().y * 0.25; 
 	if (isRight)
 	{
-		transform.position = Vector2(-transform.size.x, randomPosY);
-		transform.angle = -90.0f;
+		transform->position = Vector2(-transform->size.x, randomPosY);
+		transform->angle = -90.0f;
 	}
 	else
 	{
-		transform.position = Vector2(RENDERER.GetSizeWindow().x + transform.size.x, randomPosY);
-		transform.angle = 90.0f;
+		transform->position = Vector2(RENDERER.GetSizeWindow().x + transform->size.x, randomPosY);
+		transform->angle = 90.0f;
 	}
-	transform.scale = Vector2(2.0f, 2.0f);
-	transform.size = Vector2(16, 16);
+	transform->scale = Vector2(2.0f, 2.0f);
+	transform->size = Vector2(16, 16);
 	// RENDER
-	renderer = new ImageRenderer(&transform, Vector2(7, 283), Vector2(15, 15));
+	renderer = new ImageRenderer(transform, Vector2(7, 283), Vector2(15, 15));
 	// RIGID BODY 
-	rb = new RigidBody(&transform);
-	Vector2 topLeft = transform.position - transform.size / 2;
-	rb->AddCollision(new AABB(topLeft, transform.size));
+	rb = new RigidBody(transform);
+	Vector2 topLeft = transform->position - transform->size / 2;
+	rb->AddCollision(new AABB(topLeft, transform->size));
 	rb->SetLinearDrag(7);
 }
 

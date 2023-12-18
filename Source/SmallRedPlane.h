@@ -13,6 +13,6 @@ private:
 	virtual void UpdateMovementPattern(float dt);
 
 public:
-	SmallRedPlane(bool isRight, bool isUp, Player* playerReference);
+	SmallRedPlane(bool _isRight, bool _isUp, Transform* _playerTransform);
 	virtual void Update(float dt) override;
 };

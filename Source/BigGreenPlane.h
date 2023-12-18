@@ -10,6 +10,6 @@ private:
 	virtual void UpdateMovementPattern(float dt);
 
 public:
-	BigGreenPlane(Player* playerReference);
+	BigGreenPlane(Transform* _playerTransform);
 	virtual void Update(float dt) override;
 };
