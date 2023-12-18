@@ -29,7 +29,7 @@ Player::Player()
 
 	// RENDER
 	//renderer = new ImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16));
-	renderers.emplace("Idle", new ImageRenderer(&transform, Vector2(5, 6), Vector2(25, 16))); 
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 6), Vector2(25, 16))); 
 	renderer = renderers["Idle"]; 
 	/*delete renderer; 
 	std::vector<Vector2> deltas { 
