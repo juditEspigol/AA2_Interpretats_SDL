@@ -1,5 +1,6 @@
 #pragma once
 #include "PowerUp.h"
+#include "Player.h"
 
 class GreenPowerUp : public PowerUp
 {
@@ -25,8 +26,27 @@ public:
 	{
 		GameObject::Update(dt);
 	}
-	virtual void OnCollisionEnter(Object* object) override
+	virtual void OnCollisionEnter(Object* other) override
 	{
+		if (rb->CheckCollision(other->GetRigidBody()))
+		{
+			if (IsPlayer(other))
+				return;
+		}
+	}
 
+	bool IsPlayer(Object* other)
+	{
+		if (dynamic_cast<Player*>(other))
+		{
+			return true;
+		}/*
+		SupportPlane* support = new SupportPlane(Vector2(other->GetSize().x * 2, 0), other->GetPosition());
+		SPAWNER.SpawnObject(support);
+		supportPlanes.push_back(support);
+
+		SupportPlane* support2 = new SupportPlane(Vector2(-(transform.size.x * 2), 0), transform.position);
+		SPAWNER.SpawnObject(support2);
+		supportPlanes.push_back(support2);*/
 	}
 };
