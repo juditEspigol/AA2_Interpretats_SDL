@@ -36,6 +36,8 @@ Player::Player()
 	Vector2 topLeft = transform->position - transform->size / 2;
 	rb->AddCollision(new AABB(topLeft, transform->size));
 	rb->SetLinearDrag(7);
+
+	AddSupportPlanes(); 
 }
 
 void Player::CreateAnimations()
@@ -61,10 +63,20 @@ void Player::Update(float dt)
 
 	lastIFrames += dt;
 
+	for (int i = supportPlanes.size() - 1 ; i >= 0; i--)
+	{
+		if (supportPlanes[i]->IsPendingDestroy()) {
+			supportPlanes.erase(supportPlanes.begin() + i);
+			continue;
+		}
+		int posX = transform->position.x - supportPlanes[i]->GetOffset().x;
+		supportPlanes[i]->SetPosition(Vector2(posX, transform->position.y));
+	}
+
+	MovementInputs();
 	lastFireTime += dt;
 	ShootInputs();
 
-	MovementInputs();
 }
 
 void Player::MovementInputs()
@@ -103,8 +115,17 @@ void Player::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 5, transform->position.y)));
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 5, transform->position.y)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 4, transform->position.y)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 4, transform->position.y)));
+		if (doubleFire)
+		{
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 11, transform->position.y + 2)));
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 11, transform->position.y + 2)));
+		}
+		for (auto supportPlane : supportPlanes)
+		{
+			supportPlane->Shoot();
+		}
 	}
 }
 

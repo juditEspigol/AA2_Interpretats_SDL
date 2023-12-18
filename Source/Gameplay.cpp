@@ -12,6 +12,8 @@ Gameplay::Gameplay()
 	//objects.push_back(new MediumYellowPlane(false));
 	//objects.push_back(new MediumYellowPlane(true));
 
+	objects.push_back(new GreenPowerUp());
+
 
 	// TEXT OBJECTS
 		// SCORE
