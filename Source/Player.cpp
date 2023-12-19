@@ -42,18 +42,15 @@ Player::Player()
 void Player::CreateAnimations()
 {
 	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 6), Vector2(25, 16)));
-	std::vector<Vector2> rightDeltas {
-		Vector2(32, 0),
-		Vector2(32 * 3, 0),
-		Vector2(32 * 5, 0)
-	};
-	renderers.emplace("Right", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), rightDeltas, false, 20));
-	std::vector<Vector2> leftDeltas {
+
+	// RIGHT & LEFT
+	std::vector<Vector2> deltas {
 		Vector2(32 * 2, 0),
 		Vector2(32 * 4, 0),
 		Vector2(32 * 6, 0)
 	};
-	renderers.emplace("Left", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), leftDeltas, false, 20));
+	renderers.emplace("Right", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), deltas, false, 20, SDL_FLIP_HORIZONTAL));
+	renderers.emplace("Left", new AnimatedImageRenderer(transform, Vector2(5, 6), Vector2(25, 16), deltas, false, 20));
 }
 
 void Player::Update(float dt)
@@ -91,15 +88,30 @@ void Player::MovementInputs()
 	{
 		inputForce.x -= 1;
 		ChangeAnimation("Left"); 
+		for (auto supportPlane : supportPlanes)
+		{
+			if(supportPlane->GetIsLocated())
+				supportPlane->ChangeAnimation("Left");
+		}
 	}
 	else if (IM.CheckKeyState(SDLK_RIGHT, HOLD))
 	{
 		inputForce.x += 1;
 		ChangeAnimation("Right");
+		for (auto supportPlane : supportPlanes)
+		{
+			if (supportPlane->GetIsLocated())
+				supportPlane->ChangeAnimation("Right");
+		}
 	}
 	else
 	{
 		ChangeAnimation("Idle");
+		for (auto supportPlane : supportPlanes)
+		{
+			if (supportPlane->GetIsLocated())
+				supportPlane->ChangeAnimation("Idle");
+		}
 	}
 
 	inputForce.Normalize();

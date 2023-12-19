@@ -4,7 +4,7 @@
 class ImageRenderer : public Renderer
 {
 public:
-	ImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize);
+	ImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize, SDL_RendererFlip flipMode = SDL_FLIP_NONE);
 
 	virtual void Reset() {}; 
 

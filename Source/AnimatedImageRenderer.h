@@ -17,8 +17,8 @@ private:
 
 public:
 	AnimatedImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize
-		, const std::vector<Vector2>& deltas, bool looping, int fps)
-		:ImageRenderer(transform, sourceOffset, sourceSize)
+		, const std::vector<Vector2>& deltas, bool looping, int fps, SDL_RendererFlip flipMode = SDL_FLIP_NONE)
+		:ImageRenderer(transform, sourceOffset, sourceSize, flipMode)
 		, deltas(deltas), looping(looping), currentFrame(0), fps(fps), currentFrameTime(0.0f), initialSourceOffset(sourceOffset)
 	{
 		frameTime = 1.0f / (float)fps; 

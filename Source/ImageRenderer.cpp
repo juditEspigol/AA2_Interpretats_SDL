@@ -1,7 +1,7 @@
 #include "ImageRenderer.h"
 
-ImageRenderer::ImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize)
-	: Renderer(transform)	
+ImageRenderer::ImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize, SDL_RendererFlip flipMode)
+	: Renderer(transform, flipMode)	
 {
 	sourceRect = SDL_Rect{
 		(int)sourceOffset.x, (int)sourceOffset.y,
