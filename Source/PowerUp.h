@@ -6,25 +6,15 @@ class PowerUp : public GameObject
 {
 protected:
 	Player* player; 
+	int speed; 
 
 public:
-	PowerUp(Player* p)
-		: player(p) {}
-	void Update(float dt) override
-	{
-		GameObject::Update(dt); 
-	}
-	virtual void OnCollisionEnter(Object* other) override
-	{
-		if (rb->CheckCollision(other->GetRigidBody()))
-		{
-			if (IsPlayer(other))
-				return;
-		}
-	}
+	PowerUp(Player* p); 
 
-	virtual bool IsPlayer(Object* other)
-	{
-		return false; 
-	}
+	void Update(float dt) override; 
+	void AddMovement(); 
+
+	virtual void OnCollisionEnter(Object* other) override; 
+	virtual bool IsPlayer(Object* other) = 0; 
+	bool IsOutOfWindow(); 
 };

@@ -5,10 +5,9 @@
 #include "EnemyPlane.h"
 
 SupportPlane::SupportPlane(bool right, Vector2 pos)
-	: isRight(right)
+	: isRight(right), isLocated(false)
 {
 	isPendingDestroy = false;
-	isLocated = false;
 
 	// TRANSFORM
 	transform = new Transform();
@@ -29,15 +28,59 @@ SupportPlane::SupportPlane(bool right, Vector2 pos)
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;
 	rb->AddCollision(new AABB(topLeft, transform->size));
+	rb->SetLinearDrag(7);
 }
 
 void SupportPlane::Update(float dt)
 {
 	GameObject::Update(dt); 
 }
+void SupportPlane::LocatePlane(Vector2 playerPosition, float dt)
+{
+	Vector2 positionToGo = playerPosition - offset;
+
+	if (isLocated)
+	{
+		transform->position = positionToGo;
+	}
+	else
+	{
+		Vector2 direction = positionToGo - transform->position;
+
+		if (direction.Magnitude() <= 10)
+		{
+			isLocated = true;
+			SetRotation(0);
+		}
+		else
+		{
+			Vector2 force = Vector2();
+
+			//SPINNING
+			SetRotation(GetRotation() + (360 * dt));
+			//VERTICAL
+			if (transform->position.y < positionToGo.y) // support up, player down
+				force.y += 1;
+			if (transform->position.y > positionToGo.y) // support down, player up
+				force.y -= 1;
+			//HORITZONTAL
+			if (transform->position.x < positionToGo.x) // support left, player right
+				force.x += 1;
+			if (transform->position.x > positionToGo.x) // support right, player left
+				force.x -= 1;
+
+			force.Normalize();
+			force = force * 70;
+			rb->AddForce(force);
+		}
+	}
+}
 
 void SupportPlane::OnCollisionEnter(Object* other)
 {
+	if (!isLocated)
+		return; 
+
 	if (rb->CheckCollision(other->GetRigidBody()))
 	{
 		if (IsEnemyPlane(other))
@@ -46,7 +89,6 @@ void SupportPlane::OnCollisionEnter(Object* other)
 			return;
 	}
 }
-
 bool SupportPlane::IsEnemyPlane(Object* other)
 {
 	if (dynamic_cast<EnemyPlane*>(other))

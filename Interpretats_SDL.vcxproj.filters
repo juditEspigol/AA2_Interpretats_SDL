@@ -52,6 +52,9 @@
     <Filter Include="Header Files\Model\Background">
       <UniqueIdentifier>{7439807e-17b0-4c11-b0a1-9970922879a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\PowerUps">
+      <UniqueIdentifier>{e6d4b154-9b27-4fd2-8f71-1b808780c7f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -129,17 +132,20 @@
     <ClCompile Include="Source\MediumYellowPlane.cpp">
       <Filter>Source Files\Model\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BigGreenPlane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\IslandBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\SeaBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PowerUp.cpp">
+      <Filter>Source Files\Model\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BigGreenPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
     <ClCompile Include="Source\SupportPlane.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +242,6 @@
     <ClInclude Include="Source\ScoreManager.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SupportPlane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PowerUp.h">
       <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
     </ClInclude>
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="Source\WhitePowerUp.h">
       <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SupportPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

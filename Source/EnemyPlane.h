@@ -25,6 +25,7 @@ protected:
 	virtual void Shoot(); 
 
 	bool IsPlayerBullet(Object* other); 
+	bool IsOutOfWindow(); 
 
 	void GetDamage(const int amount);
 

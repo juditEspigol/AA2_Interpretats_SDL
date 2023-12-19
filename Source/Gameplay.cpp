@@ -7,12 +7,14 @@ Gameplay::Gameplay()
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
 	objects.push_back(player);  
-	//objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player->GetTransform()));
+	objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player->GetTransform()));
 	//objects.push_back(new SmallRedPlane(false, true));
 	//objects.push_back(new MediumYellowPlane(false));
 	//objects.push_back(new MediumYellowPlane(true));
 
 	//objects.push_back(new GreenPowerUp(player)); 
+	objects.push_back(new WhitePowerUp(player)); 
+	objects.push_back(new GreenPowerUp(player)); 
 	objects.push_back(new GrayPowerUp(player)); 
 
 
