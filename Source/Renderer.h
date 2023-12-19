@@ -23,7 +23,7 @@ protected:
 	SDL_RendererFlip flipMode; 
 
 public:
-	Renderer(Transform* transform);
+	Renderer(Transform* transform, SDL_RendererFlip flipMode);
 	~Renderer();
 
 	virtual void Render();

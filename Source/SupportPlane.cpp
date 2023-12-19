@@ -22,7 +22,8 @@ SupportPlane::SupportPlane(bool right, Vector2 pos)
 	transform->scale = Vector2(1.5f, 1.5f);
 
 	// RENDER
-	renderer = new ImageRenderer(transform, Vector2(9, 84), Vector2(18, 10));
+	CreateAnimations(); 
+	renderer = renderers["Idle"];
 
 	// RIGID BODY 
 	rb = new RigidBody(transform);
@@ -113,4 +114,15 @@ void SupportPlane::Shoot()
 {
 	if(isLocated)
 		SPAWNER.SpawnObject(new PlayerBullet(transform->position));
+}
+
+void SupportPlane::CreateAnimations()
+{
+	//IDLE 
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(49, 83), Vector2(18, 12)));
+
+	// RIGHT & LEFT
+	std::vector<Vector2> deltas{ Vector2(0, 0) };
+	renderers.emplace("Right", new AnimatedImageRenderer(transform, Vector2(9, 83), Vector2(18, 12), deltas, false, 20));
+	renderers.emplace("Left", new AnimatedImageRenderer(transform, Vector2(9, 83), Vector2(18, 12), deltas, false, 20, SDL_FLIP_HORIZONTAL));
 }

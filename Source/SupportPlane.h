@@ -11,6 +11,11 @@ private:
 
 	bool isLocated;
 
+	bool IsEnemyPlane(Object* other);
+	bool IsEnemyBullet(Object* other);
+
+	void CreateAnimations();
+
 public:
 	SupportPlane(bool right, Vector2 pos);
 
@@ -18,8 +23,8 @@ public:
 	void LocatePlane(Vector2 playerPosition, float dt);
 
 	virtual void OnCollisionEnter(Object* other) override;
-	bool IsEnemyPlane(Object* other);
-	bool IsEnemyBullet(Object* other);
 
 	void Shoot();
+
+	inline bool GetIsLocated() const { return isLocated; }
 };
