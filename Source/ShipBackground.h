@@ -7,6 +7,8 @@ private:
 
 	void Movement();
 
+	float speed;
+
 public:
 
 	ShipBackGround();

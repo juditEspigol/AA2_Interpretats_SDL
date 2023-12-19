@@ -23,7 +23,7 @@ Player::Player()
 
 	// TRANSFORM
 	transform = new Transform();
-	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y * 0.75);
+	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y + 155);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(16, 16);
@@ -57,7 +57,9 @@ void Player::Update(float dt)
 {
 	GameObject::Update(dt); 
 
-	lastIFrames += dt;
+	rb->SetVeclocity(Vector2(0, -18));
+
+	/*lastIFrames += dt;
 
 	for (int i = supportPlanes.size() - 1 ; i >= 0; i--)
 	{
@@ -70,7 +72,7 @@ void Player::Update(float dt)
 
 	MovementInputs();
 	lastFireTime += dt;
-	ShootInputs();
+	ShootInputs();*/
 
 }
 
