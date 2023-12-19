@@ -21,7 +21,7 @@ private:
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
-	inline void AddMovement(Vector2 dir) { rb->AddForce(dir); }
+	inline void AddMovement(const Vector2 dir) { rb->AddForce(dir); }
 	void MovementInputs(); 
 
 	void Shoot();
@@ -32,21 +32,13 @@ private:
 
 	void GetDamage(const int amount);
 
-	void PlayDeathAnimation();
-	void PlayRollAnimation(); 
-	void PlayLandingAnimation(); 
-	void PlayTakeOffAnimation(); 
-	void EnableDoubleFire(); 
-	inline void AddSupportPlanes()
-	{ 
-		SupportPlane* support = new SupportPlane(Vector2(transform->size.x * 2, 0), transform->position);
-		SPAWNER.SpawnObject(support);
-		supportPlanes.push_back(support);
-
-		SupportPlane* support2 = new SupportPlane(Vector2(-(transform->size.x * 2), 0), transform->position);
-		SPAWNER.SpawnObject(support2);
-		supportPlanes.push_back(support2);
-	}
+	void IdleAnimation(); 
+	void RightAnimation(); 
+	void LeftAnimation(); 
+	void DeathAnimation();
+	void RollAnimation(); 
+	void LandingAnimation(); 
+	void TakeOffAnimation(); 
 
 	void CreateAnimations(); 
 
@@ -54,4 +46,7 @@ public:
 	Player(); 
 	void Update(float dt) override; 
 	virtual void OnCollisionEnter(Object* other) override;
+
+	void AddSupportPlanes();
+	inline void EnableDoubleFire() { doubleFire = true; }
 };

@@ -10,6 +10,8 @@
 #include "BigGreenPlane.h"
 
 #include "GreenPowerUp.h"
+#include "GrayPowerUp.h"
+#include "WhitePowerUp.h"
 
 class Gameplay : public Scene
 {

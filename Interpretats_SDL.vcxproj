@@ -218,6 +218,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GrayPowerUp.h" />
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
     <ClInclude Include="Source\GreenPowerUp.h" />
@@ -252,6 +253,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />
     <ClInclude Include="Source\SupportPlane.h" />
+    <ClInclude Include="Source\WhitePowerUp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

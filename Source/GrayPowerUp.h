@@ -1,10 +1,10 @@
 #pragma once
 #include "PowerUp.h"
 
-class GreenPowerUp : public PowerUp
+class GrayPowerUp : public PowerUp
 {
 public:
-	GreenPowerUp(Player* p)
+	GrayPowerUp(Player* p)
 		:PowerUp(p)
 	{
 		// TRANSFORM
@@ -14,19 +14,19 @@ public:
 		transform->scale = Vector2(1.5f, 1.5f);
 		transform->size = Vector2(16, 16);
 		// RENDER
-		renderer = new ImageRenderer(transform, Vector2(74, 140), Vector2(13, 10));
+		renderer = new ImageRenderer(transform, Vector2(57, 140), Vector2(13, 10));
 		// RIGID BODY 
 		rb = new RigidBody(transform);
 		Vector2 topLeft = transform->position - transform->size / 2;
 		rb->AddCollision(new AABB(topLeft, transform->size));
 		rb->SetLinearDrag(7);
 	}
-
 	virtual bool IsPlayer(Object* other) override
 	{
 		if (dynamic_cast<Player*>(other))
 		{
-			Destroy(); 
+			player->AddSupportPlanes();
+			Destroy();
 			return true;
 		}
 		return false;

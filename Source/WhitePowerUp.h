@@ -1,10 +1,10 @@
 #pragma once
 #include "PowerUp.h"
 
-class GreenPowerUp : public PowerUp
+class WhitePowerUp : public PowerUp
 {
 public:
-	GreenPowerUp(Player* p)
+	WhitePowerUp(Player* p)
 		:PowerUp(p)
 	{
 		// TRANSFORM
@@ -14,7 +14,7 @@ public:
 		transform->scale = Vector2(1.5f, 1.5f);
 		transform->size = Vector2(16, 16);
 		// RENDER
-		renderer = new ImageRenderer(transform, Vector2(74, 140), Vector2(13, 10));
+		renderer = new ImageRenderer(transform, Vector2(57, 140), Vector2(13, 10));
 		// RIGID BODY 
 		rb = new RigidBody(transform);
 		Vector2 topLeft = transform->position - transform->size / 2;
@@ -26,7 +26,8 @@ public:
 	{
 		if (dynamic_cast<Player*>(other))
 		{
-			Destroy(); 
+			player->AddSupportPlanes();
+			Destroy();
 			return true;
 		}
 		return false;

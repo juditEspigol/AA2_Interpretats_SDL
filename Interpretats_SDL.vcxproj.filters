@@ -138,6 +138,9 @@
     <ClCompile Include="Source\SeaBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SupportPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -232,6 +235,21 @@
     </ClInclude>
     <ClInclude Include="Source\ScoreManager.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SupportPlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GreenPowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrayPowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WhitePowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
