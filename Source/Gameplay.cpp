@@ -4,9 +4,15 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
-	Wave newWave(5, WaveType::SmallNormal, player->GetTransform());
+	Wave newWave(2, WaveType::SmallNormal, player->GetTransform());
+	Wave newWave2(5, WaveType::SmallRed, player->GetTransform());
+	Wave newWave3(8, WaveType::MediumYellow, player->GetTransform());
+	Wave newWave4(12, WaveType::BigGreen, player->GetTransform());
 
 	remainingWaves.push_back(newWave);
+	remainingWaves.push_back(newWave2);
+	remainingWaves.push_back(newWave3);
+	remainingWaves.push_back(newWave4);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));

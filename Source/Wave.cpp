@@ -7,7 +7,6 @@ Wave::Wave(float _startTime, WaveType _waveType, Transform* _playerTransform)
 	waveType = _waveType;
 	
 	isFinished = false;
-
 	
 	switch (waveType)
 	{
@@ -50,6 +49,14 @@ Wave::Wave(float _startTime, WaveType _waveType, Transform* _playerTransform)
 
 void Wave::Update(float _dt)
 {
+	for (int i = planesToSpawn.size() - 1; i >= 0; i--)
+	{
+		if (planesToSpawn[i]->IsPendingDestroy())
+		{
+			planesToSpawn.erase(planesToSpawn.begin() + i);
+		}
+	}
+
 	currentTime += _dt;
 
 	std::cout << currentTime << std::endl;
