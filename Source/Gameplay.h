@@ -4,10 +4,8 @@
 #include "Player.h"
 #include "SeaBackground.h"
 #include "IslandBackground.h"
-#include "SmallNormalPlane.h"
-#include "SmallRedPlane.h"
-#include "MediumYellowPlane.h"
-#include "BigGreenPlane.h"
+
+#include "Wave.h"
 
 #include "GreenPowerUp.h"
 #include "GrayPowerUp.h"
@@ -23,7 +21,9 @@ private:
 
 	Player* player;
 
-	std::vector<Object*> backGround;
+	std::vector<Wave> remainingWaves;
+	int sizeRemainingWaves;
+	int levelWaves;
 
 public:
 

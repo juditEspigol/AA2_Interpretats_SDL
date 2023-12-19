@@ -3,7 +3,7 @@
 PlayerBullet::PlayerBullet(Vector2 pos)
 {
 	isPendingDestroy = false;
-	speed = Vector2(0, -300); 
+	speed = Vector2(0, -500); 
 
 	// TRANSFORM
 	transform = new Transform();

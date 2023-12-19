@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Spawner.h"
 #include "WaveType.h"
 #include "MovementPattern.h"
 #include "EnemyPlane.h"
@@ -9,26 +8,28 @@
 #include "MediumYellowPlane.h"
 #include "BigGreenPlane.h"
 
-class Wave
+class Wave : public GameObject
 {
 private:
 
 	float startTime;
+	float currentTime;
 	WaveType waveType;
 	MovementPattern movementPattern;
 	int amount;
 	std::vector<EnemyPlane*> planesToSpawn;
-	bool isFinished;
 
-	
+	bool isFinished;
 
 public:
 
-	Wave(float _startTime, WaveType _waveType, int _amount);
+	Wave(float _startTime, WaveType _waveType, Transform* _playerTransform);
 
-	void Update(float dt, const Player* p, Spawner* spawner);
+	void Update(float _dt);
 
 	void Start();
 
 	bool IsFinished();
+
+	void SpawnPlanes();
 };

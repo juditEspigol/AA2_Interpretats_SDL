@@ -4,7 +4,7 @@
 class SmallNormalPlane : public EnemyPlane
 {
 public: 
-	enum MovementType { V, CURVE, STRAIGHT };
+	enum MovementType { V = 0, CURVE = 1, STRAIGHT = 2, COUNT = 3 };
 
 private:
 	MovementType currentMove;
