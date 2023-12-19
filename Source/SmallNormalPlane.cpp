@@ -18,8 +18,10 @@ SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transf
 	transform->angle = 180.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(16, 16);
+
 	// RENDER
 	renderer = new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15));
+
 	// RIGID BODY 
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;

@@ -1,38 +1,78 @@
 #include "Wave.h"
 
-Wave::Wave(float _startTime, WaveType _waveType, int _amount, Transform* _playerTransform)
+Wave::Wave(float _startTime, WaveType _waveType, Transform* _playerTransform)
 {
 	startTime = _startTime;
+	currentTime = 0;
 	waveType = _waveType;
-	amount = _amount;
+	
 	isFinished = false;
 
-
+	
 	switch (waveType)
 	{
 	case SmallNormal:
-		for (int i = 0; i < 4; i++)
+		amount = 4;
+		// This region is in a Specific Block because you can't initialize a variable in a switch only in one 
+		// case
 		{
-			SmallNormalPlane::MovementType type = (SmallNormalPlane::MovementType)(rand() % 3 + 1);
-			planesToSpawn.push_back(new SmallNormalPlane(type, true, _playerTransform));
+			//int type = (rand() % SmallNormalPlane::MovementType::COUNT + 1);
+
+			for (int i = 0; i < amount; i++)
+			{
+				planesToSpawn.push_back(new SmallNormalPlane(SmallNormalPlane::MovementType::CURVE, true, _playerTransform));
+			}
 		}
 		break;
 	case SmallRed:
-		for (int i = 0; i < 5; i++)
+		amount = 5;
+		for (int i = 0; i < amount; i++)
 		{
 			planesToSpawn.push_back(new SmallRedPlane(true, false, _playerTransform));
 		}
 		break;
 	case MediumYellow:
-		for (int i = 0; i < 2; i++)
+		amount = 2;
+		for (int i = 0; i < amount; i++)
 		{
 			planesToSpawn.push_back(new MediumYellowPlane(false, _playerTransform));
 		}
 		break;
 	case BigGreen:
+		amount = 1;
 		planesToSpawn.push_back(new BigGreenPlane(_playerTransform));
 		break;
 	default:
+		amount = 0;
 		break;
+	}
+}
+
+void Wave::Update(float _dt)
+{
+	currentTime += _dt;
+
+	std::cout << currentTime << std::endl;
+
+	if (currentTime >= startTime && !isFinished)
+	{
+		isFinished = true;
+		SpawnPlanes();
+	}
+
+	if (isFinished)
+	{
+		for (EnemyPlane* e : planesToSpawn)
+			e->Update(_dt);
+	}
+}
+
+void Wave::SpawnPlanes()
+{
+	int size = planesToSpawn.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		SPAWNER.SpawnObject(planesToSpawn[i]);
 	}
 }

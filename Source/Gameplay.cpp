@@ -4,10 +4,14 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
+	Wave newWave(5, WaveType::SmallNormal, player->GetTransform());
+
+	remainingWaves.push_back(newWave);
+
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
 	objects.push_back(player);  
-	objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player->GetTransform()));
+
 	//objects.push_back(new SmallRedPlane(false, true));
 	//objects.push_back(new MediumYellowPlane(false));
 	//objects.push_back(new MediumYellowPlane(true));
@@ -33,6 +37,7 @@ Gameplay::Gameplay()
 
 	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
+	sizeRemainingWaves = remainingWaves.size();
 }
 
 void Gameplay::OnEnter()
@@ -49,6 +54,13 @@ void Gameplay::Update(float dt)
 {
 
 	Scene::Update(dt); 
+
+	for (int i = 0; i < sizeRemainingWaves; i++)
+	{
+		 remainingWaves[i].Update(dt);
+	}
+
+	//remainingWaves[0].Update(dt);
 
 	isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
 
