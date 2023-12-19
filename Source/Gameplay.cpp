@@ -12,7 +12,10 @@ Gameplay::Gameplay()
 	//objects.push_back(new MediumYellowPlane(false));
 	//objects.push_back(new MediumYellowPlane(true));
 
-	objects.push_back(new GreenPowerUp());
+	//objects.push_back(new GreenPowerUp(player)); 
+	objects.push_back(new WhitePowerUp(player)); 
+	objects.push_back(new GreenPowerUp(player)); 
+	objects.push_back(new GrayPowerUp(player)); 
 
 
 	// TEXT OBJECTS

@@ -23,14 +23,6 @@ void EnemyPlane::Update(float dt)
 
 	lastFireTime += dt;  
 	Shoot(); 
-
-	if (transform->position.y > RENDERER.GetSizeWindow().y + transform->size.y
-		|| transform->position.y < -transform->size.y 
-		|| transform->position.x < -transform->size.x
-		|| transform->position.x > RENDERER.GetSizeWindow().x + transform->size.x)
-	{
-		Destroy();
-	}
 }
 
 void EnemyPlane::Shoot()
@@ -46,7 +38,10 @@ void EnemyPlane::Shoot()
 void EnemyPlane::OnCollisionEnter(Object* other)
 {
 	if (rb->CheckCollision(other->GetRigidBody()))
-	{
+	{	
+		if (IsOutOfWindow())
+			return;
+
 		if (IsPlayerBullet(other))
 			return;
 	}
@@ -62,7 +57,6 @@ void EnemyPlane::GetDamage(const int amount)
 		if (health <= 0)
 		{
 			SCORE.AddScore(score); 
-			SCORE.GetScoreUI()->GetRenderer()->NewText(std::to_string(SCORE.GetScore())); 
 			Destroy();
 		}
 	}
@@ -74,6 +68,18 @@ bool EnemyPlane::IsPlayerBullet(Object* other)
 	{
 		GetDamage(1);
 		other->Destroy();
+		return true;
+	}
+	return false;
+}
+bool EnemyPlane::IsOutOfWindow()
+{
+	if (transform->position.y > RENDERER.GetSizeWindow().y + transform->size.y
+		|| transform->position.y < -transform->size.y
+		|| transform->position.x < -transform->size.x
+		|| transform->position.x > RENDERER.GetSizeWindow().x + transform->size.x)
+	{
+		Destroy();
 		return true;
 	}
 	return false;

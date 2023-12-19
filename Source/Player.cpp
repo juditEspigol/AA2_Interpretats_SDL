@@ -3,6 +3,7 @@
 // OnCollisionEnter
 #include "EnemyPlane.h"
 #include "EnemyBullet.h"
+#include "GreenPowerUp.h"
 
 Player::Player()
 {
@@ -36,8 +37,6 @@ Player::Player()
 	Vector2 topLeft = transform->position - transform->size / 2;
 	rb->AddCollision(new AABB(topLeft, transform->size));
 	rb->SetLinearDrag(7);
-
-	AddSupportPlanes(); 
 }
 
 void Player::CreateAnimations()
@@ -69,8 +68,7 @@ void Player::Update(float dt)
 			supportPlanes.erase(supportPlanes.begin() + i);
 			continue;
 		}
-		int posX = transform->position.x - supportPlanes[i]->GetOffset().x;
-		supportPlanes[i]->SetPosition(Vector2(posX, transform->position.y));
+		supportPlanes[i]->LocatePlane(transform->position, dt); 
 	}
 
 	MovementInputs();
@@ -104,7 +102,6 @@ void Player::MovementInputs()
 		ChangeAnimation("Idle");
 	}
 
-
 	inputForce.Normalize();
 	inputForce = inputForce * force;
 	AddMovement(inputForce);
@@ -119,8 +116,8 @@ void Player::Shoot()
 		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 4, transform->position.y)));
 		if (doubleFire)
 		{
-			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 11, transform->position.y + 2)));
-			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 11, transform->position.y + 2)));
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 11, transform->position.y + 3)));
+			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 11, transform->position.y + 3)));
 		}
 		for (auto supportPlane : supportPlanes)
 		{
@@ -133,10 +130,6 @@ void Player::ShootInputs()
 {
 	if (IM.CheckKeyState(SDLK_SPACE, HOLD))
 		Shoot();
-}
-
-void Player::EnableDoubleFire()
-{
 }
 
 void Player::OnCollisionEnter(Object* other)
@@ -181,4 +174,22 @@ void Player::GetDamage(const int amount)
 		if (health <= 0)
 			Destroy();
 	}
+}
+
+void Player::AddSupportPlanes()
+{
+	if (!supportPlanes.empty())
+	{
+		for (auto supportPlane : supportPlanes)
+			supportPlane->Destroy();
+		supportPlanes.clear();
+	}
+
+	SupportPlane* support = new SupportPlane(true, transform->position);
+	SPAWNER.SpawnObject(support);
+	supportPlanes.push_back(support);
+
+	SupportPlane* support2 = new SupportPlane(false, transform->position);
+	SPAWNER.SpawnObject(support2);
+	supportPlanes.push_back(support2);
 }

@@ -6,18 +6,20 @@
 class SupportPlane : public GameObject
 {
 private:
-	Vector2 offset; 
+	bool isRight; 
+	Vector2 offset;
+
+	bool isLocated;
 
 public:
-	SupportPlane(Vector2 offset, Vector2 pos);
+	SupportPlane(bool right, Vector2 pos);
 
-	void Update(float dt) override; 
+	void Update(float dt) override;
+	void LocatePlane(Vector2 playerPosition, float dt);
+
 	virtual void OnCollisionEnter(Object* other) override;
-
 	bool IsEnemyPlane(Object* other);
 	bool IsEnemyBullet(Object* other);
 
 	void Shoot();
-
-	inline Vector2 GetOffset() const { return offset; }
 };

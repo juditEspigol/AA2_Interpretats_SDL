@@ -6,7 +6,7 @@ Wave::Wave(float _startTime, WaveType _waveType, int _amount)
 	waveType = _waveType;
 	amount = _amount;
 
-	switch (waveType)
+	/*switch (waveType)
 	{
 	case SmallNormal:
 		for (int i = 0; i < 4; i++)
@@ -32,5 +32,5 @@ Wave::Wave(float _startTime, WaveType _waveType, int _amount)
 		break;
 	default:
 		break;
-	}
+	}*/
 }

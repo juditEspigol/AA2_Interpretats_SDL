@@ -1,21 +1,20 @@
 #pragma once
 #include "GameObject.h"
+#include "Player.h"
 
 class PowerUp : public GameObject
 {
 protected:
+	Player* player; 
+	int speed; 
 
 public:
-	PowerUp()
-	{
+	PowerUp(Player* p); 
 
-	}
-	virtual void Update(float dt) override
-	{
-		GameObject::Update(dt); 
-	}
-	virtual void OnCollisionEnter(Object* object) override
-	{
+	void Update(float dt) override; 
+	void AddMovement(); 
 
-	}
+	virtual void OnCollisionEnter(Object* other) override; 
+	virtual bool IsPlayer(Object* other) = 0; 
+	bool IsOutOfWindow(); 
 };

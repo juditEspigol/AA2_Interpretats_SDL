@@ -11,7 +11,12 @@ private:
 	ScoreManager()
 		: score(0) 
 	{
-		scoreUI = new TextObject(std::to_string(score), 15, { 255, 255, 0 },
+		std::string printScore;
+		for (int i = std::to_string(score).length(); i < 6; i++)
+			printScore.append("0");
+		printScore.append(std::to_string(score));
+
+		scoreUI = new TextObject(printScore, 15, { 255, 255, 0 },
 			new Transform(Vector2(10, 30), 0, Vector2(1, 1), Vector2(15, 15), false),
 			"Resources/PixelPowerline-11Mg.ttf"); 
 	};
@@ -25,7 +30,19 @@ public:
 		return manager;
 	}
 
-	inline void AddScore(int amount) { score += amount; }
-	inline int GetScore() const { return score; }
+	inline void AddScore(int amount) 
+	{ 
+		// SUM SCORE
+		score += amount;
+
+		// UPDATE TEXT SCORE
+		std::string printScore; 
+		for (int i = std::to_string(score).length(); i < 6; i++)
+			printScore.append("0");
+ 		printScore.append(std::to_string(score));
+
+		// DRAW
+		scoreUI->GetRenderer()->NewText(printScore);
+	}
 	inline TextObject* GetScoreUI() const { return scoreUI; }
 };
