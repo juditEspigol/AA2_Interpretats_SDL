@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "ScoreManager.h"
+#include "LivesManager.h"
 #include "Player.h"
 #include "SeaBackground.h"
 #include "IslandBackground.h"

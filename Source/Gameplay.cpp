@@ -5,14 +5,14 @@ Gameplay::Gameplay()
 	player = new Player();
 
 	Wave newWave(2, WaveType::SmallNormal, player->GetTransform());
-	Wave newWave2(5, WaveType::SmallRed, player->GetTransform());
+	/*Wave newWave2(5, WaveType::SmallRed, player->GetTransform());
 	Wave newWave3(8, WaveType::MediumYellow, player->GetTransform());
 	Wave newWave4(12, WaveType::BigGreen, player->GetTransform());
 
-	remainingWaves.push_back(newWave);
 	remainingWaves.push_back(newWave2);
 	remainingWaves.push_back(newWave3);
-	remainingWaves.push_back(newWave4);
+	remainingWaves.push_back(newWave4);*/
+	remainingWaves.push_back(newWave);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -36,9 +36,7 @@ Gameplay::Gameplay()
 		new Transform(Vector2(10, 5), 0, Vector2(1, 1), Vector2(15, 15), false),
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// LIVES PLAYER
-	ui.push_back(new TextObject("000", 15, { 255, 0, 0 },
-		new Transform(Vector2(10, RENDERER.GetSizeWindow().y - 30), 0, Vector2(1, 1), Vector2(15, 15), false),
-		"Resources/PixelPowerline-11Mg.ttf"));
+	ui.push_back(LIVES_GAME.GetLivesUI());
 
 	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 

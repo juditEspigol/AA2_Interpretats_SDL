@@ -220,6 +220,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\LivesManager.h" />
     <ClInclude Include="Source\GrayPowerUp.h" />
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
@@ -259,6 +260,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\WaveType.h" />
     <ClInclude Include="Source\SupportPlane.h" />
     <ClInclude Include="Source\WhitePowerUp.h" />
+    <ClInclude Include="Source\StatesPlayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

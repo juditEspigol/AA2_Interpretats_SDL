@@ -44,6 +44,11 @@ public:
 		}
 	}
 
+	virtual bool LastFrame() override
+	{
+		return (currentFrame + 1) >= deltas.size() ? true : false;
+	}
+
 	virtual void Reset() override
 	{
 		currentFrame = 0; 

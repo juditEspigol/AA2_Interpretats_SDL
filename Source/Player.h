@@ -1,42 +1,51 @@
 #pragma once
-#include "Spawner.h"
 #include "GameObject.h"
-#include "RenderManager.h"
-#include "InputManager.h"
+
+// AGGREGATION
 #include "PlayerBullet.h"
-#include "AnimatedImageRenderer.h"
-#include "ScoreManager.h"
 #include "SupportPlane.h"
+#include "StatesPlayer.h"
+// USE
+#include "Spawner.h"
+#include "InputManager.h"
+#include "LivesManager.h"
+
 
 class Player : public GameObject
 {
 private:
-	bool isRolling;
-	float force; 
-
+	StatesPlayer statePlayer; 
 	int health; 
-	float iFrames, lastIFrames;
-
+	float force;
 	float fireTime, lastFireTime;
+
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
-	inline void AddMovement(const Vector2 dir) { rb->AddForce(dir); }
-	void MovementInputs(); 
+	void UpdateSupportPlanes(float dt);
 
-	void Shoot();
+	void CheckStatePlayer(); 
+
+	void MoveInputs(); 
+	void UpdateFlyingAnimation();
+	inline void AddMovement(const Vector2 direction) { rb->AddForce(direction); }
+
 	void ShootInputs(); 
+	void Shoot();
 
+	void Roll();
+	void RollAnimation();
+
+	void Death(); 
+	void DeathAnimation(); 
+
+	// COLLISIONS
 	bool IsEnemyPlane(Object* other);
 	bool IsEnemyBullet(Object* other);
+	bool IsOutOfWindow(); 
 
 	void GetDamage(const int amount);
 
-	void IdleAnimation(); 
-	void RightAnimation(); 
-	void LeftAnimation(); 
-	void DeathAnimation();
-	void RollAnimation(); 
 	void LandingAnimation(); 
 	void TakeOffAnimation(); 
 
@@ -49,4 +58,6 @@ public:
 
 	void AddSupportPlanes();
 	inline void EnableDoubleFire() { doubleFire = true; }
+
+	inline int GetHealth() const { return health; }
 };

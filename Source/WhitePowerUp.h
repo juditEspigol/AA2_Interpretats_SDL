@@ -23,7 +23,9 @@ public:
 		PowerUp::OnCollisionEnter(other); 
 
 		if (activated && dynamic_cast<EnemyPlane*>(other))
-			other->Destroy(); 
+		{
+			other->Destroy();
+		}
 	}
 
 	virtual bool IsPlayer(Object* other) override

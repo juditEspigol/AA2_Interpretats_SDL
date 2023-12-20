@@ -1,6 +1,9 @@
 #pragma once
 #include "Object.h"
+
+#include "RenderManager.h"
 #include "ImageRenderer.h"
+#include "AnimatedImageRenderer.h"
 
 class GameObject : public Object
 {
