@@ -9,4 +9,6 @@ public:
 	virtual void Reset() {}; 
 
 	virtual void Update(float dt) {}
+
+	virtual bool LastFrame() { return false; }
 };

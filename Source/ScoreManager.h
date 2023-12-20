@@ -1,5 +1,6 @@
 #pragma once
 #include "TextObject.h"
+
 #define SCORE ScoreManager::Instance()
 
 class ScoreManager

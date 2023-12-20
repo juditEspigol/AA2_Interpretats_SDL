@@ -58,8 +58,6 @@ void Wave::Update(float _dt)
 
 	currentTime += _dt;
 
-	std::cout << currentTime << std::endl;
-
 	if (currentTime >= startTime && !isFinished)
 	{
 		isFinished = true;
