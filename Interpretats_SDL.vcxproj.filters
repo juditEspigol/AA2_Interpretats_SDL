@@ -269,5 +269,11 @@
     <ClInclude Include="Source\MovementPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StatesPlayer.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LivesManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

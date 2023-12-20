@@ -8,6 +8,7 @@ EnemyPlane::EnemyPlane(int _hp, int _score, Transform* _playerTransform)
 	: health(_hp),  score(_score)
 {
 	isPendingDestroy = false; 
+	outOfWindow = false;
 
 	iFrames = 1.0f; 
 	lastIFrames = iFrames; 
@@ -56,7 +57,6 @@ void EnemyPlane::GetDamage(const int amount)
 
 		if (health <= 0)
 		{
-			SCORE.AddScore(score); 
 			Destroy();
 		}
 	}
@@ -79,6 +79,7 @@ bool EnemyPlane::IsOutOfWindow()
 		|| transform->position.x < -transform->size.x
 		|| transform->position.x > RENDERER.GetSizeWindow().x + transform->size.x)
 	{
+		outOfWindow = true; 
 		Destroy();
 		return true;
 	}

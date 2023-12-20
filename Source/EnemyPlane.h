@@ -8,6 +8,7 @@
 class EnemyPlane : public GameObject
 {
 protected:
+	bool outOfWindow; 
 
 	int health;
 	float iFrames, lastIFrames; 
@@ -35,4 +36,11 @@ public:
 	EnemyPlane(int hp, int score, Transform* transform);
 	virtual void Update(float dt) override; 
 	void OnCollisionEnter(Object* other) override; 
+
+	virtual void Destroy() override 
+	{
+		isPendingDestroy = true; 
+		if(!outOfWindow)
+			SCORE.AddScore(score);
+	}
 };
