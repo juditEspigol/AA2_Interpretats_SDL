@@ -2,6 +2,6 @@
 
 enum StateShipBackground
 {
-	START,
-	FINISHED
+	STARTING,
+	FINISHING
 };

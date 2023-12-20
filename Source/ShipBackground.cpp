@@ -5,9 +5,20 @@ void ShipBackGround::Movement()
 	rb->SetVeclocity(Vector2(0, speed));
 }
 
-ShipBackGround::ShipBackGround()
+ShipBackGround::ShipBackGround(Player* _player)
 {
 	speed = -16;
+
+	currentState = StateShipBackground::STARTING;
+
+	pointToStopAtStarting = 320;
+	pointToStopAtFinishing = -320;
+
+	player = _player;
+
+	timeToSetSail = 5;
+	currentTime = 0;
+	hasToSetSail = false;
 
 	//TRANSFORM
 	transform = new Transform();
@@ -24,21 +35,100 @@ ShipBackGround::ShipBackGround()
 	rb = new RigidBody(transform);
 }
 
-void ShipBackGround::Update(float dt)
+void ShipBackGround::Update(float _dt)
 {
-	Object::Update(dt);
-	Movement();
+	Object::Update(_dt);
 
-	if (transform->position.y <= 320)
+	switch (currentState)
 	{
-		speed = 0;
+	case STARTING:
+		Movement();
+		StopMoving();
+		if (hasToSetSail)
+			SetSail(_dt);
+		break;
+	case FINISHING:
+		Movement();
+		StopMoving();
+		if (hasToSetSail)
+			SetSail(_dt);
+		break;
+	default:
+		break;
 	}
 }
 
 void ShipBackGround::StopMoving()
 {
+	switch (currentState)
+	{
+	case STARTING:
+		if (transform->position.y <= pointToStopAtStarting)
+		{
+			speed = 0;
+			player->ChangeState(StatesPlayer::FLYING);
+			hasToSetSail = true;
+		}
+		break;
+	case FINISHING:
+		if (transform->position.y >= pointToStopAtFinishing)
+		{
+			speed = 0;
+			player->ChangeState(StatesPlayer::LANDED);
+			hasToSetSail = true;
+		}
+		break;
+	default:
+		break;
+	}
+	
+}
+
+void ShipBackGround::SetSail(float _dt)
+{
+	currentTime += _dt;
+	std::cout << currentTime << " " << timeToSetSail << std::endl;
+
+	if (currentTime >= timeToSetSail)
+	{
+		if (currentState == StateShipBackground::STARTING)
+			speed = 16;
+		else
+			speed = -16;
+	}
+
 	if (transform->position.y >= RENDERER.GetSizeWindow().y + 5)
 	{
-		rb->SetVeclocity(Vector2());
+		std::cout << "Get out of the window" << std::endl;
+		speed = 0;
+		ChangeState(StateShipBackground::FINISHING);
 	}
+}
+
+void ShipBackGround::ChangeState(StateShipBackground newState)
+{
+	switch (currentState)
+	{
+	case STARTING:
+		speed = 0;
+		hasToSetSail = false;
+		break;
+	case FINISHING:
+		break;
+	default:
+		break;
+	}
+
+	switch (newState)
+	{
+	case STARTING:
+		break;
+	case FINISHING:
+		transform->position.y = 0 - transform->size.y;
+		speed = 16;
+		break;
+	default:
+		break;
+	}
+	currentState = newState;
 }

@@ -16,7 +16,7 @@ Gameplay::Gameplay()
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
-	objects.push_back(new ShipBackGround());
+	objects.push_back(new ShipBackGround(player));
 	objects.push_back(player);  
 
 	//objects.push_back(new SmallRedPlane(false, true));
