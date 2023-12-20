@@ -8,7 +8,8 @@ Player::Player()
 {
 	isPendingDestroy = false;
 
-	statePlayer = FLYING;
+	currentState = LANDED;
+
 	health = LIVES_GAME.GetLives();
 	force = 40; 
 	fireTime = 0.15f;
@@ -18,7 +19,7 @@ Player::Player()
 
 	// TRANSFORM
 	transform = new Transform();
-	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y * 0.75);
+	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y + 155);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(16, 16);
@@ -57,14 +58,12 @@ void Player::Update(float dt)
 	GameObject::Update(dt); 
 	UpdateSupportPlanes(dt);
 
-	lastFireTime += dt;
-
 	CheckStatePlayer(); 
 }
 
 void Player::CheckStatePlayer()
 {
-	switch (statePlayer)
+	switch (currentState)
 	{
 	case FLYING:
 		MoveInputs();
@@ -73,7 +72,7 @@ void Player::CheckStatePlayer()
 		break;
 
 	case LANDED:
-		
+		rb->SetVeclocity(Vector2(0, -18));
 		break;
 
 	case ROLLING:
@@ -88,6 +87,44 @@ void Player::CheckStatePlayer()
 	default:
 		break;
 	}
+}
+
+void Player::ChangeState(const StatesPlayer newState)
+{
+	switch (currentState)
+	{
+	case FLYING:
+		break;
+	case LANDED:
+		rb->SetVeclocity(Vector2());
+		break;
+	case ROLLING:
+		break;
+	case DEATH:
+		break;
+	case COUNT:
+		break;
+	default:
+		break;
+	}
+
+	switch (newState)
+	{
+	case FLYING:
+		break;
+	case LANDED:
+		break;
+	case ROLLING:
+		break;
+	case DEATH:
+		break;
+	case COUNT:
+		break;
+	default:
+		break;
+	}
+
+	currentState = newState;
 }
 
 void Player::MoveInputs() 
@@ -108,7 +145,7 @@ void Player::MoveInputs()
 
 	//ROLL
 	if (IM.CheckKeyState(SDLK_x, PRESSED))
-		statePlayer = ROLLING; 
+		currentState = ROLLING; 
 
 	inputForce.Normalize();
 	inputForce = inputForce * force;
@@ -173,7 +210,7 @@ void Player::Death()
 		if (health <= 0)
 			Destroy();
 
-		statePlayer = FLYING;
+		currentState = FLYING;
 	}
 }
 void Player::DeathAnimation()
@@ -194,7 +231,7 @@ void Player::Roll()
 {
 	ChangeAnimation("Roll");
 	if (renderer->LastFrame())
-		statePlayer = FLYING;
+		currentState = FLYING;
 }
 void Player::RollAnimation()
 {
@@ -243,12 +280,12 @@ bool Player::IsEnemyBullet(Object* other)
 
 void Player::GetDamage(const int amount)
 {
-	if (statePlayer == FLYING)
+	if (currentState == FLYING)
 	{
 		health -= amount;
 		LIVES_GAME.SubstractLives(1); 
 	}
-	statePlayer = DEATH;
+	currentState = DEATH;
 }
 
 void Player::AddSupportPlanes()

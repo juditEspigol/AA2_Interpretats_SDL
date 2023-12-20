@@ -11,6 +11,7 @@
 #include "GreenPowerUp.h"
 #include "GrayPowerUp.h"
 #include "WhitePowerUp.h"
+#include "ShipBackground.h"
 
 class Gameplay : public Scene
 {

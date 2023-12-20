@@ -9,13 +9,14 @@ Gameplay::Gameplay()
 	Wave newWave3(8, WaveType::MediumYellow, player->GetTransform());
 	Wave newWave4(12, WaveType::BigGreen, player->GetTransform());
 
+	/*remainingWaves.push_back(newWave);
 	remainingWaves.push_back(newWave2);
 	remainingWaves.push_back(newWave3);
 	remainingWaves.push_back(newWave4);*/
-	remainingWaves.push_back(newWave);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
+	objects.push_back(new ShipBackGround(player));
 	objects.push_back(player);  
 
 	//objects.push_back(new SmallRedPlane(false, true));

@@ -14,7 +14,7 @@
 class Player : public GameObject
 {
 private:
-	StatesPlayer statePlayer; 
+	StatesPlayer currentState; 
 	int health; 
 	float force;
 	float fireTime, lastFireTime;
@@ -22,9 +22,13 @@ private:
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
+
+
 	void UpdateSupportPlanes(float dt);
 
 	void CheckStatePlayer(); 
+
+	
 
 	void MoveInputs(); 
 	void UpdateFlyingAnimation();
@@ -49,7 +53,7 @@ private:
 	void LandingAnimation(); 
 	void TakeOffAnimation(); 
 
-	void CreateAnimations(); 
+	void CreateAnimations();
 
 public:
 	Player(); 
@@ -58,6 +62,8 @@ public:
 
 	void AddSupportPlanes();
 	inline void EnableDoubleFire() { doubleFire = true; }
+
+	void ChangeState(const StatesPlayer newState);
 
 	inline int GetHealth() const { return health; }
 };
