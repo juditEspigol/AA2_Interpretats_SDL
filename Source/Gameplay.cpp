@@ -21,8 +21,10 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	//objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, false, player->GetTransform()));
-	objects.push_back(new SmallRedPlane(false, false, player->GetTransform()));
-	//objects.push_back(new MediumYellowPlane(true));
+	//objects.push_back(new SmallRedPlane(true, true, player->GetTransform()));
+	//objects.push_back(new MediumYellowPlane(false, player->GetTransform()));
+	//objects.push_back(new MediumYellowPlane(true, player->GetTransform()));
+	objects.push_back(new BigGreenPlane(player->GetTransform()));
 
 	//objects.push_back(new GreenPowerUp(player)); 
 	objects.push_back(new WhitePowerUp(player)); 

@@ -5,10 +5,14 @@ class MediumYellowPlane : public EnemyPlane
 {
 private:
 	bool isRight;
-	bool isLooping;
 	float startLoop; 
 
+	Vector2 pixelsPorSecond;
+	Vector2 radiusLoop;
+
 	virtual void UpdateMovementPattern(float dt);
+
+	Vector2 Loop(float dt, int cosSigne, int sinSigne);
 
 public:
 	MediumYellowPlane(bool _isRight, Transform* _playerTransform);

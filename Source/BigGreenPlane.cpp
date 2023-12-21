@@ -8,10 +8,10 @@ BigGreenPlane::BigGreenPlane(Transform* _playerTransform)
 
 	// TRANSFORM
 	transform = new Transform();
-	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.75, RENDERER.GetSizeWindow().y * 0.5);
-	transform->angle = 180.0f;
-	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(48, 48);
+	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.75, RENDERER.GetSizeWindow().y + transform->size.y * 0.5);
+	transform->angle = 0.0f;
+	transform->scale = Vector2(2.0f, 2.0f);
 	// RENDER
 	renderer = new ImageRenderer(transform, Vector2(7, 323), Vector2(63, 48));
 	// RIGID BODY 
@@ -23,10 +23,23 @@ BigGreenPlane::BigGreenPlane(Transform* _playerTransform)
 
 void BigGreenPlane::Update(float dt)
 {
-	EnemyPlane::Update(dt);
+	EnemyPlane::Update(dt); 
+
+	UpdateMovementPattern(dt); 
 }
 
 void BigGreenPlane::UpdateMovementPattern(float dt)
 {
+	Vector2 direction = Vector2(); 
 
+	if (movementTime <= stopTime)
+	{
+		direction = direction - pixelsPorSecond;
+		if (movementTime >= stopTime + timeShooting)
+		{
+			movementTime = 0;
+			Shoot(); 
+		}
+	}
+	transform->position = transform->position + direction;
 }

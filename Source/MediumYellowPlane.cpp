@@ -6,17 +6,17 @@ MediumYellowPlane::MediumYellowPlane(bool _isRight, Transform* _playerTransform)
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
 	speed = Vector2(20, 20); 
-	isLooping = false; 
 	startLoop = 1.5f; 
+	pixelsPorSecond = Vector2(0, 3); 
+	radiusLoop = Vector2(7, 3);
 
 	// TRANSFORM
 	transform = new Transform();
 	transform->size = Vector2(32, 32);
-	//int randomPosX = 
 	if(isRight)
-		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.25, -transform->size.y * 0.75);
+		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5 - (18.7248 * radiusLoop.x), -transform->size.y * 0.75);
 	else
-		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.75, -transform->size.y * 0.75);
+		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5 + (18.7248 * radiusLoop.x), -transform->size.y * 0.75);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	// RENDER
@@ -32,42 +32,39 @@ void MediumYellowPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
 
-	movementTime += dt;
-
 	UpdateMovementPattern(dt);
 }
 
 void MediumYellowPlane::UpdateMovementPattern(float dt)
 {
-	Vector2 force = Vector2();
+	Vector2 direction = pixelsPorSecond;
 
 	// Check if start loop
-	if (movementTime >= startLoop && movementTime <= startLoop + 3.5f) // 1 loop = 4s 
-		isLooping = true;
-	else
-		isLooping = false;
-
-	//Apply force
-	if (isLooping)
+	if (movementTime <= startLoop) // GOING DOWN
+	{
+		direction.y *= 1; 
+	}
+	else if (movementTime >= startLoop && movementTime <= (startLoop + 3.0f)) // 2s = 1 loop
 	{
 		if (isRight)
-		{
-			force = Vector2(-cos(movementTime * 3.1416 * 0.5), sin(movementTime * 3.1416 * 0.5) * 0.25);
-			SetRotation(GetRotation() - (90 * dt) * 1.15);
-		}
+			direction = Loop(dt, 1, -1); 
 		else
-		{
-			force = Vector2(cos(movementTime * 3.1416 * 0.5), sin(movementTime * 3.1416 * 0.5) * 0.25);
-			SetRotation(GetRotation() + (90 * dt) * 1.15);
-		}
+			direction = Loop(dt, -1, -1);
 	}
-	else
+	else // GOING UP
 	{
-		SetRotation(0.0f); 
-		force.y += 1;
+		direction.y *= -1;
 	}
 
-	force.Normalize();
-	force = force * speed;
-	rb->AddForce(force);
+	transform->position = transform->position + direction;
+}
+
+Vector2 MediumYellowPlane::Loop(float dt, int cosSigne, int sinSigne)
+{
+	Vector2 pos = Vector2();
+	pos = Vector2(cosSigne * cos(movementTime * PI) * radiusLoop.x,
+		sinSigne * sin(movementTime * PI) * radiusLoop.y);
+	SetRotation(GetRotation() - cosSigne * 180 * dt);
+
+	return pos;
 }

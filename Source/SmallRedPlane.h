@@ -7,11 +7,10 @@ private:
 	bool isRight; 
 	bool isUp; 
 
-	bool isLooping;
 	float startLoop; 
 
 	Vector2 pixelsPorSecond = Vector2(3, 0); 
-	float radiusLoop = 10; 
+	float radiusLoop = 3; 
 
 	virtual void UpdateMovementPattern(float dt);
 

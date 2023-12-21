@@ -6,7 +6,6 @@ SmallRedPlane::SmallRedPlane(bool _isRight, bool _isUp, Transform* _playerTransf
 	fireTime = 1.10f;
 	lastFireTime = 0.0f;
 	speed = Vector2(20, 20); 
-	isLooping = false;
 	startLoop = 2.0f; 
 
 	// TRANSFORM
@@ -43,26 +42,19 @@ void SmallRedPlane::Update(float dt)
 
 void SmallRedPlane::UpdateMovementPattern(float dt)
 {
-
-	// Check if start loop
-	if (movementTime >= startLoop && movementTime <= startLoop + 1.0f) // 1 loop = 1s 
-		isLooping = true;
-	else
-		isLooping = false;
-
 	Vector2 direction = Vector2();
 
-	if (isRight)
+	if (movementTime >= startLoop && movementTime <= (startLoop + 2.0f))
 	{
-		if (isLooping)
-			direction = Loop(dt, -1, 1);
+		if (isRight)
+			direction = Loop(dt, 1, -1);
 		else
-			direction = Vector2(pixelsPorSecond.x, 0); 
+			direction = Loop(dt, -1, 1);
 	}
 	else
 	{
-		if (isLooping)
-			direction = Loop(dt, 1, 1);
+		if(isRight)
+			direction = Vector2(pixelsPorSecond.x, 0);
 		else
 			direction = Vector2(-pixelsPorSecond.x, 0);
 	}
@@ -75,13 +67,13 @@ Vector2 SmallRedPlane::Loop(float dt, int cosSigne, int sinSigne)
 	Vector2 pos = Vector2();
 	if (isUp)
 	{
-		pos = Vector2( cosSigne * cos(movementTime * PI * 2.0) * radiusLoop, sinSigne * sin(movementTime * PI * 2.0) * radiusLoop);
-		SetRotation(GetRotation() - 360 * dt);
+		pos = Vector2( cosSigne * cos(movementTime * PI) * radiusLoop, sinSigne * sin(movementTime * PI) * radiusLoop);
+		SetRotation(GetRotation() - 180 * dt);
 	}
 	else
 	{
-		pos = Vector2(cosSigne * cos(movementTime * 3.1416 * 2.0) * radiusLoop, -sinSigne * sin(movementTime * 3.1416 * 2.0) * radiusLoop);
-		SetRotation(GetRotation() + 360 * dt);
+		pos = Vector2(cosSigne * cos(movementTime * PI) * radiusLoop, -sinSigne * sin(movementTime * PI) * radiusLoop);
+		SetRotation(GetRotation() + 180 * dt);
 	}
 	return pos;
 }
