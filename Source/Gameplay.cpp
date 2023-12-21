@@ -4,19 +4,19 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
-	Wave newWave(2, WaveType::SmallNormal, player->GetTransform());
-	/*Wave newWave2(5, WaveType::SmallRed, player->GetTransform());
-	Wave newWave3(8, WaveType::MediumYellow, player->GetTransform());
-	Wave newWave4(12, WaveType::BigGreen, player->GetTransform());
+	Wave newWave(2, WaveType::SmallNormal, player);
+	Wave newWave2(7, WaveType::SmallRed, player);
+	Wave newWave3(13, WaveType::MediumYellow, player);
+	Wave newWave4(20, WaveType::BigGreen, player);
 
-	/*remainingWaves.push_back(newWave);
+	remainingWaves.push_back(newWave);
 	remainingWaves.push_back(newWave2);
 	remainingWaves.push_back(newWave3);
-	remainingWaves.push_back(newWave4);*/
+	remainingWaves.push_back(newWave4);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
-	objects.push_back(new ShipBackGround(player));
+	//objects.push_back(new ShipBackGround(player));
 	objects.push_back(player);  
 
 	//objects.push_back(new SmallRedPlane(false, true));

@@ -17,4 +17,6 @@ public:
 	virtual void OnCollisionEnter(Object* other) override; 
 	virtual bool IsPlayer(Object* other) = 0; 
 	bool IsOutOfWindow(); 
+
+	inline void SetPosition(const Vector2 pos) { transform->position = pos; }
 };
