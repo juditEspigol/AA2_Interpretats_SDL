@@ -4,10 +4,12 @@
 class BigGreenPlane : public EnemyPlane
 {
 private:
-	bool isGoingUp;
-	Vector2 targetPos;
+	float timeToStop; 
+	float timeShooting; 
 
 	virtual void UpdateMovementPattern(float dt);
+
+	void DeathAnimation() override; 
 
 public:
 	BigGreenPlane(Transform* _playerTransform);

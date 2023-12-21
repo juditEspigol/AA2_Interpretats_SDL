@@ -3,11 +3,10 @@
 SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform)
 	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight)
 {
-	fireTime = 1.00f;
-	lastFireTime = 0.0f;
-	speed = Vector2(12, 22); 
+	pixelsPorSecond = Vector2(2, 3);
 
-	movementTime = 0.0f; 
+	changeMoveTime = 1.5f;
+	radiusLoop = 4;
 
 	// TRANSFORM
 	transform = new Transform();
@@ -20,66 +19,168 @@ SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transf
 	transform->size = Vector2(16, 16);
 
 	// RENDER
-	renderer = new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15));
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15)));
+	DeathAnimation(); 
+	renderer = renderers["Idle"];
 
 	// RIGID BODY 
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;
 	rb->AddCollision(new AABB(topLeft, transform->size));
-	rb->SetLinearDrag(7);
 }
 
 void SmallNormalPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
 
-	movementTime += dt; 
-	UpdateMovementPattern(dt); 
+	if (isAlive)
+	{
+		Shoot();
+		UpdateMovementPattern(dt);
+	}
+	else
+		DeathState(); 
 }
 
 void SmallNormalPlane::UpdateMovementPattern(float dt)
 {
-	Vector2 force = Vector2(); 
-
 	switch (currentMove)
 	{
 	case SmallNormalPlane::V:
 
-		if (isRight)
-			force.x += 1; 
-		else
-			force.x -= 1;
+		MovementV(dt); 
 
-		if (movementTime >= 2.0)
-			force.y -= 1; 
-		else
-			force.y += 1;
 		break;
+
 	case SmallNormalPlane::CURVE:
+	
+		MovementCurve(dt); 
 
-		if (movementTime >= 1.5f && movementTime <= 2.1f)
-		{
-			force = Vector2(cos(movementTime * 3.1416), -sin(movementTime * 3.1416));
-			SetRotation(GetRotation() - (90 * dt) * 1.75);
-		}
-		else if (movementTime <= 1.5f)
-		{
-			force.y += speed.y;
-		}
-		else
-		{
-			force.x += speed.y;
-			SetRotation(90); 
-		}
 		break;
+
 	case SmallNormalPlane::STRAIGHT:
-		force.y += 1;
+
+		MovementStraight(dt); 
+
 		break;
+
 	default:
 		break;
 	}
+}
 
-	force.Normalize();
-	force = force * speed;
-	rb->AddForce(force);
+void SmallNormalPlane::MovementV(float dt)
+{
+	Vector2 direction = pixelsPorSecond;
+
+	if (isRight)
+		direction.x *= 1;
+	else
+		direction.x *= -1;
+
+	if (movementTime >= changeMoveTime)
+	{
+		direction.y *= -1;
+		if (isRight)
+		{
+			if (GetRotation() > 45)
+				SetRotation(GetRotation() - (360 * dt));
+			else
+				SetRotation(45);
+		}
+		else
+		{
+			if (GetRotation() < 315)
+				SetRotation(GetRotation() + (360 * dt));
+			else
+				SetRotation(315);
+		}
+	}
+	else
+	{
+		if(isRight)
+			SetRotation(135);
+		else
+			SetRotation(225);
+		direction.y *= 1;
+	}
+
+	transform->position = transform->position + direction; 
+}
+
+void SmallNormalPlane::MovementCurve(float dt)
+{
+	Vector2 direction = pixelsPorSecond;
+
+	if (movementTime <= changeMoveTime) // GO STRAIGHT DOWN
+	{
+		if (isRight)
+		{
+			direction.x *= 1;
+			SetRotation(135);
+		}
+		else
+		{
+			direction.x *= -1;
+			SetRotation(225);
+		}
+	}
+	else if (movementTime >= changeMoveTime && movementTime <= (changeMoveTime + 0.5f)) // CURVE
+	{
+		if (isRight)
+			direction = Loop(dt, -1, -1); 
+		else
+			direction = Loop(dt, 1, -1);
+	}
+	else // CONTINUE STRAIGHT
+	{
+		if (!isRight)
+			direction.x *= 1;
+		else
+			direction.x *= -1;
+	}
+
+	transform->position = transform->position + direction;
+}
+
+void SmallNormalPlane::MovementStraight(float dt)
+{
+	Vector2 direction = pixelsPorSecond;
+
+	if (isRight)
+	{
+		direction.x *= 1;
+		SetRotation(135);
+	}
+	else
+	{
+		direction.x *= -1;
+		SetRotation(225);
+	}
+	direction.y *= 1;
+
+	transform->position = transform->position + direction;
+}
+
+Vector2 SmallNormalPlane::Loop(float dt, int cosSigne, int sinSigne)
+{
+	Vector2 pos = Vector2();
+	pos = Vector2(cosSigne * cos(movementTime * M_PI) * radiusLoop,
+		sinSigne * sin(movementTime * M_PI) * radiusLoop);
+	SetRotation(GetRotation() - cosSigne * 180 * dt);
+
+	return pos;
+}
+
+void SmallNormalPlane::DeathAnimation()
+{
+	std::vector<Vector2> deathDeltas{
+		Vector2(0, 0),
+		Vector2(20, 0),
+		Vector2(20 * 2, 0),
+		Vector2(20 * 3, 0),
+		Vector2(20 * 4, 0),
+		Vector2(20 * 5, 0)
+	};
+	renderers.emplace("Death", new AnimatedImageRenderer(transform, Vector2(157, 80), Vector2(20, 20), deathDeltas, false, 20));
 }

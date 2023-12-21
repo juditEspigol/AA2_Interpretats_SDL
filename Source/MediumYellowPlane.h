@@ -5,10 +5,15 @@ class MediumYellowPlane : public EnemyPlane
 {
 private:
 	bool isRight;
-	bool isLooping;
 	float startLoop; 
 
+	Vector2 radiusLoop;
+
 	virtual void UpdateMovementPattern(float dt);
+
+	Vector2 Loop(float dt, int cosSigne, int sinSigne);
+
+	void DeathAnimation() override; 
 
 public:
 	MediumYellowPlane(bool _isRight, Transform* _playerTransform);

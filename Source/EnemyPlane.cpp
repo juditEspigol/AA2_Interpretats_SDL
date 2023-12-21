@@ -1,29 +1,26 @@
 #include "EnemyPlane.h"
-#include "ScoreManager.h"
-
-// OnCollisionEnter
-#include "PlayerBullet.h"
 
 EnemyPlane::EnemyPlane(int _hp, int _score, Transform* _playerTransform)
-	: health(_hp),  score(_score)
+	: health(_hp),  score(_score), playerTransform(_playerTransform)
 {
 	isPendingDestroy = false; 
-	outOfWindow = false;
+	isAlive = true; 
 
-	iFrames = 1.0f; 
-	lastIFrames = iFrames; 
+	fireTime = 1.00f;
+	lastFireTime = 0.0f;
 
-	playerTransform = _playerTransform;
+	movementTime = 0.0f; 
 }
 
 void EnemyPlane::Update(float dt)
 {
-	Object::Update(dt);
-
-	lastIFrames += dt;  
+	GameObject::Update(dt);
 
 	lastFireTime += dt;  
-	Shoot(); 
+	movementTime += dt;
+
+	if (renderer == renderers["Death"] && renderer->LastFrame())
+		Destroy(); 
 }
 
 void EnemyPlane::Shoot()
@@ -31,15 +28,27 @@ void EnemyPlane::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
-
 		SPAWNER.SpawnObject(new EnemyBullet(transform->position, playerTransform->position));
 	}
+}
+
+void EnemyPlane::DeathState()
+{	
+	Destroy();
+}
+
+void EnemyPlane::GetDamage(const int amount)
+{
+	health -= amount;
+
+	if (health <= 0 )
+		isAlive = false; 
 }
 
 void EnemyPlane::OnCollisionEnter(Object* other)
 {
 	if (rb->CheckCollision(other->GetRigidBody()))
-	{	
+	{
 		if (IsOutOfWindow())
 			return;
 
@@ -47,21 +56,6 @@ void EnemyPlane::OnCollisionEnter(Object* other)
 			return;
 	}
 }
-
-void EnemyPlane::GetDamage(const int amount)
-{
-	if (lastIFrames >= iFrames)
-	{
-		lastIFrames = 0;
-		health -= amount;
-
-		if (health <= 0)
-		{
-			Destroy();
-		}
-	}
-}
-
 bool EnemyPlane::IsPlayerBullet(Object* other)
 {
 	if (dynamic_cast<PlayerBullet*>(other))
@@ -79,8 +73,7 @@ bool EnemyPlane::IsOutOfWindow()
 		|| transform->position.x < -transform->size.x
 		|| transform->position.x > RENDERER.GetSizeWindow().x + transform->size.x)
 	{
-		outOfWindow = true; 
-		Destroy();
+		isPendingDestroy = true;
 		return true;
 	}
 	return false;

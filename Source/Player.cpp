@@ -59,6 +59,8 @@ void Player::Update(float dt)
 	UpdateSupportPlanes(dt);
 	lastFireTime += dt; 
 
+	lastFireTime += dt; 
+
 	CheckStatePlayer(); 
 }
 
