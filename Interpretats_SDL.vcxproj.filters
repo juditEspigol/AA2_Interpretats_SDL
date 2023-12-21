@@ -150,6 +150,12 @@
     <ClCompile Include="Source\Wave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ShipBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -273,6 +279,15 @@
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
     </ClInclude>
     <ClInclude Include="Source\LivesManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShipBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StatesShipBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelLoader.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>

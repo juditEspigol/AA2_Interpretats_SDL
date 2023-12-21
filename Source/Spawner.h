@@ -14,6 +14,7 @@ private:
 	Spawner& operator =(const Spawner&) = delete;
 
 public:
+
 	inline static Spawner& Instance()
 	{
 		static Spawner manager;

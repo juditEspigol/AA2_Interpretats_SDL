@@ -193,6 +193,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\EnemyPlane.cpp" />
     <ClCompile Include="Source\Gameplay.cpp" />
     <ClCompile Include="Source\IslandBackground.cpp" />
+    <ClCompile Include="Source\LevelLoader.cpp" />
     <ClCompile Include="Source\MediumYellowPlane.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerBullet.cpp" />
@@ -221,6 +222,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\LevelLoader.h" />
     <ClInclude Include="Source\LivesManager.h" />
     <ClInclude Include="Source\GrayPowerUp.h" />
     <ClInclude Include="Source\BigGreenPlane.h" />

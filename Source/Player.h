@@ -5,7 +5,7 @@
 #include "PlayerBullet.h"
 #include "SupportPlane.h"
 #include "StatesPlayer.h"
-// USE
+// DEPENDENCY
 #include "Spawner.h"
 #include "InputManager.h"
 #include "LivesManager.h"
