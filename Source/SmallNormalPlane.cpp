@@ -1,13 +1,11 @@
 #include "SmallNormalPlane.h"
 
 SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform)
-	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight)
+	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight), timeToGoUp(2.0f), pixelsPorSecond(Vector2(1, 3))
 {
-	fireTime = 1.00f;
-	lastFireTime = 0.0f;
-	speed = Vector2(12, 22); 
 
-	movementTime = 0.0f; 
+	timeToCurve = 1.5f; 
+	radioCurve = 5; 
 
 	// TRANSFORM
 	transform = new Transform();
@@ -33,53 +31,82 @@ void SmallNormalPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
 
-	movementTime += dt; 
+	Shoot(); 
+
 	UpdateMovementPattern(dt); 
 }
 
 void SmallNormalPlane::UpdateMovementPattern(float dt)
 {
-	Vector2 force = Vector2(); 
-
 	switch (currentMove)
 	{
 	case SmallNormalPlane::V:
 
-		if (isRight)
-			force.x += 1; 
-		else
-			force.x -= 1;
-
-		if (movementTime >= 2.0)
-			force.y -= 1; 
-		else
-			force.y += 1;
+		MovementV(); 
 		break;
 	case SmallNormalPlane::CURVE:
-
-		if (movementTime >= 1.5f && movementTime <= 2.1f)
-		{
-			force = Vector2(cos(movementTime * 3.1416), -sin(movementTime * 3.1416));
-			SetRotation(GetRotation() - (90 * dt) * 1.75);
-		}
-		else if (movementTime <= 1.5f)
-		{
-			force.y += speed.y;
-		}
-		else
-		{
-			force.x += speed.y;
-			SetRotation(90); 
-		}
+		
+		MovementCurve(dt); 
 		break;
 	case SmallNormalPlane::STRAIGHT:
-		force.y += 1;
+
+		MovementStraight(); 
 		break;
 	default:
 		break;
 	}
+}
 
-	force.Normalize();
-	force = force * speed;
-	rb->AddForce(force);
+void SmallNormalPlane::MovementV()
+{
+	Vector2 direction = pixelsPorSecond;
+
+	if (isRight)
+		direction.x *= 1;
+	else
+		direction.x *= -1;
+
+	if (movementTime >= timeToGoUp)
+		direction.y *= -1;
+	else
+		direction.y *= 1;
+
+	transform->position = transform->position + direction; 
+}
+
+void SmallNormalPlane::MovementCurve(float dt)
+{
+	Vector2 direction = Vector2();
+
+	if (movementTime <= timeToCurve) // GO STRAIGHT DOWN
+	{
+		direction = Vector2(0, pixelsPorSecond.y); 
+	}
+	else if (movementTime >= timeToCurve && movementTime <= (timeToCurve + 0.5)) // CURVE // 0.5 -> duration 1/4 of the loop
+	{
+		if (isRight)
+		{
+			direction = Vector2(cos(movementTime * PI) * radioCurve, -sin(movementTime * PI) * radioCurve); // 2 second == 1 loop
+			SetRotation(GetRotation() - (180 * dt));
+		}
+		else
+		{
+			direction = Vector2(-cos(movementTime * PI) * radioCurve, -sin(movementTime * PI) * radioCurve); // 2 second == 1 loop
+			SetRotation(GetRotation() + (180 * dt));
+		}
+	}
+	else // GO STRAIGHT LEFT/RIGHT
+	{
+		if (isRight)
+			direction = Vector2(pixelsPorSecond.y, 0);
+		else
+			direction = Vector2(-pixelsPorSecond.y, 0);
+	}
+
+	transform->position = transform->position + direction;
+}
+
+void SmallNormalPlane::MovementStraight()
+{
+	transform->position = transform->position + Vector2(0, pixelsPorSecond.y);
 }

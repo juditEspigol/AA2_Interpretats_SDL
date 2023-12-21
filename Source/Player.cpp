@@ -8,7 +8,7 @@ Player::Player()
 {
 	isPendingDestroy = false;
 
-	currentState = LANDED;
+	currentState = FLYING;
 
 	health = LIVES_GAME.GetLives();
 	force = 40; 
@@ -57,6 +57,8 @@ void Player::Update(float dt)
 {
 	GameObject::Update(dt); 
 	UpdateSupportPlanes(dt);
+
+	lastFireTime += dt; 
 
 	CheckStatePlayer(); 
 }

@@ -37,7 +37,7 @@ public:
 		score += amount;
 
 		// UPDATE TEXT SCORE
-		std::string printScore; 
+ 		std::string printScore; 
 		for (int i = std::to_string(score).length(); i < 6; i++)
 			printScore.append("0");
  		printScore.append(std::to_string(score));

@@ -5,25 +5,22 @@
 #include "Spawner.h"
 #include "ScoreManager.h"
 
+const float PI = 3.14159265359;
+
 class EnemyPlane : public GameObject
 {
 protected:
-	bool outOfWindow; 
-
 	int health;
-	float iFrames, lastIFrames; 
 	int score;
+	Transform* playerTransform;
 
-	float lastFireTime; 
-	float fireTime; 
+	float lastFireTime, fireTime; 
 	Vector2 speed; 
 
 	int movementStage;
 	float movementTime;
 
-	Transform* playerTransform;
-
-	virtual void Shoot(); 
+	void Shoot(); 
 
 	bool IsPlayerBullet(Object* other); 
 	bool IsOutOfWindow(); 
@@ -31,6 +28,9 @@ protected:
 	void GetDamage(const int amount);
 
 	virtual void UpdateMovementPattern(float dt) = 0; 
+
+	//ANIMATIONS
+	virtual void DeathAnimation() {};
 
 public:
 	EnemyPlane(int hp, int score, Transform* transform);
@@ -40,7 +40,6 @@ public:
 	virtual void Destroy() override 
 	{
 		isPendingDestroy = true; 
-		if(!outOfWindow)
-			SCORE.AddScore(score);
+		SCORE.AddScore(score);
 	}
 };

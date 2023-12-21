@@ -38,59 +38,50 @@ void SmallRedPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt); 
 
-	movementTime += dt; 
-
 	UpdateMovementPattern(dt);
 }
 
 void SmallRedPlane::UpdateMovementPattern(float dt)
 {
-	Vector2 force = Vector2();
 
 	// Check if start loop
-	if (movementTime >= startLoop && movementTime <= startLoop + 2.0f) // 1 loop = 2s 
+	if (movementTime >= startLoop && movementTime <= startLoop + 1.0f) // 1 loop = 1s 
 		isLooping = true;
 	else
 		isLooping = false;
 
-	//Apply force
+	Vector2 direction = Vector2();
+
 	if (isRight)
 	{
 		if (isLooping)
-		{
-			if (isUp)
-			{
-				force = Vector2(cos(movementTime * 3.1416), -sin(movementTime * 3.1416));
-				SetRotation(GetRotation() - 180.0f * dt);
-			}
-			else
-			{
-				force = Vector2(cos(movementTime * 3.1416), sin(movementTime * 3.1416));
-				SetRotation(GetRotation() + 180.0f * dt);
-			}
-		}
+			direction = Loop(dt, -1, 1);
 		else
-			force.x += 1;
+			direction = Vector2(pixelsPorSecond.x, 0); 
 	}
 	else
 	{
 		if (isLooping)
-		{
-			if (isUp)
-			{
-				force = Vector2(-cos(movementTime * 3.1416), -sin(movementTime * 3.1416));
-				SetRotation(GetRotation() + 180.0f * dt);
-			}
-			else
-			{
-				force = Vector2(-cos(movementTime * 3.1416), sin(movementTime * 3.1416));
-				SetRotation(GetRotation() - 180.0f * dt);
-			}
-		}
+			direction = Loop(dt, 1, 1);
 		else
-			force.x -= 1;
+			direction = Vector2(-pixelsPorSecond.x, 0);
 	}
-	force.Normalize();
-	force = force * speed;
-	rb->AddForce(force);
+	
+	transform->position = transform->position + direction;
+}
+
+Vector2 SmallRedPlane::Loop(float dt, int cosSigne, int sinSigne)
+{
+	Vector2 pos = Vector2();
+	if (isUp)
+	{
+		pos = Vector2( cosSigne * cos(movementTime * PI * 2.0) * radiusLoop, sinSigne * sin(movementTime * PI * 2.0) * radiusLoop);
+		SetRotation(GetRotation() - 360 * dt);
+	}
+	else
+	{
+		pos = Vector2(cosSigne * cos(movementTime * 3.1416 * 2.0) * radiusLoop, -sinSigne * sin(movementTime * 3.1416 * 2.0) * radiusLoop);
+		SetRotation(GetRotation() + 360 * dt);
+	}
+	return pos;
 }
