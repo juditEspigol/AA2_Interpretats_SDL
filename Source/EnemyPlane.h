@@ -1,24 +1,26 @@
 #pragma once
 #include "GameObject.h"
-#include "Object.h"
-#include "EnemyBullet.h"
+
+//USE
 #include "Spawner.h"
+#include "EnemyBullet.h"
 #include "ScoreManager.h"
 
-const float PI = 3.14159265359;
+// COLLISION
+#include "PlayerBullet.h"
 
 class EnemyPlane : public GameObject
 {
 protected:
+	bool isAlive; 
 	int health;
 	int score;
 	Transform* playerTransform;
 
 	float lastFireTime, fireTime; 
-	Vector2 speed; 
-
-	int movementStage;
 	float movementTime;
+
+	Vector2 pixelsPorSecond; 
 
 	void Shoot(); 
 
@@ -30,7 +32,9 @@ protected:
 	virtual void UpdateMovementPattern(float dt) = 0; 
 
 	//ANIMATIONS
-	virtual void DeathAnimation() {};
+	virtual void DeathAnimation() = 0;
+
+	void DeathState(); 
 
 public:
 	EnemyPlane(int hp, int score, Transform* transform);
@@ -39,7 +43,12 @@ public:
 
 	virtual void Destroy() override 
 	{
-		isPendingDestroy = true; 
-		SCORE.AddScore(score);
+		isAlive = false; 
+		ChangeAnimation("Death");
+		if (renderer->LastFrame() && !isPendingDestroy)
+		{
+			isPendingDestroy = true;
+			SCORE.AddScore(score);
+		}
 	}
 };

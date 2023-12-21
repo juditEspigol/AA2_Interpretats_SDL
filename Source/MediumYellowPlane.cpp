@@ -5,7 +5,6 @@ MediumYellowPlane::MediumYellowPlane(bool _isRight, Transform* _playerTransform)
 {
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
-	speed = Vector2(20, 20); 
 	startLoop = 1.5f; 
 	pixelsPorSecond = Vector2(0, 3); 
 	radiusLoop = Vector2(7, 3);
@@ -19,8 +18,12 @@ MediumYellowPlane::MediumYellowPlane(bool _isRight, Transform* _playerTransform)
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5 + (18.7248 * radiusLoop.x), -transform->size.y * 0.75);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
+
 	// RENDER
-	renderer = new ImageRenderer(transform, Vector2(7, 501), Vector2(31, 23));
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(7, 501), Vector2(31, 23)));
+	DeathAnimation();
+	renderer = renderers["Idle"];
+
 	// RIGID BODY 
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;
@@ -31,8 +34,13 @@ MediumYellowPlane::MediumYellowPlane(bool _isRight, Transform* _playerTransform)
 void MediumYellowPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
-
-	UpdateMovementPattern(dt);
+	if (isAlive)
+	{
+		Shoot(); 
+		UpdateMovementPattern(dt);
+	}
+	else
+		DeathState();
 }
 
 void MediumYellowPlane::UpdateMovementPattern(float dt)
@@ -62,9 +70,22 @@ void MediumYellowPlane::UpdateMovementPattern(float dt)
 Vector2 MediumYellowPlane::Loop(float dt, int cosSigne, int sinSigne)
 {
 	Vector2 pos = Vector2();
-	pos = Vector2(cosSigne * cos(movementTime * PI) * radiusLoop.x,
-		sinSigne * sin(movementTime * PI) * radiusLoop.y);
+	pos = Vector2(cosSigne * cos(movementTime * M_PI) * radiusLoop.x,
+		sinSigne * sin(movementTime * M_PI) * radiusLoop.y);
 	SetRotation(GetRotation() - cosSigne * 180 * dt);
 
 	return pos;
+}
+
+void MediumYellowPlane::DeathAnimation()
+{
+	std::vector<Vector2> deathDeltas{
+		Vector2(0, 0),
+		Vector2(20, 0),
+		Vector2(20 * 2, 0),
+		Vector2(20 * 3, 0),
+		Vector2(20 * 4, 0),
+		Vector2(20 * 5, 0)
+	};
+	renderers.emplace("Death", new AnimatedImageRenderer(transform, Vector2(157, 80), Vector2(20, 20), deathDeltas, false, 10));
 }

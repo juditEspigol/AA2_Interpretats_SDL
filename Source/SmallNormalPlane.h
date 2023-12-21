@@ -10,18 +10,19 @@ private:
 	MovementType currentMove;
 	bool isRight; 
 
-	Vector2 pixelsPorSecond; 
-
-	float timeToGoUp; 
-	void MovementV();
-	float timeToCurve, radioCurve;    
-	void MovementCurve(float dt); 
-	void MovementStraight(); 
+	float changeMoveTime;
+	float radiusLoop;
 
 	virtual void UpdateMovementPattern(float dt);
 
+	void MovementV(float dt);  
+	void MovementCurve(float dt); 
+	void MovementStraight(float dt); 
+
+	Vector2 Loop(float dt, int cosSigne, int sinSigne);
+
 	// ANIMATIONS
-	void DeathAnimation() override {}
+	void DeathAnimation() override; 
 
 public:
 	SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform);

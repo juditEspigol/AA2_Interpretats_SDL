@@ -26,7 +26,7 @@ Wave::Wave(float _startTime, WaveType _waveType, Transform* _playerTransform)
 		amount = 5;
 		for (int i = 0; i < amount; i++)
 		{
-			planesToSpawn.push_back(new SmallRedPlane(true, false, _playerTransform));
+			planesToSpawn.push_back(new SmallRedPlane(true, false,120, _playerTransform));
 		}
 		break;
 	case MediumYellow:

@@ -1,11 +1,12 @@
 #include "SmallNormalPlane.h"
 
 SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform)
-	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight), timeToGoUp(2.0f), pixelsPorSecond(Vector2(1, 3))
+	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight)
 {
+	pixelsPorSecond = Vector2(2, 3);
 
-	timeToCurve = 1.5f; 
-	radioCurve = 5; 
+	changeMoveTime = 1.5f;
+	radiusLoop = 4;
 
 	// TRANSFORM
 	transform = new Transform();
@@ -18,22 +19,27 @@ SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transf
 	transform->size = Vector2(16, 16);
 
 	// RENDER
-	renderer = new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15));
+	renderers.emplace("Idle", new ImageRenderer(transform, Vector2(5, 161), Vector2(15, 15)));
+	DeathAnimation(); 
+	renderer = renderers["Idle"];
 
 	// RIGID BODY 
 	rb = new RigidBody(transform);
 	Vector2 topLeft = transform->position - transform->size / 2;
 	rb->AddCollision(new AABB(topLeft, transform->size));
-	rb->SetLinearDrag(7);
 }
 
 void SmallNormalPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
 
-	Shoot(); 
-
-	UpdateMovementPattern(dt); 
+	if (isAlive)
+	{
+		Shoot();
+		UpdateMovementPattern(dt);
+	}
+	else
+		DeathState(); 
 }
 
 void SmallNormalPlane::UpdateMovementPattern(float dt)
@@ -42,22 +48,28 @@ void SmallNormalPlane::UpdateMovementPattern(float dt)
 	{
 	case SmallNormalPlane::V:
 
-		MovementV(); 
+		MovementV(dt); 
+
 		break;
+
 	case SmallNormalPlane::CURVE:
-		
+	
 		MovementCurve(dt); 
+
 		break;
+
 	case SmallNormalPlane::STRAIGHT:
 
-		MovementStraight(); 
+		MovementStraight(dt); 
+
 		break;
+
 	default:
 		break;
 	}
 }
 
-void SmallNormalPlane::MovementV()
+void SmallNormalPlane::MovementV(float dt)
 {
 	Vector2 direction = pixelsPorSecond;
 
@@ -66,47 +78,109 @@ void SmallNormalPlane::MovementV()
 	else
 		direction.x *= -1;
 
-	if (movementTime >= timeToGoUp)
+	if (movementTime >= changeMoveTime)
+	{
 		direction.y *= -1;
+		if (isRight)
+		{
+			if (GetRotation() > 45)
+				SetRotation(GetRotation() - (360 * dt));
+			else
+				SetRotation(45);
+		}
+		else
+		{
+			if (GetRotation() < 315)
+				SetRotation(GetRotation() + (360 * dt));
+			else
+				SetRotation(315);
+		}
+	}
 	else
+	{
+		if(isRight)
+			SetRotation(135);
+		else
+			SetRotation(225);
 		direction.y *= 1;
+	}
 
 	transform->position = transform->position + direction; 
 }
 
 void SmallNormalPlane::MovementCurve(float dt)
 {
-	Vector2 direction = Vector2();
+	Vector2 direction = pixelsPorSecond;
 
-	if (movementTime <= timeToCurve) // GO STRAIGHT DOWN
-	{
-		direction = Vector2(0, pixelsPorSecond.y); 
-	}
-	else if (movementTime >= timeToCurve && movementTime <= (timeToCurve + 0.5)) // CURVE // 0.5 -> duration 1/4 of the loop
+	if (movementTime <= changeMoveTime) // GO STRAIGHT DOWN
 	{
 		if (isRight)
 		{
-			direction = Vector2(cos(movementTime * PI) * radioCurve, -sin(movementTime * PI) * radioCurve); // 2 second == 1 loop
-			SetRotation(GetRotation() - (180 * dt));
+			direction.x *= 1;
+			SetRotation(135);
 		}
 		else
 		{
-			direction = Vector2(-cos(movementTime * PI) * radioCurve, -sin(movementTime * PI) * radioCurve); // 2 second == 1 loop
-			SetRotation(GetRotation() + (180 * dt));
+			direction.x *= -1;
+			SetRotation(225);
 		}
 	}
-	else // GO STRAIGHT LEFT/RIGHT
+	else if (movementTime >= changeMoveTime && movementTime <= (changeMoveTime + 0.5f)) // CURVE
 	{
 		if (isRight)
-			direction = Vector2(pixelsPorSecond.y, 0);
+			direction = Loop(dt, -1, -1); 
 		else
-			direction = Vector2(-pixelsPorSecond.y, 0);
+			direction = Loop(dt, 1, -1);
+	}
+	else // CONTINUE STRAIGHT
+	{
+		if (!isRight)
+			direction.x *= 1;
+		else
+			direction.x *= -1;
 	}
 
 	transform->position = transform->position + direction;
 }
 
-void SmallNormalPlane::MovementStraight()
+void SmallNormalPlane::MovementStraight(float dt)
 {
-	transform->position = transform->position + Vector2(0, pixelsPorSecond.y);
+	Vector2 direction = pixelsPorSecond;
+
+	if (isRight)
+	{
+		direction.x *= 1;
+		SetRotation(135);
+	}
+	else
+	{
+		direction.x *= -1;
+		SetRotation(225);
+	}
+	direction.y *= 1;
+
+	transform->position = transform->position + direction;
+}
+
+Vector2 SmallNormalPlane::Loop(float dt, int cosSigne, int sinSigne)
+{
+	Vector2 pos = Vector2();
+	pos = Vector2(cosSigne * cos(movementTime * M_PI) * radiusLoop,
+		sinSigne * sin(movementTime * M_PI) * radiusLoop);
+	SetRotation(GetRotation() - cosSigne * 180 * dt);
+
+	return pos;
+}
+
+void SmallNormalPlane::DeathAnimation()
+{
+	std::vector<Vector2> deathDeltas{
+		Vector2(0, 0),
+		Vector2(20, 0),
+		Vector2(20 * 2, 0),
+		Vector2(20 * 3, 0),
+		Vector2(20 * 4, 0),
+		Vector2(20 * 5, 0)
+	};
+	renderers.emplace("Death", new AnimatedImageRenderer(transform, Vector2(157, 80), Vector2(20, 20), deathDeltas, false, 20));
 }

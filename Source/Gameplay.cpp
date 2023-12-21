@@ -20,8 +20,8 @@ Gameplay::Gameplay()
 	//objects.push_back(new ShipBackGround(player));
 	objects.push_back(player);  
 
-	//objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, false, player->GetTransform()));
-	//objects.push_back(new SmallRedPlane(true, true, player->GetTransform()));
+	//objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player->GetTransform()));
+	//objects.push_back(new SmallRedPlane(true, false, 120, player->GetTransform()));
 	//objects.push_back(new MediumYellowPlane(false, player->GetTransform()));
 	//objects.push_back(new MediumYellowPlane(true, player->GetTransform()));
 	objects.push_back(new BigGreenPlane(player->GetTransform()));

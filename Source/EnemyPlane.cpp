@@ -1,27 +1,26 @@
 #include "EnemyPlane.h"
-#include "ScoreManager.h"
-
-// OnCollisionEnter
-#include "PlayerBullet.h"
 
 EnemyPlane::EnemyPlane(int _hp, int _score, Transform* _playerTransform)
 	: health(_hp),  score(_score), playerTransform(_playerTransform)
 {
 	isPendingDestroy = false; 
+	isAlive = true; 
 
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
-	speed = Vector2(12, 22);
 
 	movementTime = 0.0f; 
 }
 
 void EnemyPlane::Update(float dt)
 {
-	Object::Update(dt);
+	GameObject::Update(dt);
 
 	lastFireTime += dt;  
 	movementTime += dt;
+
+	if (renderer == renderers["Death"] && renderer->LastFrame())
+		Destroy(); 
 }
 
 void EnemyPlane::Shoot()
@@ -33,12 +32,17 @@ void EnemyPlane::Shoot()
 	}
 }
 
+void EnemyPlane::DeathState()
+{	
+	Destroy();
+}
+
 void EnemyPlane::GetDamage(const int amount)
 {
 	health -= amount;
 
-	if (health <= 0 && !isPendingDestroy)
-		Destroy();
+	if (health <= 0 )
+		isAlive = false; 
 }
 
 void EnemyPlane::OnCollisionEnter(Object* other)
