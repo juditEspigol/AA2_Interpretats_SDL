@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Wave.h"
+#include "Player.h"
 
 #include "rapidXML/rapidxml.hpp"
 #include "rapidXML/rapidxml_iterators.hpp"
@@ -30,5 +31,5 @@ public:
 		return levelLoader;
 	}
 
-	std::vector<Wave> LoadLevel(std::string _path);
+	std::vector<Wave> LoadLevel(std::string _path, Player* _player);
 };

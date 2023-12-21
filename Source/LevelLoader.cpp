@@ -1,17 +1,16 @@
 #include "LevelLoader.h"
 
-std::vector<Wave> LevelLoader::LoadLevel(std::string _path)
+std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
 {
     std::vector<Wave> planesToSpawn;
 
 	rapidxml::xml_document<> document;
 	std::ifstream myFile;
-	myFile.open("../stage_0.xml");
+	myFile.open(_path);
 
 	if (!myFile.is_open())
 	{
 		std::cout << "The file can't be opened";
-		return;
 	}
 
 	std::stringstream buffer;
@@ -22,18 +21,15 @@ std::vector<Wave> LevelLoader::LoadLevel(std::string _path)
 	document.parse<0>(&content[0]);
 	rapidxml::xml_node<>* root = document.first_node();
 
-	for (rapidxml::xml_node<>* WaveNode = root->first_node("wave"); WaveNode; WaveNode = WaveNode->next_sibling())
+	for (rapidxml::xml_node<>* waveNode = root->first_node("wave"); waveNode; waveNode = waveNode->next_sibling())
 	{
-		rapidxml::xml_node<>* gameObjectNode;
-		//Wave(float _startTime, WaveType _waveType, Player * _player);
+		float spawnTime = std::stof(waveNode->first_node("spawnTime")->value());
+		WaveType waveType = (WaveType)std::stoi(waveNode->first_node("type")->value());
+		
+		Wave wave(spawnTime, waveType, _player);
 
 
-
-		for (gameObjectNode = gameObjectNode->first_node(); gameObjectNode; gameObjectNode = gameObjectNode->next_sibling())
-		{
-			
-			
-		}
+		planesToSpawn.push_back(wave);
 	}
 
     return planesToSpawn;

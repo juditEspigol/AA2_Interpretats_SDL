@@ -1,4 +1,6 @@
 #pragma once
+
+#include <cassert>
 #include "Scene.h"
 #include "ScoreManager.h"
 #include "LivesManager.h"
@@ -12,6 +14,7 @@
 #include "GrayPowerUp.h"
 #include "WhitePowerUp.h"
 #include "ShipBackground.h"
+#include "LevelLoader.h"
 
 class Gameplay : public Scene
 {

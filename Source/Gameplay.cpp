@@ -4,15 +4,12 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
+	remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
+
 	Wave newWave(2, WaveType::SmallNormal, player);
 	Wave newWave2(7, WaveType::SmallRed, player);
 	Wave newWave3(13, WaveType::MediumYellow, player);
 	Wave newWave4(20, WaveType::BigGreen, player);
-
-	remainingWaves.push_back(newWave);
-	remainingWaves.push_back(newWave2);
-	remainingWaves.push_back(newWave3);
-	remainingWaves.push_back(newWave4);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
