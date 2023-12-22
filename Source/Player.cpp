@@ -12,8 +12,10 @@ Player::Player()
 
 	health = LIVES_GAME.GetLives();
 	force = 40; 
-	fireTime = 0.15f;
+	fireTime = 1.0f;
 	lastFireTime = fireTime;
+
+	avaliableRolls = 3;
 
 	doubleFire = false;
 
@@ -147,8 +149,11 @@ void Player::MoveInputs()
 		inputForce.x += 1;
 
 	//ROLL
-	if (IM.CheckKeyState(SDLK_x, PRESSED))
+	if (avaliableRolls > 0 && currentState == FLYING && IM.CheckKeyState(SDLK_z, PRESSED))
+	{
 		currentState = ROLLING; 
+		avaliableRolls--;
+	}
 
 	inputForce.Normalize();
 	inputForce = inputForce * force;
@@ -181,27 +186,33 @@ void Player::UpdateFlyingAnimation()
 
 void Player::ShootInputs()
 {
-	if (IM.CheckKeyState(SDLK_SPACE, HOLD))
-		Shoot(); 
+	if (IM.CheckKeyState(SDLK_x, RELEASED))
+	{
+		Shoot();
+	}
+	else if (IM.CheckKeyState(SDLK_x, HOLD))
+	{
+		if (lastFireTime >= fireTime)
+		{
+			Shoot(); 
+		}
+	}
 }
 void Player::Shoot()
 {
-	if (lastFireTime >= fireTime)
-	{
-		lastFireTime = 0;
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 4, transform->position.y)));
-		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 4, transform->position.y)));
+	lastFireTime = 0;
+	SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 4, transform->position.y)));
+	SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 4, transform->position.y)));
 
-		// DOUBLE SHOOT
-		if (doubleFire)
-		{
-			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 11, transform->position.y + 3)));
-			SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 11, transform->position.y + 3)));
-		}
-		//SUPPORT PLANES SHOOT
-		for (auto supportPlane : supportPlanes)
-			supportPlane->Shoot();
+	// DOUBLE SHOOT
+	if (doubleFire)
+	{
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x + 11, transform->position.y + 3)));
+		SPAWNER.SpawnObject(new PlayerBullet(Vector2(transform->position.x - 11, transform->position.y + 3)));
 	}
+	//SUPPORT PLANES SHOOT
+	for (auto supportPlane : supportPlanes)
+		supportPlane->Shoot();
 }
 
 void Player::Death()
@@ -233,6 +244,7 @@ void Player::DeathAnimation()
 void Player::Roll()
 {
 	ChangeAnimation("Roll");
+
 	if (renderer->LastFrame())
 		currentState = FLYING;
 }
@@ -244,15 +256,16 @@ void Player::RollAnimation()
 		Vector2(32 * 2, 0),
 		Vector2(32 * 3, 0),
 		Vector2(32 * 4, 0),
-		Vector2(32 * 5, 0),
-		Vector2(32 * 6, 0),
-		Vector2(32 * 7, 0)
+		Vector2(32 * 5, 0)
 	};
-	renderers.emplace("Roll", new AnimatedImageRenderer(transform, Vector2(4, 27), Vector2(28, 13), deltas, true, 15));
+	renderers.emplace("Roll", new AnimatedImageRenderer(transform, Vector2(4, 27), Vector2(28, 13), deltas, true, 5));
 }
 
 void Player::OnCollisionEnter(Object* other)
 {
+	if (currentState == ROLLING)
+		return;
+
 	if (rb->CheckCollision(other->GetRigidBody()))
 	{
 		if (IsEnemyPlane(other))
