@@ -149,7 +149,7 @@ void Player::MoveInputs()
 		inputForce.x += 1;
 
 	//ROLL
-	if (avaliableRolls > 0 && currentState == FLYING && IM.CheckKeyState(SDLK_z, PRESSED))
+	if (avaliableRolls > 0 && currentState == FLYING && IM.CheckKeyState(SDLK_x, PRESSED))
 	{
 		currentState = ROLLING; 
 		avaliableRolls--;
@@ -186,11 +186,11 @@ void Player::UpdateFlyingAnimation()
 
 void Player::ShootInputs()
 {
-	if (IM.CheckKeyState(SDLK_x, RELEASED))
+	if (IM.CheckKeyState(SDLK_z, RELEASED))
 	{
 		Shoot();
 	}
-	else if (IM.CheckKeyState(SDLK_x, HOLD))
+	else if (IM.CheckKeyState(SDLK_z, HOLD))
 	{
 		if (lastFireTime >= fireTime)
 		{
