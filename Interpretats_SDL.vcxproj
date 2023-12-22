@@ -227,8 +227,8 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\GrayPowerUp.h" />
     <ClInclude Include="Source\BigGreenPlane.h" />
     <ClInclude Include="Source\EnemyBullet.h" />
-    <ClInclude Include="Source\MovementPattern.h" />
     <ClInclude Include="Source\GreenPowerUp.h" />
+    <ClInclude Include="Source\Pattern.h" />
     <ClInclude Include="Source\PowerUp.h" />
     <ClInclude Include="Source\ScoreManager.h" />
     <ClInclude Include="Source\SeaBackground.h" />

@@ -1,10 +1,9 @@
 #pragma once
 
-enum MovementPattern
-{
+enum Pattern {
 	A,
 	B,
 	C,
 	D,
-	E
+	E,
 };

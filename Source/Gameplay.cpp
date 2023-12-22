@@ -6,27 +6,10 @@ Gameplay::Gameplay()
 
 	remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
 
-	Wave newWave(2, WaveType::SmallNormal, player);
-	Wave newWave2(7, WaveType::SmallRed, player);
-	Wave newWave3(13, WaveType::MediumYellow, player);
-	Wave newWave4(20, WaveType::BigGreen, player);
-
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
 	//objects.push_back(new ShipBackGround(player));
 	objects.push_back(player);  
-
-	//objects.push_back(new SmallNormalPlane(SmallNormalPlane::CURVE, true, player->GetTransform()));
-	//objects.push_back(new SmallRedPlane(true, false, 120, player->GetTransform()));
-	//objects.push_back(new MediumYellowPlane(false, player->GetTransform()));
-	//objects.push_back(new MediumYellowPlane(true, player->GetTransform()));
-	objects.push_back(new BigGreenPlane(player->GetTransform()));
-
-	//objects.push_back(new GreenPowerUp(player)); 
-	objects.push_back(new WhitePowerUp(player)); 
-	objects.push_back(new GreenPowerUp(player)); 
-	objects.push_back(new GrayPowerUp(player)); 
-
 
 	// TEXT OBJECTS
 		// SCORE
