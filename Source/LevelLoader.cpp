@@ -31,8 +31,12 @@ std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
 	{
 		spawnTime = std::stof(waveNode->first_node("spawnTime")->value());
 		waveType = (WaveType)std::stoi(waveNode->first_node("type")->value());
-		waveAtribute = waveNode->first_node("type")->first_attribute("pattern");
-		pattern = (Pattern)std::stoi(waveAtribute->value());
+		
+		if (waveNode->first_node("type")->first_attribute("pattern") != NULL)
+		{
+			waveAtribute = waveNode->first_node("type")->first_attribute("pattern");
+			pattern = (Pattern)std::stoi(waveAtribute->value());
+		}
 
 		Wave wave(spawnTime, waveType, pattern, _player);
 
