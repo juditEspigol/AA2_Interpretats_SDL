@@ -19,6 +19,8 @@ private:
 	float force;
 	float fireTime, lastFireTime;
 
+	int avaliableRolls;
+
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
