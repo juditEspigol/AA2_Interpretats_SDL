@@ -1,6 +1,6 @@
 #include "Wave.h"
 
-Wave::Wave(float _startTime, WaveType _waveType, Player* _player)
+Wave::Wave(float _startTime, WaveType _waveType, Pattern _pattern, Player* _player)
 {
 	startTime = _startTime;
 	currentTime = 0;
@@ -8,18 +8,18 @@ Wave::Wave(float _startTime, WaveType _waveType, Player* _player)
 	
 	planesAreSpawned = false;
 	
-	CreateWaves(_player);
+	CreateWaves(_player, _pattern);
 }
 
-void Wave::CreateWaves(Player* _player)
+void Wave::CreateWaves(Player* _player, Pattern _pattern)
 {
 	switch (waveType)
 	{
 	case SmallNormal:
-		CreateSmallNormal(_player);
+		CreateSmallNormal(_player, _pattern);
 		break;
 	case SmallRed:
-		CreateSmallRed(_player);
+		CreateSmallRed(_player, _pattern);
 		break;
 	case MediumYellow:
 		CreateMediumYellow(_player);
@@ -33,7 +33,7 @@ void Wave::CreateWaves(Player* _player)
 	}
 }
 
-void Wave::CreateSmallNormal(Player* _player)
+void Wave::CreateSmallNormal(Player* _player, Pattern _pattern)
 {
 	amount = 4;
 
@@ -43,7 +43,7 @@ void Wave::CreateSmallNormal(Player* _player)
 	}
 }
 
-void Wave::CreateSmallRed(Player* _player)
+void Wave::CreateSmallRed(Player* _player, Pattern _pattern)
 {
 	amount = 5;
 
@@ -53,7 +53,7 @@ void Wave::CreateSmallRed(Player* _player)
 
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new SmallRedPlane(true, false, _player->GetTransform()));
+		planesToSpawn.push_back(new SmallRedPlane(true, false, 100, _player->GetTransform()));
 	}
 }
 

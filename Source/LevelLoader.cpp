@@ -21,13 +21,24 @@ std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
 	document.parse<0>(&content[0]);
 	rapidxml::xml_node<>* root = document.first_node();
 
+	rapidxml::xml_attribute<>* waveAtribute;
+
+	float spawnTime;
+	WaveType waveType;
+	Pattern pattern;
+
 	for (rapidxml::xml_node<>* waveNode = root->first_node("wave"); waveNode; waveNode = waveNode->next_sibling())
 	{
-		float spawnTime = std::stof(waveNode->first_node("spawnTime")->value());
-		WaveType waveType = (WaveType)std::stoi(waveNode->first_node("type")->value());
+		spawnTime = std::stof(waveNode->first_node("spawnTime")->value());
+		waveType = (WaveType)std::stoi(waveNode->first_node("type")->value());
 		
-		Wave wave(spawnTime, waveType, _player);
+		if (waveNode->first_node("type")->first_attribute("pattern") != NULL)
+		{
+			waveAtribute = waveNode->first_node("type")->first_attribute("pattern");
+			pattern = (Pattern)std::stoi(waveAtribute->value());
+		}
 
+		Wave wave(spawnTime, waveType, pattern, _player);
 
 		planesToSpawn.push_back(wave);
 	}
