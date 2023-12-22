@@ -14,6 +14,7 @@ public:
 		:PowerUp(p)
 	{
 		renderer = new ImageRenderer(transform, Vector2(40, 140), Vector2(13, 10));
+		scoreToGive = 1000;
 	}
 
 	virtual bool IsPlayer(Object* other) override
@@ -22,6 +23,8 @@ public:
 		{
 			player->AddSupportPlanes();
 			Destroy();
+			if(player->GetHasSupportPlanes())
+				GiveScore();
 			return true;
 		}
 		return false;

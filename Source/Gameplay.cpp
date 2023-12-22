@@ -9,6 +9,9 @@ Gameplay::Gameplay()
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
 	//objects.push_back(new ShipBackGround(player));
+	objects.push_back(new GreenPowerUp(player));
+	objects.push_back(new GrayPowerUp(player));
+	objects.push_back(new WhitePowerUp(player));
 	objects.push_back(player);  
 
 	// TEXT OBJECTS

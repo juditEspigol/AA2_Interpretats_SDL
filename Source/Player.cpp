@@ -263,9 +263,6 @@ void Player::RollAnimation()
 
 void Player::OnCollisionEnter(Object* other)
 {
-	if (currentState == ROLLING)
-		return;
-
 	if (rb->CheckCollision(other->GetRigidBody()))
 	{
 		if (IsEnemyPlane(other))
@@ -278,6 +275,11 @@ bool Player::IsEnemyPlane(Object* other)
 {
 	if (dynamic_cast<EnemyPlane*>(other))
 	{
+		if (currentState == ROLLING)
+		{
+			SCORE.AddScore(500);
+			return true;
+		}
 		GetDamage(1);
 		return true;
 	}
@@ -287,6 +289,11 @@ bool Player::IsEnemyBullet(Object* other)
 {
 	if (dynamic_cast<EnemyBullet*>(other))
 	{
+		if (currentState == ROLLING)
+		{
+			SCORE.AddScore(500);
+			return true;
+		}
 		GetDamage(1);
 		other->Destroy();
 		return true;

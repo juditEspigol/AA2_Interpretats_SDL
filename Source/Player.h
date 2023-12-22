@@ -68,4 +68,6 @@ public:
 	void ChangeState(const StatesPlayer newState);
 
 	inline int GetHealth() const { return health; }
+	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
+	inline bool GetDoubleFireEnabled()const { return doubleFire; }
 };

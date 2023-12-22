@@ -1,5 +1,6 @@
 #include "PowerUp.h"
 
+
 PowerUp::PowerUp(Player* p)
 	: player(p), speed(10)
 {
@@ -35,6 +36,11 @@ void PowerUp::AddMovement()
 	force.Normalize();
 	force = force * speed;
 	rb->AddForce(force);
+}
+
+void PowerUp::GiveScore()
+{
+	SCORE.AddScore(scoreToGive);
 }
 
 void PowerUp::OnCollisionEnter(Object* other)

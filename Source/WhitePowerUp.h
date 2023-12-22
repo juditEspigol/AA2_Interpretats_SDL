@@ -16,6 +16,7 @@ public:
 		:PowerUp(p), activated(false)
 	{
 		renderer = new ImageRenderer(transform, Vector2(6, 140), Vector2(13, 10));
+		scoreToGive = 2000;
 	}
 
 	void OnCollisionEnter(Object* other) override
@@ -34,6 +35,7 @@ public:
 		{
 			activated = true;
 			Destroy();
+			GiveScore();
 			return true;
 		}
 		return false;

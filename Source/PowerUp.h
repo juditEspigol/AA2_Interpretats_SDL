@@ -1,18 +1,22 @@
 #pragma once
 #include "GameObject.h"
 #include "Player.h"
+#include "ScoreManager.h"
 
 class PowerUp : public GameObject
 {
 protected:
 	Player* player; 
 	int speed; 
+	int scoreToGive;
 
 public:
 	PowerUp(Player* p); 
 
 	void Update(float dt) override; 
 	void AddMovement(); 
+
+	void GiveScore();
 
 	virtual void OnCollisionEnter(Object* other) override; 
 	virtual bool IsPlayer(Object* other) = 0; 

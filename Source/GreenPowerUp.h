@@ -12,6 +12,7 @@ public:
 		:PowerUp(p)
 	{
 		renderer = new ImageRenderer(transform, Vector2(74, 140), Vector2(13, 10));
+		scoreToGive = 1500;
 	}
 
 	virtual bool IsPlayer(Object* other) override
@@ -19,7 +20,9 @@ public:
 		if (dynamic_cast<Player*>(other))
 		{
 			player->EnableDoubleFire(); 
-			Destroy(); 
+			Destroy();
+			if(player->GetDoubleFireEnabled())
+				GiveScore();
 			return true;
 		}
 		return false;
