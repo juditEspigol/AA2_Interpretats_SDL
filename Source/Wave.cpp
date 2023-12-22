@@ -39,7 +39,7 @@ void Wave::CreateSmallNormal(Player* _player, Pattern _pattern)
 
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new SmallNormalPlane(SmallNormalPlane::MovementType::CURVE, true, _player->GetTransform()));
+		planesToSpawn.push_back(new SmallNormalPlane(_pattern, _player->GetTransform()));
 	}
 }
 
@@ -53,7 +53,7 @@ void Wave::CreateSmallRed(Player* _player, Pattern _pattern)
 
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new SmallRedPlane(true, false, 100, _player->GetTransform()));
+		planesToSpawn.push_back(new SmallRedPlane(_pattern, _player->GetTransform()));
 	}
 }
 

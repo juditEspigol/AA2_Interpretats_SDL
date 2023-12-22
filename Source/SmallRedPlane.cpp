@@ -1,13 +1,16 @@
 #include "SmallRedPlane.h"
 
-SmallRedPlane::SmallRedPlane(bool _isRight, bool _isUp, float posToSpawnY, Transform* _playerTransform)
-	: EnemyPlane(1, 100, _playerTransform), isRight(_isRight), isUp(_isUp)
+SmallRedPlane::SmallRedPlane(Pattern _pattern, Transform* _playerTransform)
+	: EnemyPlane(1, 100, _playerTransform)
 {
 	fireTime = 1.10f;
 	lastFireTime = 0.0f;
 	startLoop = 2.0f; 
 	radiusLoop = 3; 
 	pixelsPorSecond = Vector2(3, 0); 
+	float posToSpawnY;
+
+	BuildPattern(_pattern, posToSpawnY);
 
 	// TRANSFORM
 	transform = new Transform();
@@ -95,4 +98,42 @@ void SmallRedPlane::DeathAnimation()
 		Vector2(20 * 5, 0)
 	};
 	renderers.emplace("Death", new AnimatedImageRenderer(transform, Vector2(157, 80), Vector2(20, 20), deathDeltas, false, 20));
+}
+
+void SmallRedPlane::BuildPattern(Pattern _pattern, float& posToSpawnY)
+{
+	switch (_pattern)
+	{
+	case A:
+		isRight = true;
+		isUp = false;
+		posToSpawnY = 120;
+		break;
+	case B:
+		isRight = false;
+		isUp = true;
+		posToSpawnY = 135;
+		break;
+	case C:
+		isRight = false;
+		isUp = false;
+		posToSpawnY = 150;
+		break;
+	case D:
+		isRight = true;
+		isUp = true;
+		posToSpawnY = 100;
+		break;
+	case E:
+		isRight = true;
+		isUp = false;
+		posToSpawnY = 170;
+		break;
+	case F:
+		isRight = false;
+		isUp = false;
+		posToSpawnY = 125;
+	default:
+		break;
+	}
 }

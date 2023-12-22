@@ -1,12 +1,14 @@
 #include "SmallNormalPlane.h"
 
-SmallNormalPlane::SmallNormalPlane(MovementType _movement, bool _isRight, Transform* _playerTransform)
-	: EnemyPlane(1, 50, _playerTransform), currentMove(_movement), isRight(_isRight)
+SmallNormalPlane::SmallNormalPlane(Pattern _pattern, Transform* _playerTransform)
+	: EnemyPlane(1, 50, _playerTransform)
 {
 	pixelsPorSecond = Vector2(2, 3);
 
 	changeMoveTime = 1.5f;
 	radiusLoop = 4;
+
+	BuildPattern(_pattern);
 
 	// TRANSFORM
 	transform = new Transform();
@@ -40,6 +42,38 @@ void SmallNormalPlane::Update(float dt)
 	}
 	else
 		DeathState(); 
+}
+
+void SmallNormalPlane::BuildPattern(Pattern _pattern)
+{
+	switch (_pattern)
+	{
+	case A:
+		currentMove = CURVE;
+		isRight = true;
+		break;
+	case B:
+		currentMove = CURVE;
+		isRight = false;
+		break;
+	case C:
+		currentMove = V;
+		isRight = true;
+		break;
+	case D:
+		currentMove = V;
+		isRight = false;
+		break;
+	case E:
+		currentMove = STRAIGHT;
+		isRight = true;
+		break;
+	case F:
+		currentMove = STRAIGHT;
+		isRight = false;
+	default:
+		break;
+	}
 }
 
 void SmallNormalPlane::UpdateMovementPattern(float dt)

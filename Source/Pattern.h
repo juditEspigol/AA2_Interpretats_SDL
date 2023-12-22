@@ -6,4 +6,5 @@ enum Pattern {
 	C,
 	D,
 	E,
+	F
 };

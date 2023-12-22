@@ -17,6 +17,11 @@
 		<amount>2</amount>
 	</wave>
 	<wave>
+		<spawnTime>25</spawnTime>
+		<type pattern="1">1</type>
+		<amount>2</amount>
+	</wave>
+	<wave>
 		<spawnTime>30</spawnTime>
 		<type>3</type>
 		<amount>1</amount>

@@ -1,5 +1,6 @@
 #pragma once
 #include "EnemyPlane.h"
+#include "Pattern.h"
 
 class SmallRedPlane : public EnemyPlane
 {
@@ -9,6 +10,7 @@ private:
 
 	float startLoop; 
 	float radiusLoop; 
+	Pattern pattern;
 
 	virtual void UpdateMovementPattern(float dt);
 
@@ -16,7 +18,9 @@ private:
 
 	void DeathAnimation() override; 
 
+	void BuildPattern(Pattern _pattern, float& posToSpawnY);
+
 public:
-	SmallRedPlane(bool _isRight, bool _isUp, float posToSpawnY, Transform* _playerTransform);
+	SmallRedPlane(Pattern _pattern, Transform* _playerTransform);
 	virtual void Update(float dt) override;
 };
