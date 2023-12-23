@@ -12,6 +12,11 @@
 class EnemyPlane : public GameObject
 {
 protected:
+
+	//Audio
+	int shootId;
+	int bulletId;
+
 	bool isAlive; 
 	int health;
 	int score;

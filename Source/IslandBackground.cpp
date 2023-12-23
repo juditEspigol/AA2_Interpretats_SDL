@@ -2,7 +2,7 @@
 
 void IslandBackground::Movement()
 {
-	rb->SetVeclocity(Vector2(0, 16));
+	rb->SetVeclocity(Vector2(0, 160));
 }
 
 IslandBackground::IslandBackground(float posX, float posY)
@@ -16,7 +16,7 @@ IslandBackground::IslandBackground(float posX, float posY)
 	transform->centered = false;
 
 	//RENDER
-	renderer = new ImageRenderer(transform, Vector2(22, 686), Vector2(16, 16));
+	renderer = new ImageRenderer(transform, Vector2(79, 802), Vector2(113, 77));
 
 	//RIGIDBODY
 	rb = new RigidBody(transform);

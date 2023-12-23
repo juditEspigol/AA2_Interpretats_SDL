@@ -19,7 +19,7 @@
 class Gameplay : public Scene
 {
 private:
-	int sfxID;
+	
 
 	float timeToSpawnIsland;
 	float currentTimeToSpawnIsland;
@@ -29,6 +29,9 @@ private:
 	std::vector<Wave> remainingWaves;
 	int sizeRemainingWaves;
 	int levelWaves;
+
+	int mainThemeId;
+	int stageCompletedId;
 
 public:
 

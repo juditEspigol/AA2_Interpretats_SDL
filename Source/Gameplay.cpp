@@ -2,9 +2,14 @@
 
 Gameplay::Gameplay()
 {
+	mainThemeId = AUDIO.LoadMusic("Resources/Audio/MainTheme.mp3");
+	AUDIO.PlayMusic(mainThemeId);
+
+	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
+
 	player = new Player();
 
-	//remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
+	remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -23,8 +28,6 @@ Gameplay::Gameplay()
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// LIVES PLAYER
 	ui.push_back(LIVES_GAME.GetLivesUI());
-
-	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 
 	nextScene = MAIN;
 
@@ -48,17 +51,12 @@ void Gameplay::Update(float dt)
 
 	Scene::Update(dt); 
 
-	//for (int i = 0; i < sizeRemainingWaves; i++)
-	//{
-	//	 remainingWaves[i].Update(dt);
-	//}
-
-	//remainingWaves[0].Update(dt);
+	for (int i = 0; i < sizeRemainingWaves; i++)
+	{
+		 remainingWaves[i].Update(dt);
+	}
 
 	isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
-
-	/*if (IM.CheckKeyState(SDLK_SPACE, PRESSED))
-		AUDIO.PlayClip(sfxID);*/
 
 	currentTimeToSpawnIsland += dt;
 

@@ -48,6 +48,10 @@ void PowerUp::OnCollisionEnter(Object* other)
 	if (rb->CheckCollision(other->GetRigidBody()))
 	{
 		if (IsPlayer(other))
+		{
+			AUDIO.PlayClip(powerUpID);
+			return;
+		}
 			
 		if (IsOutOfWindow())
 			return;

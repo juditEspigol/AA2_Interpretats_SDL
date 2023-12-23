@@ -17,6 +17,7 @@ public:
 	{
 		renderer = new ImageRenderer(transform, Vector2(6, 140), Vector2(13, 10));
 		scoreToGive = 2000;
+		powerUpID = AUDIO.LoadClip("Resources/Audio/PowerUp3.mp3");
 	}
 
 	void OnCollisionEnter(Object* other) override

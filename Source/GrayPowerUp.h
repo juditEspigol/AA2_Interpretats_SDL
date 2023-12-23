@@ -15,6 +15,7 @@ public:
 	{
 		renderer = new ImageRenderer(transform, Vector2(40, 140), Vector2(13, 10));
 		scoreToGive = 1000;
+		powerUpID = AUDIO.LoadClip("Resources/Audio/PowerUp1.mp3");
 	}
 
 	virtual bool IsPlayer(Object* other) override

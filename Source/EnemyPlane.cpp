@@ -5,6 +5,8 @@ EnemyPlane::EnemyPlane(int _hp, int _score, Transform* _playerTransform)
 {
 	isPendingDestroy = false; 
 	isAlive = true; 
+	shootId = AUDIO.LoadClip("Resources/Audio/EnemyShoot.mp3");
+	bulletId = AUDIO.LoadClip("Resources/Audio/BulletCollision.mp3");
 
 	fireTime = 1.00f;
 	lastFireTime = 0.0f;
@@ -28,6 +30,7 @@ void EnemyPlane::Shoot()
 	if (lastFireTime >= fireTime)
 	{
 		lastFireTime = 0;
+		AUDIO.PlayClip(shootId);
 		SPAWNER.SpawnObject(new EnemyBullet(transform->position, playerTransform->position));
 	}
 }
@@ -53,7 +56,10 @@ void EnemyPlane::OnCollisionEnter(Object* other)
 			return;
 
 		if (IsPlayerBullet(other))
+		{
+			AUDIO.PlayClip(bulletId);
 			return;
+		}
 	}
 }
 bool EnemyPlane::IsPlayerBullet(Object* other)
