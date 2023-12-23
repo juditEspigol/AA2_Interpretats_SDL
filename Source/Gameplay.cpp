@@ -4,7 +4,7 @@ Gameplay::Gameplay()
 {
 	player = new Player();
 
-	remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
+	//remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -48,10 +48,10 @@ void Gameplay::Update(float dt)
 
 	Scene::Update(dt); 
 
-	for (int i = 0; i < sizeRemainingWaves; i++)
-	{
-		 remainingWaves[i].Update(dt);
-	}
+	//for (int i = 0; i < sizeRemainingWaves; i++)
+	//{
+	//	 remainingWaves[i].Update(dt);
+	//}
 
 	//remainingWaves[0].Update(dt);
 

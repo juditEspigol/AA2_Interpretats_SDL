@@ -24,13 +24,9 @@ private:
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
-
-
 	void UpdateSupportPlanes(float dt);
 
 	void CheckStatePlayer(); 
-
-	
 
 	void MoveInputs(); 
 	void UpdateFlyingAnimation();
