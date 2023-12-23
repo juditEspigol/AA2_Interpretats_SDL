@@ -137,16 +137,48 @@ void Player::MoveInputs()
 	Vector2 inputForce = Vector2();
 
 	//VERTICAL
-	if (IM.CheckKeyState(SDLK_UP, HOLD))
+	if (transform->position.y - 18 >= 0 && IM.CheckKeyState(SDLK_UP, HOLD))
+	{
 		inputForce.y -= 1;
-	if (IM.CheckKeyState(SDLK_DOWN, HOLD))
+	}
+	else if (transform->position.y - 18 <= 0)
+	{
+		rb->SetVeclocity(Vector2(0, 0));
+		transform->position.y += 1;
+	}
+	
+
+	if (transform->position.y + 18 <= RENDERER.GetSizeWindow().y && IM.CheckKeyState(SDLK_DOWN, HOLD))
+	{
 		inputForce.y += 1;
+	}
+	else if (transform->position.y + 18 >= RENDERER.GetSizeWindow().y)
+	{
+		rb->SetVeclocity(Vector2(0, 0));
+		transform->position.y -= 1;
+	}
 
 	//HORIZONTAL
-	if (IM.CheckKeyState(SDLK_LEFT, HOLD))
+	if (transform->position.x - 18 >= 0 && IM.CheckKeyState(SDLK_LEFT, HOLD))
+	{
 		inputForce.x -= 1;
-	if (IM.CheckKeyState(SDLK_RIGHT, HOLD))
+	}
+	else if (transform->position.x - 18 <= 0)
+	{
+		rb->SetVeclocity(Vector2());
+		transform->position.x += 1;
+	}
+
+	if (transform->position.x + 18 <= RENDERER.GetSizeWindow().x && IM.CheckKeyState(SDLK_RIGHT, HOLD))
+	{
 		inputForce.x += 1;
+	}
+	else if (transform->position.x + 18 >= RENDERER.GetSizeWindow().x)
+	{
+		rb->SetVeclocity(Vector2());
+		transform->position.x -= 1;
+	}
+
 
 	//ROLL
 	if (avaliableRolls > 0 && currentState == FLYING && IM.CheckKeyState(SDLK_x, PRESSED))
