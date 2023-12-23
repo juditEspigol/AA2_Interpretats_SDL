@@ -9,11 +9,19 @@
 #include "Spawner.h"
 #include "InputManager.h"
 #include "LivesManager.h"
+#include "AudioManager.h"
 
 
 class Player : public GameObject
 {
 private:
+
+	//Audio
+	int shootID;
+	int CollisionId;
+	int bulletId;
+	int loseStageId;
+
 	StatesPlayer currentState; 
 	StatesPlayer nextState; 
 	int health; 

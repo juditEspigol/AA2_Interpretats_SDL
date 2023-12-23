@@ -9,6 +9,7 @@ protected:
 	Player* player; 
 	int speed; 
 	int scoreToGive;
+	int powerUpID;
 
 public:
 	PowerUp(Player* p); 

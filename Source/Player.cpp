@@ -20,6 +20,11 @@ Player::Player()
 
 	doubleFire = false;
 
+	shootID = AUDIO.LoadClip("Resources/Audio/PlayerShoot.wav");
+	CollisionId = AUDIO.LoadClip("Resources/Audio/EnemyCollision.mp3");
+	bulletId = AUDIO.LoadClip("Resources/Audio/BulletCollision.mp3");
+	loseStageId = AUDIO.LoadClip("Resources/Audio/LoseStage.mp3");
+
 	// TRANSFORM
 	transform = new Transform();
 	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
@@ -188,7 +193,7 @@ void Player::UpdateFlyingAnimation()
 
 void Player::ShootInputs()
 {
-	if (IM.CheckKeyState(SDLK_z, RELEASED))
+	if (IM.CheckKeyState(SDLK_z, PRESSED))
 	{
 		Shoot();
 	}
@@ -215,17 +220,24 @@ void Player::Shoot()
 	//SUPPORT PLANES SHOOT
 	for (auto supportPlane : supportPlanes)
 		supportPlane->Shoot();
+
+	AUDIO.PlayClip(shootID);
+	
 }
 
 void Player::Death()
 {
 	ChangeAnimation("Death");
+
 	if (renderer->LastFrame())
 	{
 		doubleFire = false; 
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y * 0.75);
 		if (health <= 0)
+		{
+			AUDIO.PlayClip(loseStageId);
 			Destroy();
+		}
 
 		currentState = FLYING;
 	}
@@ -316,11 +328,13 @@ bool Player::IsEnemyPlane(Object* other)
 {
 	if (dynamic_cast<EnemyPlane*>(other))
 	{
+		AUDIO.PlayClip(CollisionId);
 		if (currentState == ROLLING)
 		{
 			SCORE.AddScore(500);
 			return true;
 		}
+		AUDIO.PlayClip(bulletId);
 		GetDamage(1);
 		return true;
 	}

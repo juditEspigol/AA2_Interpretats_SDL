@@ -3,7 +3,7 @@
 EnemyBullet::EnemyBullet(Vector2 _pos, Vector2 _posToGo)
 {
 	isPendingDestroy = false;
-
+	
 	// TRANSFORM
 	transform = new Transform();
 	transform->size = Vector2(4, 16);

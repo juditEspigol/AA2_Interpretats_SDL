@@ -2,6 +2,11 @@
 
 Gameplay::Gameplay()
 {
+	mainThemeId = AUDIO.LoadMusic("Resources/Audio/MainTheme.mp3");
+	AUDIO.PlayMusic(mainThemeId);
+
+	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
+
 	player = new Player();
 	ship = new ShipBackGround();
 
@@ -21,8 +26,6 @@ Gameplay::Gameplay()
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// LIVES PLAYER
 	ui.push_back(LIVES_GAME.GetLivesUI());
-
-	sfxID = AUDIO.LoadClip("Resources/Audio/discord-notification.mp3");
 
 	nextScene = MAIN;
 
@@ -60,12 +63,7 @@ void Gameplay::Update(float dt)
 		ship->Finished();
 	}
 
-	//remainingWaves[0].Update(dt);
-
 	isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
-
-	/*if (IM.CheckKeyState(SDLK_SPACE, PRESSED))
-		AUDIO.PlayClip(sfxID);*/
 
 	currentTimeToSpawnIsland += dt;
 
