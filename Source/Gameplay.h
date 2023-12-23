@@ -25,6 +25,7 @@ private:
 	float currentTimeToSpawnIsland;
 
 	Player* player;
+	ShipBackGround* ship; 
 
 	std::vector<Wave> remainingWaves;
 	int sizeRemainingWaves;

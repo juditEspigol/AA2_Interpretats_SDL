@@ -4,6 +4,7 @@ enum StatesPlayer
 {
 	FLYING,
 	LANDED, 
+	TAKE_OFF,
 	ROLLING, 
 	DEATH, 
 	COUNT

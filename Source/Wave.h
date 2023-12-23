@@ -51,4 +51,6 @@ public:
 	void DestroyPlanes();
 
 	void UpdatePlanes(float _dt);
+
+	inline bool WaveDone() { return planesAreSpawned && planesToSpawn.empty(); }
 };

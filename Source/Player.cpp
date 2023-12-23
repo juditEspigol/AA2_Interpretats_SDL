@@ -8,7 +8,8 @@ Player::Player()
 {
 	isPendingDestroy = false;
 
-	currentState = FLYING;
+	currentState = TAKE_OFF;
+	nextState = FLYING; 
 
 	health = LIVES_GAME.GetLives();
 	force = 40; 
@@ -21,14 +22,14 @@ Player::Player()
 
 	// TRANSFORM
 	transform = new Transform();
-	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y + 155);
+	transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
 	transform->angle = 0.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(16, 16);
 
 	// RENDER
 	CreateAnimations(); 
-	renderer = renderers["Idle"]; 
+	renderer = renderers["TakeOffImage"]; 
 
 	// RIGID BODY 
 	rb = new RigidBody(transform);
@@ -53,6 +54,8 @@ void Player::CreateAnimations()
 	DeathAnimation(); 
 	//ROLL
 	RollAnimation(); 
+	//TAKE OFF
+	TakeOffAnimation(); 
 }
 
 void Player::Update(float dt)
@@ -63,13 +66,18 @@ void Player::Update(float dt)
 
 	lastFireTime += dt; 
 
-	CheckStatePlayer(); 
+	CheckStatePlayer(dt); 
 }
 
-void Player::CheckStatePlayer()
+void Player::CheckStatePlayer(float dt)
 {
 	switch (currentState)
 	{
+	case TAKE_OFF:
+		movementTime += dt;
+		TakeOff(); 
+		break;
+
 	case FLYING:
 		MoveInputs();
 		ShootInputs();
@@ -79,10 +87,10 @@ void Player::CheckStatePlayer()
 	case LANDED:
 		rb->SetVeclocity(Vector2(0, -18));
 		break;
-
 	case ROLLING:
 		MoveInputs();
-		Roll(); 
+		Roll(nextState); 
+		movementTime = 0; 
 		break;
 
 	case DEATH:
@@ -92,44 +100,6 @@ void Player::CheckStatePlayer()
 	default:
 		break;
 	}
-}
-
-void Player::ChangeState(const StatesPlayer newState)
-{
-	switch (currentState)
-	{
-	case FLYING:
-		break;
-	case LANDED:
-		rb->SetVeclocity(Vector2());
-		break;
-	case ROLLING:
-		break;
-	case DEATH:
-		break;
-	case COUNT:
-		break;
-	default:
-		break;
-	}
-
-	switch (newState)
-	{
-	case FLYING:
-		break;
-	case LANDED:
-		break;
-	case ROLLING:
-		break;
-	case DEATH:
-		break;
-	case COUNT:
-		break;
-	default:
-		break;
-	}
-
-	currentState = newState;
 }
 
 void Player::MoveInputs() 
@@ -220,6 +190,7 @@ void Player::Death()
 	ChangeAnimation("Death");
 	if (renderer->LastFrame())
 	{
+		doubleFire = false; 
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y * 0.75);
 		if (health <= 0)
 			Destroy();
@@ -241,12 +212,15 @@ void Player::DeathAnimation()
 	renderers.emplace("Death", new AnimatedImageRenderer(transform, Vector2(3, 101), Vector2(32, 32), deltas, false, 10));
 }
 
-void Player::Roll()
+void Player::Roll(StatesPlayer nextState)
 {
 	ChangeAnimation("Roll");
 
 	if (renderer->LastFrame())
-		currentState = FLYING;
+	{
+		movementState++;
+		currentState = nextState;
+	}
 }
 void Player::RollAnimation()
 {
@@ -254,11 +228,46 @@ void Player::RollAnimation()
 		Vector2(0, 0),
 		Vector2(32, 0),
 		Vector2(32 * 2, 0),
-		Vector2(32 * 3, 0),
-		Vector2(32 * 4, 0),
-		Vector2(32 * 5, 0)
+		Vector2(32 * 3, 0)
 	};
 	renderers.emplace("Roll", new AnimatedImageRenderer(transform, Vector2(4, 27), Vector2(28, 13), deltas, true, 5));
+}
+
+void Player::TakeOff()
+{
+
+	if (movementTime <= 1.0f && movementState == 0)
+	{
+		Vector2 newForce = Vector2(0, -0.5) * force;
+		AddMovement(newForce);
+
+		if (movementTime >= 0.5f && renderer != renderers["TakeOffAnimated"])
+			ChangeAnimation("TakeOffAnimated");
+	}
+	else if (movementTime <= 0.75f && movementState == 1)
+	{
+		transform->angle = 180.0f;
+		ChangeAnimation("Idle");
+		Vector2 newForce = Vector2(0, 0.5) * force;
+		AddMovement(newForce);
+	}
+	else if (movementTime <= 0.5 && movementState == 2)
+	{
+		transform->angle = 0.0f;
+		ChangeAnimation("Idle");
+		Vector2 newForce = Vector2(0, -0.5) * force;
+		AddMovement(newForce);
+	}
+	else if (movementState == 0 || movementState == 1)
+	{
+		nextState = TAKE_OFF;
+		currentState = ROLLING;
+	}
+	else
+	{
+		nextState = FLYING;
+		currentState = FLYING;
+	}
 }
 
 void Player::OnCollisionEnter(Object* other)
@@ -309,6 +318,21 @@ void Player::GetDamage(const int amount)
 		LIVES_GAME.SubstractLives(1); 
 	}
 	currentState = DEATH;
+}
+
+void Player::LandingAnimation()
+{
+}
+
+void Player::TakeOffAnimation()
+{
+	std::vector<Vector2> deltas{
+		Vector2(0, 0),
+		Vector2(20, 0),
+		Vector2(20 * 2, 0)
+	};
+	renderers.emplace("TakeOffAnimated", new AnimatedImageRenderer(transform, Vector2(6, 84), Vector2(22, 16), deltas, false, 5));
+	renderers.emplace("TakeOffImage", new ImageRenderer(transform, Vector2(6, 84), Vector2(22, 16)));
 }
 
 void Player::AddSupportPlanes()
