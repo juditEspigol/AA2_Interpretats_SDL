@@ -2,27 +2,27 @@
 <stage>
 	<totalTime>50</totalTime>
 	<wave>
-		<spawnTime>15</spawnTime>
+		<spawnTime>5</spawnTime>
 		<type pattern="1">0</type>
 		<amount>5</amount>
 	</wave>
 	<wave>
-		<spawnTime>20</spawnTime>
+		<spawnTime>10</spawnTime>
 		<type pattern="2">0</type>
 		<amount>2</amount>
 	</wave>
 	<wave>
-		<spawnTime>20</spawnTime>
+		<spawnTime>15</spawnTime>
 		<type>2</type>
 		<amount>2</amount>
 	</wave>
 	<wave>
-		<spawnTime>25</spawnTime>
+		<spawnTime>17</spawnTime>
 		<type pattern="1">1</type>
 		<amount>2</amount>
 	</wave>
 	<wave>
-		<spawnTime>30</spawnTime>
+		<spawnTime>20</spawnTime>
 		<type>3</type>
 		<amount>1</amount>
 	</wave>

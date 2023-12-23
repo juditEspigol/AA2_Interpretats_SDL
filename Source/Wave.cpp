@@ -89,11 +89,6 @@ void Wave::Update(float _dt)
 	{
 		SpawnPlanes();
 	}
-
-	if (planesAreSpawned)
-	{
-		UpdatePlanes(_dt);
-	}
 }
 
 void Wave::SpawnPlanes()
@@ -125,10 +120,4 @@ void Wave::DestroyPlanes()
 		powerUpToSpawn->SetPosition(posSpawnPowerUp);
 		SPAWNER.SpawnObject(powerUpToSpawn);
 	}
-}
-
-void Wave::UpdatePlanes(float _dt)
-{
-	for (EnemyPlane* e : planesToSpawn)
-		e->Update(_dt);
 }
