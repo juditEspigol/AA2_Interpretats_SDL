@@ -1,38 +1,21 @@
 #pragma once
 #include "GameObject.h"
-#include "Player.h"
+
+// USE
 #include "StatesShipBackground.h"
+#include "ScoreManager.h"
 
 class ShipBackGround : public GameObject
 {
 private:
-
-	void Movement();
-
-	float speed;
-
+	float speedY; 
 	StateShipBackground currentState;
+	bool isFinished; 
 
-	float pointToStopAtStarting;
-	float pointToStopAtFinishing;
-
-	Player* player;
-
-	float timeToSetSail;
-	float currentTime;
-
-	bool hasToSetSail;
+	void AddMovement(Vector2 _speed);
 
 public:
-
-	ShipBackGround(Player* player);
-
+	ShipBackGround();
 	void Update(float _dt) override;
-
-	void StopMoving();
-
-	void SetSail(float _dt);
-	void SailFinished(float _dt);
-
-	void ChangeState(StateShipBackground newState);
+	void Finished() { isFinished = true; }
 };

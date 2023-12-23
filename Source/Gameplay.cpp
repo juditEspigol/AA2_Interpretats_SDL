@@ -3,15 +3,13 @@
 Gameplay::Gameplay()
 {
 	player = new Player();
+	ship = new ShipBackGround();
 
 	//remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
-	//objects.push_back(new ShipBackGround(player));
-	objects.push_back(new GreenPowerUp(player));
-	objects.push_back(new GrayPowerUp(player));
-	objects.push_back(new WhitePowerUp(player));
+	objects.push_back(ship);
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
@@ -48,10 +46,19 @@ void Gameplay::Update(float dt)
 
 	Scene::Update(dt); 
 
-	//for (int i = 0; i < sizeRemainingWaves; i++)
-	//{
-	//	 remainingWaves[i].Update(dt);
-	//}
+	for (int i = remainingWaves.size() - 1; i >= 0; i--)
+	{
+		if (remainingWaves[i].WaveDone())
+		{
+			remainingWaves.erase(remainingWaves.begin() + i); 
+			continue; 
+		}
+		 remainingWaves[i].Update(dt);
+	}
+	if (remainingWaves.empty())
+	{
+		ship->Finished();
+	}
 
 	//remainingWaves[0].Update(dt);
 
