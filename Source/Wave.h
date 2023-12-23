@@ -23,7 +23,6 @@ private:
 	int amount;
 	std::vector<EnemyPlane*> planesToSpawn;
 
-
 	bool planesAreSpawned;
 
 	Vector2 posSpawnPowerUp; 
@@ -49,8 +48,6 @@ public:
 	void SpawnPlanes();
 
 	void DestroyPlanes();
-
-	void UpdatePlanes(float _dt);
 
 	inline bool WaveDone() { return planesAreSpawned && planesToSpawn.empty(); }
 };
