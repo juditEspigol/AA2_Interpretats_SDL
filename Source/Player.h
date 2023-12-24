@@ -38,6 +38,7 @@ private:
 
 	float movementTime; 
 	int movementState; 
+	bool playerHitted = false; 
 
 	void UpdateSupportPlanes(float dt);
 
@@ -88,6 +89,7 @@ public:
 	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
 	inline bool GetDoubleFireEnabled()const { return doubleFire; }
 	inline bool IsPlayerPaused() const { return currentState == STOP;  }
+	inline bool PlayerHitted() const { return playerHitted; }
 	void Reset()
 	{
 		currentState = TAKE_OFF;
@@ -97,6 +99,7 @@ public:
 		movementTime = 0; 
 		movementState = 0; 
 		avaliableRolls = 3;
+		playerHitted = false; 
 
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
 	}

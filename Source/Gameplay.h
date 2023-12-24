@@ -15,7 +15,7 @@
 #include "ShipBackground.h"
 #include "LevelLoader.h"
 
-enum StatesGameplay { GAME, PAUSE, FINISH_STATE, GAME_OVER };
+enum StatesGameplay { GAME, PAUSE, FINISH_STATE, HIT, GAME_OVER };
 
 class Gameplay : public Scene
 {
