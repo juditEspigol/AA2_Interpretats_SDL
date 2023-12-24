@@ -34,6 +34,7 @@ MediumYellowPlane::MediumYellowPlane(bool _isRight, Transform* _playerTransform)
 void MediumYellowPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
+	movementTime += dt;
 	if (isAlive)
 	{
 		Shoot(); 
@@ -55,7 +56,7 @@ void MediumYellowPlane::UpdateMovementPattern(float dt)
 	else if (movementTime >= startLoop && movementTime <= (startLoop + 3.0f)) // 2s = 1 loop
 	{
 		if (isRight)
-			direction = Loop(dt, 1, -1); 
+			direction = Loop(dt, 1, 1); 
 		else
 			direction = Loop(dt, -1, -1);
 	}

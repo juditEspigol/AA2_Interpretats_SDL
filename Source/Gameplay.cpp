@@ -2,6 +2,8 @@
 
 Gameplay::Gameplay()
 {
+	currentState = GAME;
+
 	mainThemeId = AUDIO.LoadMusic("Resources/Audio/MainTheme.mp3");
 	AUDIO.PlayMusic(mainThemeId);
 
@@ -10,7 +12,8 @@ Gameplay::Gameplay()
 	ship = new ShipBackGround();
 	player = new Player(ship);
 
-	remainingWaves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
+	waves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
+	remainingWaves = waves; 
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -18,6 +21,10 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
+		//PAUSED
+	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
+		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
+		"Resources/PixelPowerline-11Mg.ttf"));
 		// SCORE
 	ui.push_back(SCORE.GetScoreUI());
 		// NAME PLAYER
@@ -46,31 +53,94 @@ void Gameplay::Render()
 
 void Gameplay::Update(float dt)
 {
-
-	Scene::Update(dt); 
-
-	for (int i = remainingWaves.size() - 1; i >= 0; i--)
+	switch (currentState)
 	{
-		if (remainingWaves[i].WaveDone())
+	case GAME:
+
+		Scene::Update(dt);
+
+		for (int i = remainingWaves.size() - 1; i >= 0; i--)
 		{
-			remainingWaves.erase(remainingWaves.begin() + i); 
-			continue; 
+			if (remainingWaves[i].WaveDone())
+			{
+				remainingWaves.erase(remainingWaves.begin() + i);
+				continue;
+			}
+			remainingWaves[i].Update(dt);
 		}
-		 remainingWaves[i].Update(dt);
-	}
-	if (remainingWaves.size() == 1)
-	{
-		ship->Finished();
-	}
+		if (remainingWaves.size() == 1)
+		{
+			ship->Finished();
+		}
 
-	isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
+		isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
 
-	currentTimeToSpawnIsland += dt;
+		currentTimeToSpawnIsland += dt;
 
-	if (currentTimeToSpawnIsland >= timeToSpawnIsland)
-	{
-		currentTimeToSpawnIsland = 0;
-		SpawnIsland();
+		if (currentTimeToSpawnIsland >= timeToSpawnIsland)
+		{
+			currentTimeToSpawnIsland = 0;
+			SpawnIsland();
+		}
+
+		if (player->IsPlayerPuased())
+			currentState = FINISH_STATE; 
+
+		if (LIVES_GAME.GetLives() == 0)
+			currentState = GAME_OVER; 
+
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
+		{
+			currentState = PAUSE;
+			ui[0]->GetRenderer()->NewText("PAUSED");
+		}
+
+		break;
+
+	case PAUSE:
+
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
+		{
+			currentState = GAME;
+			ui[0]->GetRenderer()->NewText("  ");
+		}
+
+		break;
+	case FINISH_STATE:
+
+		player->Update(dt); 
+
+
+		if (!player->IsPlayerPuased())
+			currentState = GAME; 
+
+		break;
+	case GAME_OVER:
+
+		LIVES_GAME.Reset(); 
+		SCORE.Reset();
+
+		for (int i = objects.size() - 1; i >= 0; i--)
+		{
+			if (dynamic_cast<SeaBackground*>(objects[i]) || 
+				dynamic_cast<ShipBackGround*>(objects[i]) ||
+				dynamic_cast<Player*>(objects[i]))
+				continue; 
+
+			delete objects[i];
+			objects.erase(objects.begin() + i);
+		}
+
+		remainingWaves = waves;
+
+		ship->Reset(); 
+		player->Reset(); 
+
+		currentState = GAME; 
+
+		break;
+	default:
+		break;
 	}
 }
 

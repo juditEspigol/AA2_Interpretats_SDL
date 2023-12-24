@@ -19,7 +19,6 @@ void EnemyPlane::Update(float dt)
 	GameObject::Update(dt);
 
 	lastFireTime += dt;  
-	movementTime += dt;
 
 	if (renderer == renderers["Death"] && renderer->LastFrame())
 		Destroy(); 

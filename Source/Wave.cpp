@@ -36,10 +36,12 @@ void Wave::CreateWaves(Player* _player, Pattern _pattern)
 void Wave::CreateSmallNormal(Player* _player, Pattern _pattern)
 {
 	amount = 4;
+	bool right = true; 
 
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new SmallNormalPlane(_pattern, _player->GetTransform()));
+		planesToSpawn.push_back(new SmallNormalPlane(_pattern, right, _player->GetTransform()));
+		right = !right; 
 	}
 }
 
@@ -57,11 +59,13 @@ void Wave::CreateSmallRed(Player* _player, Pattern _pattern)
 		powerUpToSpawn = new WhitePowerUp(_player);
 
 	powerUpHasSpawned = false;
+	float timeToWait = 0; 
 
 
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new SmallRedPlane(_pattern, _player->GetTransform()));
+		planesToSpawn.push_back(new SmallRedPlane(_pattern, timeToWait, _player->GetTransform()));
+		timeToWait += 0.25; 
 	}
 }
 

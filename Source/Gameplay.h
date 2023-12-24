@@ -14,11 +14,15 @@
 #include "Player.h"
 #include "ShipBackground.h"
 
+enum StatesGameplay { GAME, PAUSE, FINISH_STATE, GAME_OVER };
+
 class Gameplay : public Scene
 {
 private:
 	float timeToSpawnIsland;
 	float currentTimeToSpawnIsland;
+
+	StatesGameplay currentState; 
 
 	Player* player;
 	ShipBackGround* ship; 
@@ -26,6 +30,7 @@ private:
 	int currentLevel;
 
 	std::vector<Wave> remainingWaves;
+	std::vector<Wave> waves; 
 	int sizeRemainingWaves;
 	int levelWaves;
 

@@ -27,6 +27,6 @@ private:
 	void DeathAnimation() override; 
 
 public:
-	SmallNormalPlane(Pattern _pattern, Transform* _playerTransform);
+	SmallNormalPlane(Pattern _pattern, bool _isRight, Transform* _playerTransform);
 	virtual void Update(float dt) override; 
 };

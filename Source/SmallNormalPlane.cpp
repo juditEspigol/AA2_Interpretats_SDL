@@ -1,7 +1,7 @@
 #include "SmallNormalPlane.h"
 
-SmallNormalPlane::SmallNormalPlane(Pattern _pattern, Transform* _playerTransform)
-	: EnemyPlane(1, 50, _playerTransform)
+SmallNormalPlane::SmallNormalPlane(Pattern _pattern, bool _isRight, Transform* _playerTransform)
+	: EnemyPlane(1, 50, _playerTransform), isRight(_isRight)
 {
 	pixelsPorSecond = Vector2(2, 3);
 
@@ -12,10 +12,10 @@ SmallNormalPlane::SmallNormalPlane(Pattern _pattern, Transform* _playerTransform
 
 	// TRANSFORM
 	transform = new Transform();
-	if(isRight)
-		transform->position = Vector2(10 +rand() % (int)RENDERER.GetSizeWindow().x * 0.40, 0);
+	if (isRight)
+		transform->position = Vector2(rand() % (int)RENDERER.GetSizeWindow().x * 0.40, 0);
 	else
-		transform->position = Vector2((int)RENDERER.GetSizeWindow().x * 0.6 + rand() % (int)RENDERER.GetSizeWindow().x * 0.30, 0);
+		transform->position = Vector2((int)RENDERER.GetSizeWindow().x * 0.6 + rand() % (int)RENDERER.GetSizeWindow().x * 0.40, 0);
 	transform->angle = 180.0f;
 	transform->scale = Vector2(2.0f, 2.0f);
 	transform->size = Vector2(16, 16);
@@ -34,6 +34,7 @@ SmallNormalPlane::SmallNormalPlane(Pattern _pattern, Transform* _playerTransform
 void SmallNormalPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
+	movementTime += dt;
 
 	if (isAlive)
 	{
@@ -50,27 +51,21 @@ void SmallNormalPlane::BuildPattern(Pattern _pattern)
 	{
 	case A:
 		currentMove = CURVE;
-		isRight = true;
 		break;
 	case B:
 		currentMove = CURVE;
-		isRight = false;
 		break;
 	case C:
 		currentMove = V;
-		isRight = true;
 		break;
 	case D:
 		currentMove = V;
-		isRight = false;
 		break;
 	case E:
 		currentMove = STRAIGHT;
-		isRight = true;
 		break;
 	case F:
 		currentMove = STRAIGHT;
-		isRight = false;
 	default:
 		break;
 	}
