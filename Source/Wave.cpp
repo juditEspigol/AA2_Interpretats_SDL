@@ -69,9 +69,12 @@ void Wave::CreateMediumYellow(Player* _player)
 {
 	amount = 2;
 
+	bool isRight = true;
+
 	for (int i = 0; i < amount; i++)
 	{
-		planesToSpawn.push_back(new MediumYellowPlane(false, _player->GetTransform()));
+		planesToSpawn.push_back(new MediumYellowPlane(isRight, _player->GetTransform()));
+		isRight = false;
 	}
 }
 
