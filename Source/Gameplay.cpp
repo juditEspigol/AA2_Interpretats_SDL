@@ -27,10 +27,6 @@ Gameplay::Gameplay()
 	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
-		// HITTED
-	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
-		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
-		"Resources/PixelPowerline-11Mg.ttf"));
 		// SCORE
 	ui.push_back(SCORE.GetScoreUI());
 		// NAME PLAYER
@@ -54,7 +50,8 @@ void Gameplay::OnEnter()
 
 void Gameplay::Render()
 {
-	Scene::Render(); 
+	if(currentState != HIT)
+		Scene::Render(); 
 }
 
 void Gameplay::Update(float dt)
@@ -92,7 +89,6 @@ void Gameplay::Update(float dt)
 
 		if (player->PlayerHitted())
 		{
-			ui[1]->GetRenderer()->NewText("HITTED wait 2s");
 			currentState = HIT;
 		}
 
@@ -152,7 +148,6 @@ void Gameplay::Update(float dt)
 
 		if (!player->PlayerHitted())
 		{
-			ui[1]->GetRenderer()->NewText("  ");
 			currentState = GAME;
 		}
 
