@@ -14,7 +14,7 @@ Gameplay::Gameplay()
 	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
 
 
-	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+	remainingWaves = levelLoader.LoadLevel(1);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
