@@ -21,4 +21,9 @@ public:
 
 	bool GetPlayerCanLand() const { return playerCanLand; }
 	void PlayerLanded() { playerCanLand = false;  }
+	void Reset()
+	{
+		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5 - 95, RENDERER.GetSizeWindow().y * 0.25);
+		currentState = STARTING; 
+	}
 };

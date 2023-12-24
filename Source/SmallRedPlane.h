@@ -8,6 +8,9 @@ private:
 	bool isRight; 
 	bool isUp; 
 
+	float timeToWait; 
+	float timeWaited; 
+
 	float startLoop; 
 	float radiusLoop; 
 	Pattern pattern;
@@ -21,6 +24,6 @@ private:
 	void BuildPattern(Pattern _pattern, float& posToSpawnY);
 
 public:
-	SmallRedPlane(Pattern _pattern, Transform* _playerTransform);
+	SmallRedPlane(Pattern _pattern, float _waitingTime, Transform* _playerTransform);
 	virtual void Update(float dt) override;
 };

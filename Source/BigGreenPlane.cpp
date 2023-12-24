@@ -30,6 +30,7 @@ BigGreenPlane::BigGreenPlane(Transform* _playerTransform)
 void BigGreenPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt); 
+	movementTime += dt;
 
 	if (isAlive)
 		UpdateMovementPattern(dt);

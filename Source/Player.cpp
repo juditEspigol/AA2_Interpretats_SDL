@@ -18,6 +18,9 @@ Player::Player(ShipBackGround* _ship)
 	fireTime = 1.0f;
 	lastFireTime = fireTime;
 
+	movementTime = 0.0f;
+	movementState = 0;
+
 	avaliableRolls = 3;
 
 	doubleFire = false;
@@ -101,12 +104,8 @@ void Player::CheckStatePlayer(float dt)
 
 			if (direction.Magnitude() <= 1)
 			{
+				currentState = STOP; 
 				SCORE.AddScore(5000);
-				ship->PlayerLanded(); 
-				movementTime = 0; 
-				movementState = 0; 
-				currentState = TAKE_OFF; 
-				nextState = TAKE_OFF; 
 			}
 			else
 			{
@@ -143,6 +142,17 @@ void Player::CheckStatePlayer(float dt)
 	case DEATH:
 		Death(); 
 		break;
+
+	case STOP:
+		if (IM.CheckKeyState(SDLK_SPACE, PRESSED))
+		{
+			ship->PlayerLanded();
+			movementTime = 0;
+			movementState = 0;
+			currentState = TAKE_OFF;
+			nextState = TAKE_OFF;
+		}
+		break; 
 
 	default:
 		break;

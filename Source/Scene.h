@@ -16,7 +16,7 @@
 class Scene
 {
 protected:
-	std::vector<Object*> ui; 
+	std::vector<TextObject*> ui; 
 	std::vector<Object*> objects; 
 
 	bool isFinished; 

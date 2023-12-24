@@ -46,6 +46,7 @@ void ShipBackGround::Update(float _dt)
 
 		if(transform->position.y >= 0 - 20)
 		{
+			isFinished = false; 
 			playerCanLand = true; 
 			currentState = STARTING; 
 		}

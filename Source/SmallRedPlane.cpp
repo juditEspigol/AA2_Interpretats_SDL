@@ -1,13 +1,14 @@
 #include "SmallRedPlane.h"
 
-SmallRedPlane::SmallRedPlane(Pattern _pattern, Transform* _playerTransform)
-	: EnemyPlane(1, 100, _playerTransform)
+SmallRedPlane::SmallRedPlane(Pattern _pattern, float _waitingTime, Transform* _playerTransform)
+	: EnemyPlane(1, 100, _playerTransform), timeToWait(_waitingTime)
 {
 	fireTime = 1.10f;
 	lastFireTime = 0.0f;
 	startLoop = 2.0f; 
 	radiusLoop = 3; 
 	pixelsPorSecond = Vector2(3, 0); 
+	timeWaited = 0; 
 	float posToSpawnY;
 
 	BuildPattern(_pattern, posToSpawnY);
@@ -43,6 +44,10 @@ SmallRedPlane::SmallRedPlane(Pattern _pattern, Transform* _playerTransform)
 void SmallRedPlane::Update(float dt)
 {
 	EnemyPlane::Update(dt);
+	timeWaited += dt; 
+
+	if (timeWaited <= timeToWait)
+		return;
 
 	if (isAlive)
 		UpdateMovementPattern(dt);
@@ -53,6 +58,8 @@ void SmallRedPlane::Update(float dt)
 void SmallRedPlane::UpdateMovementPattern(float dt)
 {
 	Vector2 direction = Vector2();
+
+	movementTime += dt; 
 
 	if (movementTime >= startLoop && movementTime <= (startLoop + 2.0f))
 	{

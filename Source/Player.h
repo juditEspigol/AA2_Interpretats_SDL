@@ -36,10 +36,8 @@ private:
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
 
-	float movementTime = 0.0f; 
-	int movementState = 0; 
-
-
+	float movementTime; 
+	int movementState; 
 
 	void UpdateSupportPlanes(float dt);
 
@@ -83,4 +81,17 @@ public:
 	inline int GetHealth() const { return health; }
 	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
 	inline bool GetDoubleFireEnabled()const { return doubleFire; }
+	inline bool IsPlayerPuased() const { return currentState == STOP;  }
+	void Reset()
+	{
+		currentState = TAKE_OFF;
+		nextState = FLYING;
+		health = LIVES_GAME.GetLives();
+		doubleFire = false;
+		movementTime = 0; 
+		movementState = 0; 
+		avaliableRolls = 3;
+
+		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
+	}
 };

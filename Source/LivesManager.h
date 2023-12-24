@@ -6,12 +6,14 @@
 class LivesManager
 {
 private:
+	int maxLives; 
 	int lives;
 	TextObject* livesUI;
 
 	LivesManager()
-		: lives(3)
 	{
+		maxLives = 3; 
+		lives = maxLives; 
 		std::string priintLives = "HP: ";
 		for (int i = lives; i > 0; i--)
 			priintLives.append("O");
@@ -45,4 +47,9 @@ public:
 	}
 	inline TextObject* GetLivesUI() const { return livesUI; }
 	inline int GetLives() const { return lives; }
+	inline void Reset() 
+	{ 
+		lives = maxLives; 
+		SubstractLives(0); 
+	}
 };

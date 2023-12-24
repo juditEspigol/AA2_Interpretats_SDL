@@ -38,7 +38,7 @@ void Scene::Update(float dt)
 			object->OnCollisionEnter(other);
 		
 	}
-	for (Object* gameUI : ui)
+	for (TextObject* gameUI : ui)
 		gameUI->Update(dt);
 }
 
@@ -47,7 +47,7 @@ void Scene::Render()
 	for (Object* o : objects)
 		o->Render();
 
-	for (Object* gameUI : ui)
+	for (TextObject* gameUI : ui)
 		gameUI->Render();
 
 }

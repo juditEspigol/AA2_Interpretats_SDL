@@ -46,4 +46,9 @@ public:
 		scoreUI->GetRenderer()->NewText(printScore);
 	}
 	inline TextObject* GetScoreUI() const { return scoreUI; }
+	inline void Reset() 
+	{
+		score = 0; 
+		AddScore(0); 
+	}
 };
