@@ -1,26 +1,22 @@
 #pragma once
-
 #include <cassert>
 #include "Scene.h"
+
+// DEPENDENCIES
 #include "ScoreManager.h"
 #include "LivesManager.h"
-#include "Player.h"
+
+// AGGREGATION
 #include "SeaBackground.h"
 #include "IslandBackground.h"
-
-#include "Wave.h"
-
-#include "GreenPowerUp.h"
-#include "GrayPowerUp.h"
-#include "WhitePowerUp.h"
-#include "ShipBackground.h"
 #include "LevelLoader.h"
+#include "Wave.h"
+#include "Player.h"
+#include "ShipBackground.h"
 
 class Gameplay : public Scene
 {
 private:
-	
-
 	float timeToSpawnIsland;
 	float currentTimeToSpawnIsland;
 

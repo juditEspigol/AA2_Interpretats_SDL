@@ -1,15 +1,19 @@
 #pragma once
-
 #include "WaveType.h"
 #include "Pattern.h"
-#include "EnemyPlane.h"
+
+// ENEMY PLANES
 #include "SmallNormalPlane.h"
 #include "SmallRedPlane.h"
 #include "MediumYellowPlane.h"
 #include "BigGreenPlane.h"
+
+// POWER UPS
 #include "WhitePowerUp.h"
 #include "GreenPowerUp.h"
 #include "GrayPowerUp.h"
+
+// PLAYER
 #include "Player.h"
 
 class Wave : public GameObject

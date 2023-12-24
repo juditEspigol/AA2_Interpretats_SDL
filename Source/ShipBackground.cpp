@@ -1,7 +1,7 @@
 #include "ShipBackground.h"
 
 ShipBackGround::ShipBackGround()
-	: speedY(30), currentState(StateShipBackground::STARTING), isFinished(false)
+	: speedY(30), currentState(StateShipBackground::STARTING), isFinished(false), playerCanLand(false)
 {
 	//TRANSFORM
 	transform = new Transform();
@@ -44,6 +44,13 @@ void ShipBackGround::Update(float _dt)
 		
 		AddMovement(Vector2(0, speedY));
 
+		if(transform->position.y >= 0 - 20)
+		{
+			playerCanLand = true; 
+			currentState = STARTING; 
+		}
+
+
 		break;
 	case WAITING:
 
@@ -53,7 +60,6 @@ void ShipBackGround::Update(float _dt)
 		if (isFinished)
 		{
 			currentState = FINISHING;
-			SCORE.AddScore(5000); 
 		}
 
 		break; 

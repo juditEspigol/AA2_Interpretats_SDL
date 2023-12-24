@@ -7,8 +7,8 @@ Gameplay::Gameplay()
 
 	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
 
-	player = new Player();
 	ship = new ShipBackGround();
+	player = new Player(ship);
 
 	remainingWaves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
 
@@ -58,7 +58,7 @@ void Gameplay::Update(float dt)
 		}
 		 remainingWaves[i].Update(dt);
 	}
-	if (remainingWaves.empty())
+	if (remainingWaves.size() == 1)
 	{
 		ship->Finished();
 	}

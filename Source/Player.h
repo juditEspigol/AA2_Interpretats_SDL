@@ -5,6 +5,7 @@
 #include "PlayerBullet.h"
 #include "SupportPlane.h"
 #include "StatesPlayer.h"
+#include "ShipBackground.h"
 // DEPENDENCY
 #include "Spawner.h"
 #include "InputManager.h"
@@ -22,6 +23,8 @@ private:
 	int bulletId;
 	int loseStageId;
 
+
+	ShipBackGround* ship; 
 	StatesPlayer currentState; 
 	StatesPlayer nextState; 
 	int health; 
@@ -70,7 +73,7 @@ private:
 	void CreateAnimations();
 
 public:
-	Player(); 
+	Player(ShipBackGround* _ship); 
 	void Update(float dt) override; 
 	virtual void OnCollisionEnter(Object* other) override;
 

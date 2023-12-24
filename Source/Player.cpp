@@ -4,9 +4,11 @@
 #include "EnemyPlane.h"
 #include "EnemyBullet.h"
 
-Player::Player()
+Player::Player(ShipBackGround* _ship)
 {
 	isPendingDestroy = false;
+
+	ship = _ship; 
 
 	currentState = TAKE_OFF;
 	nextState = FLYING; 
@@ -84,16 +86,56 @@ void Player::CheckStatePlayer(float dt)
 		break;
 
 	case FLYING:
-		MoveInputs();
-		ShootInputs();
-		UpdateFlyingAnimation();
+
+		if (!ship->GetPlayerCanLand())
+		{
+			MoveInputs();
+			ShootInputs();
+			UpdateFlyingAnimation();
+		}
+		else
+		{
+			ChangeAnimation("TakeOffImage"); 
+			Vector2 positionToGo = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y * 0.75);
+			Vector2 direction = positionToGo - transform->position; 
+
+			if (direction.Magnitude() <= 1)
+			{
+				SCORE.AddScore(5000);
+				ship->PlayerLanded(); 
+				movementTime = 0; 
+				movementState = 0; 
+				currentState = TAKE_OFF; 
+				nextState = TAKE_OFF; 
+			}
+			else
+			{
+				Vector2 speed = Vector2();
+
+				//VERTICAL
+				if (transform->position.y < positionToGo.y) // support up, player down
+					speed.y += 1;
+				if (transform->position.y > positionToGo.y) // support down, player up
+					speed.y -= 1;
+				//HORITZONTAL
+				if (transform->position.x < positionToGo.x) // support left, player right
+					speed.x += 1;
+				if (transform->position.x > positionToGo.x) // support right, player left
+					speed.x -= 1;
+
+				speed.Normalize();
+				speed = speed * force;
+				rb->AddForce(speed);
+			}
+		}
 		break;
 
 	case LANDED:
 		rb->SetVeclocity(Vector2(0, -18));
 		break;
 	case ROLLING:
-		MoveInputs();
+		if(nextState == FLYING)
+			MoveInputs();
 		Roll(nextState); 
 		movementTime = 0; 
 		break;
