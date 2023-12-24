@@ -63,12 +63,12 @@ void Gameplay::Update(float dt)
 
 		for (int i = remainingWaves.size() - 1; i >= 0; i--)
 		{
-			if (remainingWaves[i].WaveDone())
+			if (remainingWaves[i]->WaveDone())
 			{
 				remainingWaves.erase(remainingWaves.begin() + i);
 				continue;
 			}
-			remainingWaves[i].Update(dt);
+			remainingWaves[i]->Update(dt);
 		}
 		if (remainingWaves.size() == 1)
 		{
@@ -125,7 +125,8 @@ void Gameplay::Update(float dt)
 		break;
 	case GAME_OVER:
 
-		levelLoader.ReadAllLevels(player);
+		for (int i = remainingWaves.size() - 1; i >= 0; i--)
+			remainingWaves.erase(remainingWaves.begin() + i);
 
 		LIVES_GAME.Reset();
 		SCORE.Reset();
@@ -140,6 +141,10 @@ void Gameplay::Update(float dt)
 			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
+
+		levelLoader.clearLevels();
+
+		levelLoader.SetLevels(levelLoader.ReadAllLevels(player));
 		
 
 		currentKeyLevel = 0;

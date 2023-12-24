@@ -37,6 +37,13 @@ public:
 
 	Wave(float _startTime, WaveType _waveType, Pattern _pattern, Player* _player);
 
+	~Wave()
+	{
+		for (EnemyPlane* p : planesToSpawn)
+			delete p;
+		planesToSpawn.clear();
+	}
+
 	void CreateWaves(Player* _player, Pattern _pattern);
 
 	void CreateSmallNormal(Player* _player, Pattern _pattern);
@@ -54,4 +61,6 @@ public:
 	void DestroyPlanes();
 
 	inline bool WaveDone() { return planesAreSpawned && planesToSpawn.empty(); }
+
+	void ForceDestroyPlanes();
 };
