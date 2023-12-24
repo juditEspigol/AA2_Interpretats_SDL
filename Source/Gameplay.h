@@ -13,6 +13,7 @@
 #include "Wave.h"
 #include "Player.h"
 #include "ShipBackground.h"
+#include "LevelLoader.h"
 
 class Gameplay : public Scene
 {
@@ -23,14 +24,16 @@ private:
 	Player* player;
 	ShipBackGround* ship; 
 
-	int currentLevel;
-
 	std::vector<Wave> remainingWaves;
 	int sizeRemainingWaves;
 	int levelWaves;
 
 	int mainThemeId;
 	int stageCompletedId;
+
+	LevelLoader levelLoader;
+
+	int currentKeyLevel;
 
 public:
 

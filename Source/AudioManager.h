@@ -9,7 +9,7 @@
 class AudioManager
 {
 private:
-	const int maxChannels = 128;
+	const int maxChannels = 400;
 	std::unordered_map<int, Mix_Chunk*> clips; 
 	std::unordered_map<int, Mix_Music*> songs; 
 

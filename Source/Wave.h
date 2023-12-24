@@ -16,7 +16,7 @@
 // PLAYER
 #include "Player.h"
 
-class Wave : public GameObject
+class Wave
 {
 private:
 

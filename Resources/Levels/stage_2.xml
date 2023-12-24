@@ -2,6 +2,10 @@
 <stage>
 	<wave>
 		<spawnTime>5</spawnTime>
+		<type pattern="2">0</type>
+	</wave>
+	<wave>
+		<spawnTime>5</spawnTime>
 		<type>2</type>
 	</wave>
 	<wave>
