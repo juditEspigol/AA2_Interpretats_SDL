@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<stage>
+	<wave>
+		<spawnTime>5</spawnTime>
+		<type>2</type>
+	</wave>
+	<wave>
+		<spawnTime>10</spawnTime>
+		<type pattern="3">0</type>
+	</wave>
+	<wave>
+		<spawnTime>12</spawnTime>
+		<type pattern="4">1</type>
+	</wave>
+	<wave>
+		<spawnTime>10</spawnTime>
+		<type pattern="5">0</type>
+	</wave>
+	<wave>
+		<spawnTime>11</spawnTime>
+		<type >3</type>
+	</wave>
+	<wave>
+		<spawnTime>14</spawnTime>
+		<type >2</type>
+	</wave>
+	<wave>
+		<spawnTime>18</spawnTime>
+		<type pattern="0">0</type>
+	</wave>
+	<wave>
+		<spawnTime>23</spawnTime>
+		<type pattern="3">0</type>
+	</wave>
+	<wave>
+		<spawnTime>24</spawnTime>
+		<type pattern="2">1</type>
+	</wave>
+	<wave>
+		<spawnTime>30</spawnTime>
+		<type>3</type>
+	</wave>
+	<wave>
+		<spawnTime>30</spawnTime>
+		<type pattern="2">0</type>
+	</wave>
+	<wave>
+		<spawnTime>33</spawnTime>
+		<type>2</type>
+	</wave>
+	<wave>
+		<spawnTime>35</spawnTime>
+		<type pattern="5">0</type>
+	</wave>
+	<wave>
+		<spawnTime>35</spawnTime>
+		<type pattern="2">0</type>
+	</wave>
+</stage>

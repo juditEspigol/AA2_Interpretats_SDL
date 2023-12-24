@@ -10,7 +10,7 @@ Gameplay::Gameplay()
 	player = new Player();
 	ship = new ShipBackGround();
 
-	remainingWaves = LEVELLOADER.LoadLevel("stage_0.xml", player);
+	remainingWaves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));

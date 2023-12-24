@@ -47,7 +47,15 @@ void Wave::CreateSmallRed(Player* _player, Pattern _pattern)
 {
 	amount = 5;
 
-	powerUpToSpawn = new GrayPowerUp(_player);
+	int randomPowerUp = 1 + rand() % 3;
+
+	if (randomPowerUp == 1)
+		powerUpToSpawn = new GrayPowerUp(_player);
+	else if (randomPowerUp == 2)
+		powerUpToSpawn = new GreenPowerUp(_player);
+	else
+		powerUpToSpawn = new WhitePowerUp(_player);
+
 	powerUpHasSpawned = false;
 
 
