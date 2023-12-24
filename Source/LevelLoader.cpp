@@ -1,17 +1,17 @@
 #include "LevelLoader.h"
 
-std::vector<Wave> LevelLoader::LoadLevel(int key)
+std::vector<Wave*> LevelLoader::LoadLevel(int key)
 {
-	for (std::pair<int, std::vector<Wave>> myPair : levels)
+	for (std::pair<int, std::vector<Wave*>> myPair : levels)
 	{
 		if (key == myPair.first)
 			return myPair.second;
 	}
 }
 
-std::unordered_map<int, std::vector<Wave>> LevelLoader::ReadAllLevels(Player* _player)
+std::unordered_map<int, std::vector<Wave*>> LevelLoader::ReadAllLevels(Player* _player)
 {
-	std::unordered_map<int, std::vector<Wave>> mapLevels;
+	std::unordered_map<int, std::vector<Wave*>> mapLevels;
 
 	int key = 0;
 
@@ -35,9 +35,9 @@ std::unordered_map<int, std::vector<Wave>> LevelLoader::ReadAllLevels(Player* _p
 	return mapLevels;
 }
 
-std::vector<Wave> LevelLoader::ReadOneLevel(std::string _path, Player* _player)
+std::vector<Wave*> LevelLoader::ReadOneLevel(std::string _path, Player* _player)
 {
-	std::vector<Wave> planesToSpawn;
+	std::vector<Wave*> waveVector;
 
 	rapidxml::xml_document<> document;
 	std::ifstream myFile;
@@ -73,10 +73,16 @@ std::vector<Wave> LevelLoader::ReadOneLevel(std::string _path, Player* _player)
 			pattern = (Pattern)std::stoi(waveAtribute->value());
 		}
 
-		Wave wave(spawnTime, waveType, pattern, _player);
+		Wave* wave = new Wave(spawnTime, waveType, pattern, _player);
 
-		planesToSpawn.push_back(wave);
+		waveVector.push_back(wave);
 	}
 
-	return planesToSpawn;
+	return waveVector;
+}
+
+void LevelLoader::clearLevels()
+{
+
+	levels.clear();
 }

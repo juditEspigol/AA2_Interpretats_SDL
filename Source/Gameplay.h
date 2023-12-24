@@ -28,8 +28,8 @@ private:
 	Player* player;
 	ShipBackGround* ship; 
 
-	std::vector<Wave> remainingWaves;
-	std::vector<Wave> waves; 
+	std::vector<Wave*> remainingWaves;
+
 	int sizeRemainingWaves;
 	int levelWaves;
 

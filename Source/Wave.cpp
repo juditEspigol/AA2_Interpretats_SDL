@@ -130,3 +130,11 @@ void Wave::DestroyPlanes()
 		SPAWNER.SpawnObject(powerUpToSpawn);
 	}
 }
+
+void Wave::ForceDestroyPlanes()
+{
+	for (int i = planesToSpawn.size() - 1; i >= 0; i--)
+		planesToSpawn.erase(planesToSpawn.begin() + i);
+
+	planesToSpawn.clear();
+}
