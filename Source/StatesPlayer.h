@@ -7,6 +7,7 @@ enum StatesPlayer
 	TAKE_OFF,
 	ROLLING, 
 	DEATH, 
+	HITTED, 
 	STOP,
 	COUNT
 };

@@ -23,7 +23,11 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
-		//PAUSED
+		//PAUSED OBJECT[0]!!!!!!
+	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
+		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
+		"Resources/PixelPowerline-11Mg.ttf"));
+		// HITTED
 	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
@@ -86,6 +90,12 @@ void Gameplay::Update(float dt)
 		if (player->IsPlayerPaused())
 			currentState = FINISH_STATE; 
 
+		if (player->PlayerHitted())
+		{
+			ui[1]->GetRenderer()->NewText("HITTED wait 2s");
+			currentState = HIT;
+		}
+
 		if (LIVES_GAME.GetLives() == 0)
 			currentState = GAME_OVER; 
 
@@ -123,12 +133,38 @@ void Gameplay::Update(float dt)
 		}
 
 		break;
+	case HIT:
+
+		player->Update(dt); 
+
+		for (int i = objects.size() - 1; i >= 0; i--)
+		{
+			if (dynamic_cast<SeaBackground*>(objects[i]) ||
+				dynamic_cast<ShipBackGround*>(objects[i]) ||
+				dynamic_cast<Player*>(objects[i]))
+				continue;
+
+			delete objects[i];
+			objects.erase(objects.begin() + i);
+		}
+
+		SPAWNER.ClearSpawnQueue(); 
+
+		if (!player->PlayerHitted())
+		{
+			ui[1]->GetRenderer()->NewText("  ");
+			currentState = GAME;
+		}
+
+
+		break; 
 	case GAME_OVER:
 
 		levelLoader.ReadAllLevels(player);
 
 		LIVES_GAME.Reset();
 		SCORE.Reset();
+		SPAWNER.ClearSpawnQueue();
 
 		for (int i = objects.size() - 1; i >= 0; i--)
 		{

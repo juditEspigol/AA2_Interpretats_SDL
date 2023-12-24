@@ -89,7 +89,7 @@ void Player::CheckStatePlayer(float dt)
 		break;
 
 	case FLYING:
-
+		movementTime = 0; 
 		if (!ship->GetPlayerCanLand())
 		{
 			MoveInputs();
@@ -142,6 +142,16 @@ void Player::CheckStatePlayer(float dt)
 	case DEATH:
 		Death(); 
 		break;
+
+	case HITTED:
+		ChangeAnimation("Idle"); 
+		movementTime += dt;
+		if (movementTime >= 2.0f)
+		{
+			currentState = FLYING;
+			playerHitted = false;
+		}
+		break; 
 
 	case STOP:
 		if (IM.CheckKeyState(SDLK_SPACE, PRESSED))
@@ -294,8 +304,8 @@ void Player::Death()
 		{
 			AUDIO.PlayClip(CollisionId);
 		}
-
-		currentState = FLYING;
+		currentState = HITTED; 
+		playerHitted = true; 
 	}
 }
 void Player::DeathAnimation()
