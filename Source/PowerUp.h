@@ -12,8 +12,10 @@ protected:
 	int powerUpID;
 
 public:
-	PowerUp(Player* p); 
-
+	PowerUp(Player* p);
+	~PowerUp(){
+		AUDIO.FreeClip(powerUpID);
+	}
 	void Update(float dt) override; 
 	void AddMovement(); 
 

@@ -15,10 +15,7 @@ Gameplay::Gameplay()
 
 	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
 
-
-	waves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
-	remainingWaves = waves; 
-	remainingWaves = levelLoader.LoadLevel(1);
+	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -78,14 +75,6 @@ void Gameplay::Update(float dt)
 			ship->Finished();
 		}
 
-		isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
-
-	if (IM.CheckKeyState(SDLK_t, PRESSED))
-	{
-		currentKeyLevel++;
-		remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
-	}
-
 	currentTimeToSpawnIsland += dt;
 
 		if (currentTimeToSpawnIsland >= timeToSpawnIsland)
@@ -94,7 +83,7 @@ void Gameplay::Update(float dt)
 			SpawnIsland();
 		}
 
-		if (player->IsPlayerPuased())
+		if (player->IsPlayerPaused())
 			currentState = FINISH_STATE; 
 
 		if (LIVES_GAME.GetLives() == 0)
@@ -122,13 +111,23 @@ void Gameplay::Update(float dt)
 		player->Update(dt); 
 
 
-		if (!player->IsPlayerPuased())
+		if (!player->IsPlayerPaused())
+		{
+			if (currentKeyLevel == 2)
+				currentKeyLevel = 0;
+			else
+				currentKeyLevel++;
+
+			remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
 			currentState = GAME; 
+		}
 
 		break;
 	case GAME_OVER:
 
-		LIVES_GAME.Reset(); 
+		levelLoader.ReadAllLevels(player);
+
+		LIVES_GAME.Reset();
 		SCORE.Reset();
 
 		for (int i = objects.size() - 1; i >= 0; i--)
@@ -141,8 +140,10 @@ void Gameplay::Update(float dt)
 			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
+		
 
-		remainingWaves = waves;
+		currentKeyLevel = 0;
+		remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
 
 		ship->Reset(); 
 		player->Reset(); 

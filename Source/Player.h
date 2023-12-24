@@ -71,7 +71,13 @@ private:
 	void CreateAnimations();
 
 public:
-	Player(ShipBackGround* _ship); 
+	Player(ShipBackGround* _ship);
+	~Player() {
+		AUDIO.FreeClip(shootID);
+		AUDIO.FreeClip(CollisionId);
+		AUDIO.FreeClip(loseStageId);
+		AUDIO.FreeClip(bulletId);
+	}
 	void Update(float dt) override; 
 	virtual void OnCollisionEnter(Object* other) override;
 
@@ -81,7 +87,7 @@ public:
 	inline int GetHealth() const { return health; }
 	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
 	inline bool GetDoubleFireEnabled()const { return doubleFire; }
-	inline bool IsPlayerPuased() const { return currentState == STOP;  }
+	inline bool IsPlayerPaused() const { return currentState == STOP;  }
 	void Reset()
 	{
 		currentState = TAKE_OFF;
