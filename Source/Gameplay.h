@@ -13,6 +13,7 @@
 #include "Wave.h"
 #include "Player.h"
 #include "ShipBackground.h"
+#include "LevelLoader.h"
 
 enum StatesGameplay { GAME, PAUSE, FINISH_STATE, GAME_OVER };
 
@@ -27,8 +28,6 @@ private:
 	Player* player;
 	ShipBackGround* ship; 
 
-	int currentLevel;
-
 	std::vector<Wave> remainingWaves;
 	std::vector<Wave> waves; 
 	int sizeRemainingWaves;
@@ -36,6 +35,10 @@ private:
 
 	int mainThemeId;
 	int stageCompletedId;
+
+	LevelLoader levelLoader;
+
+	int currentKeyLevel;
 
 public:
 

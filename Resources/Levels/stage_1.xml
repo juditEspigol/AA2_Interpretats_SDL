@@ -33,12 +33,12 @@
 		<type pattern="0">1</type>
 	</wave>
 	<wave>
-		<spawnTime>29</spawnTime>
-		<type>2</type>
+		<spawnTime>31</spawnTime>
+		<type pattern="4">0</type>
 	</wave>
 	<wave>
-		<spawnTime>30</spawnTime>
-		<type pattern="2">0</type>
+		<spawnTime>32</spawnTime>
+		<type pattern="3">0</type>
 	</wave>
 	<wave>
 		<spawnTime>31</spawnTime>

@@ -4,16 +4,21 @@ Gameplay::Gameplay()
 {
 	currentState = GAME;
 
+	currentKeyLevel = 0;
+	ship = new ShipBackGround();
+	player = new Player(ship);
+
+	levelLoader = LevelLoader(player);
+
 	mainThemeId = AUDIO.LoadMusic("Resources/Audio/MainTheme.mp3");
 	AUDIO.PlayMusic(mainThemeId);
 
 	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
 
-	ship = new ShipBackGround();
-	player = new Player(ship);
 
 	waves = LEVELLOADER.LoadLevel("Resources/Levels/stage_0.xml", player);
 	remainingWaves = waves; 
+	remainingWaves = levelLoader.LoadLevel(1);
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -75,7 +80,13 @@ void Gameplay::Update(float dt)
 
 		isFinished = IM.CheckKeyState(SDLK_e, PRESSED);
 
-		currentTimeToSpawnIsland += dt;
+	if (IM.CheckKeyState(SDLK_t, PRESSED))
+	{
+		currentKeyLevel++;
+		remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+	}
+
+	currentTimeToSpawnIsland += dt;
 
 		if (currentTimeToSpawnIsland >= timeToSpawnIsland)
 		{

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 
 #include "Wave.h"
 #include "Player.h"
@@ -18,18 +19,19 @@
 
 class LevelLoader
 {
-
-	LevelLoader() = default;
-	LevelLoader(const LevelLoader&) = delete;
-	LevelLoader& operator =(const LevelLoader&) = delete;
+	std::unordered_map<int, std::vector<Wave>> levels;
 
 public:
 
-	inline static LevelLoader& Instance()
-	{
-		static LevelLoader levelLoader;
-		return levelLoader;
-	}
+	LevelLoader() = default;
 
-	std::vector<Wave> LoadLevel(std::string _path, Player* _player);
+	LevelLoader(Player* _player) {
+		levels = ReadAllLevels(_player);
+	};
+
+	std::vector<Wave> LoadLevel(int key);
+
+	std::unordered_map<int, std::vector<Wave>> ReadAllLevels(Player* _player);
+
+	std::vector<Wave>ReadOneLevel(std::string _path, Player* _player);
 };

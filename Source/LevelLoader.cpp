@@ -1,8 +1,43 @@
 #include "LevelLoader.h"
 
-std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
+std::vector<Wave> LevelLoader::LoadLevel(int key)
 {
-    std::vector<Wave> planesToSpawn;
+	for (std::pair<int, std::vector<Wave>> myPair : levels)
+	{
+		if (key == myPair.first)
+			return myPair.second;
+	}
+}
+
+std::unordered_map<int, std::vector<Wave>> LevelLoader::ReadAllLevels(Player* _player)
+{
+	std::unordered_map<int, std::vector<Wave>> mapLevels;
+
+	int key = 0;
+
+	mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_0.xml", _player));
+	key++;
+
+	mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_1.xml", _player));
+	key++;
+
+	mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_2.xml", _player));
+	key++;
+
+	/*mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_3.xml", _player));
+	key++;
+
+	mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_4.xml", _player));
+	key++;
+
+	mapLevels.emplace(key, ReadOneLevel("Resources/Levels/stage_5.xml", _player));*/
+
+	return mapLevels;
+}
+
+std::vector<Wave> LevelLoader::ReadOneLevel(std::string _path, Player* _player)
+{
+	std::vector<Wave> planesToSpawn;
 
 	rapidxml::xml_document<> document;
 	std::ifstream myFile;
@@ -31,7 +66,7 @@ std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
 	{
 		spawnTime = std::stof(waveNode->first_node("spawnTime")->value());
 		waveType = (WaveType)std::stoi(waveNode->first_node("type")->value());
-		
+
 		if (waveNode->first_node("type")->first_attribute("pattern") != NULL)
 		{
 			waveAtribute = waveNode->first_node("type")->first_attribute("pattern");
@@ -43,5 +78,5 @@ std::vector<Wave> LevelLoader::LoadLevel(std::string _path, Player* _player)
 		planesToSpawn.push_back(wave);
 	}
 
-    return planesToSpawn;
+	return planesToSpawn;
 }
