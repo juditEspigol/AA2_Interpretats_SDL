@@ -280,6 +280,10 @@ void Player::Death()
 			AUDIO.PlayClip(loseStageId);
 			Destroy();
 		}
+		else
+		{
+			AUDIO.PlayClip(CollisionId);
+		}
 
 		currentState = FLYING;
 	}
@@ -370,13 +374,11 @@ bool Player::IsEnemyPlane(Object* other)
 {
 	if (dynamic_cast<EnemyPlane*>(other))
 	{
-		AUDIO.PlayClip(CollisionId);
 		if (currentState == ROLLING)
 		{
 			SCORE.AddScore(500);
 			return true;
 		}
-		AUDIO.PlayClip(bulletId);
 		GetDamage(1);
 		return true;
 	}
@@ -391,6 +393,7 @@ bool Player::IsEnemyBullet(Object* other)
 			SCORE.AddScore(500);
 			return true;
 		}
+		AUDIO.PlayClip(bulletId);
 		GetDamage(1);
 		other->Destroy();
 		return true;
