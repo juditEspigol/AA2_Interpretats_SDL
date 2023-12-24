@@ -85,12 +85,6 @@ void Wave::Update(float _dt)
 {
 	DestroyPlanes();
 
-	if (IM.CheckKeyState(SDLK_k, PRESSED))
-	{
-		for (EnemyPlane* plane : planesToSpawn)
-			plane->Destroy();
-	}
-
 	currentTime += _dt;
 
 	if (currentTime >= startTime && !planesAreSpawned)
