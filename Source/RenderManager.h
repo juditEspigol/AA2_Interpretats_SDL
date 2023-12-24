@@ -14,6 +14,7 @@
 class RenderManager // render manager
 {
 private:
+
 	SDL_Texture* gameTexture; 
 	SDL_Window* window;
 	SDL_Renderer* renderer;

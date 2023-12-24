@@ -30,8 +30,15 @@ void Scene::Update(float dt)
 		objects.push_back(SPAWNER.DequeueObjectToSpawn());
 	
 	for (Object* object : objects)
+	{
 		object->Update(dt);
-	for (Object* gameUI : ui)
+
+		// Detect Collisions
+		for (Object* other : objects)
+			object->OnCollisionEnter(other);
+		
+	}
+	for (TextObject* gameUI : ui)
 		gameUI->Update(dt);
 }
 
@@ -40,7 +47,7 @@ void Scene::Render()
 	for (Object* o : objects)
 		o->Render();
 
-	for (Object* gameUI : ui)
+	for (TextObject* gameUI : ui)
 		gameUI->Render();
 
 }

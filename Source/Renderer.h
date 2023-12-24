@@ -6,10 +6,15 @@
 #include "Vector2.h"
 #include "Transform.h"
 #include "RenderManager.h"
+#include <unordered_map>
+
+const std::string BACKGROUND_TEXTURE;
+const std::string GAMEOBJECTS_TEXTURE;
 
 class Renderer
 {
 protected:
+
 	SDL_Texture* texture; 
 	int surfaceW, surfaceH; 
 	SDL_Rect sourceRect, destRect; 
@@ -18,7 +23,7 @@ protected:
 	SDL_RendererFlip flipMode; 
 
 public:
-	Renderer(Transform* transform);
+	Renderer(Transform* transform, SDL_RendererFlip flipMode);
 	~Renderer();
 
 	virtual void Render();

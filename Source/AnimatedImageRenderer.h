@@ -17,13 +17,13 @@ private:
 
 public:
 	AnimatedImageRenderer(Transform* transform, Vector2 sourceOffset, Vector2 sourceSize
-		, const std::vector<Vector2>& deltas, bool looping, int fps)
-		:ImageRenderer(transform, sourceOffset, sourceSize)
+		, const std::vector<Vector2>& deltas, bool looping, int fps, SDL_RendererFlip flipMode = SDL_FLIP_NONE)
+		:ImageRenderer(transform, sourceOffset, sourceSize, flipMode)
 		, deltas(deltas), looping(looping), currentFrame(0), fps(fps), currentFrameTime(0.0f), initialSourceOffset(sourceOffset)
 	{
 		frameTime = 1.0f / (float)fps; 
 	}
-	void Update(float dt)
+	virtual void Update(float dt) override
 	{
 		currentFrameTime += dt; 
 
@@ -42,5 +42,16 @@ public:
 			sourceRect.x = initialSourceOffset.x + deltas[currentFrame].x;
 			sourceRect.y = initialSourceOffset.y + deltas[currentFrame].y;
 		}
+	}
+
+	virtual bool LastFrame() override
+	{
+ 		return (currentFrame + 1) >= deltas.size() ? true : false;
+	}
+
+	virtual void Reset() override
+	{
+		currentFrame = 0; 
+		currentFrameTime = 0.0f; 
 	}
 };

@@ -9,12 +9,15 @@
 class AudioManager
 {
 private:
-	const int maxChannels = 64; // 64 audios reproduint-se a l'hora
+	
+	const int maxChannels = 800;
+
 	std::unordered_map<int, Mix_Chunk*> clips; 
-	std::unordered_map<int, Mix_Music*> songs;
+	std::unordered_map<int, Mix_Music*> songs; 
+
+	std::queue<int> avaliableIDs; 
 
 	bool muted; 
-	std::queue<int> avaliableIDs; 
 
 	AudioManager();
 	~AudioManager(); 

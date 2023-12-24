@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include "Object.h"
+#include "TextObject.h"
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "AudioManager.h"
-#include "TextRenderer.h"
 #include "Spawner.h"
 
 //Scenes names
@@ -16,13 +16,14 @@
 class Scene
 {
 protected:
-	std::vector<Object*> ui; 
-	std::vector<Object*> objects;
+	std::vector<TextObject*> ui; 
+	std::vector<Object*> objects; 
 
 	bool isFinished; 
 	std::string nextScene; 
 
 public:
+
 	Scene() = default; 
 	virtual void OnEnter() = 0; 
 	virtual std::string OnExit(); 

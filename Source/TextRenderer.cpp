@@ -1,7 +1,7 @@
 #include "TextRenderer.h"
 
-TextRenderer::TextRenderer(std::string text, int fontSize, SDL_Color color, Transform* transform, std::string resourcePath)
-	: Renderer(transform), text(text), fontSize(fontSize), color(color)
+TextRenderer::TextRenderer(std::string text, int fontSize, SDL_Color color, Transform* transform, std::string resourcePath, SDL_RendererFlip flipMode)
+	: Renderer(transform, flipMode), text(text), fontSize(fontSize), color(color)
 {
 	fontPath = resourcePath;
 	SetText(text, fontSize, color);

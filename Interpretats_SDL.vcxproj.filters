@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -45,6 +45,15 @@
     </Filter>
     <Filter Include="Header Files\Model\GameObjects\PowerUps">
       <UniqueIdentifier>{88de6166-a261-4802-9332-b1983691c3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Bullet">
+      <UniqueIdentifier>{f74b0e49-d633-47c8-855b-b61238e82653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Background">
+      <UniqueIdentifier>{7439807e-17b0-4c11-b0a1-9970922879a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\PowerUps">
+      <UniqueIdentifier>{e6d4b154-9b27-4fd2-8f71-1b808780c7f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,12 +102,6 @@
     <ClCompile Include="Source\MainMenu.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Spawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PlayerBullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Gameplay.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
@@ -108,7 +111,49 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Source Files\Model\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerBullet.cpp">
+      <Filter>Source Files\Model\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SmallNormalPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EnemyPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyBullet.cpp">
+      <Filter>Source Files\Model\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SmallRedPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spawner.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MediumYellowPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IslandBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SeaBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PowerUp.cpp">
+      <Filter>Source Files\Model\PowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BigGreenPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SupportPlane.cpp">
+      <Filter>Source Files\Model\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShipBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,6 +222,72 @@
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimatedImageRenderer.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IslandBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SmallNormalPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyBullet.h">
+      <Filter>Header Files\Model\GameObjects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SmallRedPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MediumYellowPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BigGreenPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SeaBackground.h">
+      <Filter>Header Files\Model\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScoreManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GreenPowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrayPowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WhitePowerUp.h">
+      <Filter>Header Files\Model\GameObjects\PowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SupportPlane.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaveType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MovementPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StatesPlayer.h">
+      <Filter>Header Files\Model\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LivesManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShipBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StatesShipBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelLoader.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>

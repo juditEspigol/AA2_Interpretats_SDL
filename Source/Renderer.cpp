@@ -1,8 +1,8 @@
 #include "Renderer.h"
 
 
-Renderer::Renderer(Transform* transform) 
-	: transform(transform), flipMode(SDL_FLIP_NONE) {}
+Renderer::Renderer(Transform* transform, SDL_RendererFlip flipMode)
+	: transform(transform), flipMode(flipMode) {}
 
 Renderer::~Renderer()
 {
