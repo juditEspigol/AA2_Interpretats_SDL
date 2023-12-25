@@ -42,6 +42,8 @@ public:
 	void FreeClip(int ID); 
 	void FreeMusic(int ID); 
 
+	void ClearClips();
+
 	void Mute();
 	void Unmute();
 	inline bool GetMuted() { return muted; }

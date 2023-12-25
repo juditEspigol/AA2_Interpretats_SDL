@@ -84,6 +84,18 @@ void AudioManager::FreeMusic(int ID)
     songs.erase(ID);
 }
 
+void AudioManager::ClearClips()
+{
+    clips.clear();
+    while (avaliableIDs.size() != 0)
+    {
+        avaliableIDs.pop();
+    }
+
+    for (int i = 0; i < maxChannels; i++)
+        avaliableIDs.push(i);
+}
+
 void AudioManager::Mute()
 {
     if (muted)
