@@ -192,6 +192,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\EnemyBullet.cpp" />
     <ClCompile Include="Source\EnemyPlane.cpp" />
     <ClCompile Include="Source\Gameplay.cpp" />
+    <ClCompile Include="Source\HighScoreManager.cpp" />
     <ClCompile Include="Source\IslandBackground.cpp" />
     <ClCompile Include="Source\LevelLoader.cpp" />
     <ClCompile Include="Source\MediumYellowPlane.cpp" />
@@ -222,6 +223,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\HighScoreManager.h" />
     <ClInclude Include="Source\LevelLoader.h" />
     <ClInclude Include="Source\LivesManager.h" />
     <ClInclude Include="Source\GrayPowerUp.h" />
@@ -230,6 +232,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\GreenPowerUp.h" />
     <ClInclude Include="Source\Pattern.h" />
     <ClInclude Include="Source\PowerUp.h" />
+    <ClInclude Include="Source\Ranking.h" />
     <ClInclude Include="Source\ScoreManager.h" />
     <ClInclude Include="Source\SeaBackground.h" />
     <ClInclude Include="Source\ShipBackground.h" />
@@ -258,6 +261,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\TextObject.h" />
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\TimeManager.h" />
+    <ClInclude Include="Source\UserScore.h" />
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />

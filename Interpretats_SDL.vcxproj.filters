@@ -156,6 +156,9 @@
     <ClCompile Include="Source\LevelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HighScoreManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -272,9 +275,6 @@
     <ClInclude Include="Source\WaveType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MovementPattern.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\StatesPlayer.h">
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
     </ClInclude>
@@ -289,6 +289,18 @@
     </ClInclude>
     <ClInclude Include="Source\LevelLoader.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HighScoreManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UserScore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ranking.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
