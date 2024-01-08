@@ -7,9 +7,9 @@ void HighScoreManager::SaveScores(std::string path)
 
 	assert(!myFileOut.is_open());
 
-	int size = highscores.size();
+	int size = highScores.size();
 	myFileOut.write(reinterpret_cast<char*>(&size), sizeof(int));
-	myFileOut.write(reinterpret_cast<char*>(highscores.data()), sizeof(UserScore) * size);
+	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * size);
 
 	myFileOut.close();
 }
@@ -23,9 +23,9 @@ void HighScoreManager::LoadScores(std::string path)
 	int inSize = 0;
 	myFileIn.read(reinterpret_cast<char*>(&inSize), sizeof(int));
 
-	highscores.resize(inSize);
+	highScores.resize(inSize);
 
-	myFileIn.read(reinterpret_cast<char*>(highscores.data()), sizeof(UserScore) * inSize);
+	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * inSize);
 
 	myFileIn.close();
 }
@@ -34,10 +34,23 @@ void HighScoreManager::AddScores(int value, std::string name)
 {
 	UserScore uScore(value, name);
 
-	highscores.push_back(uScore);
+	int count = 0;
+
+	for (UserScore userScore : highScores)
+	{
+		if (uScore >= userScore)
+		{
+			highScores.insert(highScores.begin() + count, uScore);
+			return;
+		}
+		count++;                                                         
+	}
+
+	if (highScores.size() > 10)
+		highScores.pop_back();
 }
 
 std::vector<UserScore> HighScoreManager::GetScores()
 {
-    return highscores;
+    return highScores;
 }

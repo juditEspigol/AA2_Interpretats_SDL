@@ -14,10 +14,13 @@ class HighScoreManager
 {
 private:
 
-	std::vector<UserScore> highscores;
+	std::vector<UserScore> highScores;
+
+	int numMaxOfHighScores;
 
 
-	HighScoreManager();
+	HighScoreManager()
+		: numMaxOfHighScores(10) {};
 
 	HighScoreManager(const HighScoreManager&) = delete;
 	HighScoreManager& operator =(const HighScoreManager&) = delete;
