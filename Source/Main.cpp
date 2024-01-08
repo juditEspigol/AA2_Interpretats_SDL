@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 
 //Scenes
+#include "SplashScreen.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 
@@ -21,8 +22,9 @@ int main(int argc, char* args[])
     // CREATE SCENES
     SCENE_M.AddScene(GAMEPLAY, new Gameplay());
     SCENE_M.AddScene(MAIN, new MainMenu());
+    SCENE_M.AddScene(SPLASH, new SplashScreen());
 
-    SCENE_M.SetCurrentScene(GAMEPLAY);
+    SCENE_M.SetCurrentScene(SPLASH);
     SCENE_M.GetCurrentScene()->OnEnter();
 
     while (!IM.GetQuitEvent())

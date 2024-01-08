@@ -2,6 +2,7 @@
 #include <vector>
 #include "Object.h"
 #include "TextObject.h"
+#include "GameObject.h"
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "AudioManager.h"
@@ -10,7 +11,7 @@
 //Scenes names
 #define GAMEPLAY "Gameplay"
 #define MAIN "Main Menu"
-#define SPLASH "SplashScreen"
+#define SPLASH "Splash Screen"
 #define RANKING "Ranking"
 
 class Scene
