@@ -166,6 +166,8 @@ void Gameplay::Update(float dt)
 		for (int i = remainingWaves.size() - 1; i >= 0; i--)
 			remainingWaves.erase(remainingWaves.begin() + i);
 
+		AUDIO.ClearClips();
+
 		LIVES_GAME.Reset();
 		SCORE.Reset();
 		SPAWNER.ClearSpawnQueue();
