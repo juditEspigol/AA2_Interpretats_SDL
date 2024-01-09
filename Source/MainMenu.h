@@ -7,6 +7,7 @@
 class MainMenu : public Scene
 {
 private:
+	bool enableAudio; 
 public:
 	MainMenu(); 
 	virtual void OnEnter() override;

@@ -102,7 +102,7 @@ void AudioManager::Mute()
         return; 
 
     // STOP!
-   /* Mix_HaltChannel(-1); 
+    /* Mix_HaltChannel(-1); 
     Mix_HaltMusic(); */
     // CHANGE VOLUME
     Mix_Volume(-1, 0); 
@@ -114,6 +114,6 @@ void AudioManager::Unmute()
     if (!muted)
         return;
 
-    Mix_Volume(-1, MIX_MAX_VOLUME); //128
+    //Mix_Volume(-1, MIX_MAX_VOLUME); //128
     muted = false; 
 }
