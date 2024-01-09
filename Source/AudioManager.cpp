@@ -101,8 +101,8 @@ void AudioManager::Mute()
     if (muted)
         return; 
 
-    /* STOP!
-    Mix_HaltChannel(-1); 
+    // STOP!
+   /* Mix_HaltChannel(-1); 
     Mix_HaltMusic(); */
     // CHANGE VOLUME
     Mix_Volume(-1, 0); 
