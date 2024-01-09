@@ -215,6 +215,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\ShipBackground.cpp" />
     <ClCompile Include="Source\SmallNormalPlane.cpp" />
     <ClCompile Include="Source\SmallRedPlane.cpp" />
+    <ClCompile Include="Source\SplashScreen.cpp" />
     <ClCompile Include="Source\SupportPlane.cpp" />
     <ClCompile Include="Source\TextRenderer.cpp" />
     <ClCompile Include="Source\TimeManager.cpp" />
@@ -225,6 +226,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\HighScoreManager.h" />
+    <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\LevelLoader.h" />
     <ClInclude Include="Source\LivesManager.h" />
     <ClInclude Include="Source\GrayPowerUp.h" />
@@ -270,6 +272,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\SupportPlane.h" />
     <ClInclude Include="Source\WhitePowerUp.h" />
     <ClInclude Include="Source\StatesPlayer.h" />
+    <ClInclude Include="Source\SplashScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

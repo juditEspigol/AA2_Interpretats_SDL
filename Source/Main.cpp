@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 
 //Scenes
+#include "SplashScreen.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Ranking.h"
@@ -24,10 +25,9 @@ int main(int argc, char* args[])
     SCENE_M.AddScene(GAMEPLAY, new Gameplay());
     SCENE_M.AddScene(MAIN, new MainMenu());
     SCENE_M.AddScene(RANKING, new Ranking());
+    SCENE_M.AddScene(SPLASH, new SplashScreen());
 
-
-    SCENE_M.SetCurrentScene(GAMEPLAY);
-    //SCENE_M.SetCurrentScene(RANKING);
+    SCENE_M.SetCurrentScene(MAIN);
     SCENE_M.GetCurrentScene()->OnEnter();
 
     while (!IM.GetQuitEvent())

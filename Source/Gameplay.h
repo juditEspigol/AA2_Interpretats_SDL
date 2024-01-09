@@ -8,6 +8,7 @@
 #include "HighScoreManager.h"
 
 // AGGREGATION
+#include "Button.h"
 #include "SeaBackground.h"
 #include "IslandBackground.h"
 #include "LevelLoader.h"

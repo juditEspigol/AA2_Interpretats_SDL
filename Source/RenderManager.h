@@ -40,4 +40,5 @@ public:
 	SDL_Renderer* GetRenderer() { return renderer; }
 	SDL_Texture* GetGameTexture() { return gameTexture; }
 	Vector2 GetSizeWindow() { return sizeWindow; }
+	void SetWindowsColor(int red, int green, int blue, int h = 212) { SDL_SetRenderDrawColor(renderer, red, green, blue, h); }
 };
