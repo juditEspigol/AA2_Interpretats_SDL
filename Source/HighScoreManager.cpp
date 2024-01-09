@@ -8,6 +8,7 @@ void HighScoreManager::InitializeHighScores()
 		UserScore user(0000, "---");
 		highScores.push_back(user);
 	}
+	SCOREM.SaveScores(scoreFile);
 }
 
 void HighScoreManager::SaveScores(std::string path)
