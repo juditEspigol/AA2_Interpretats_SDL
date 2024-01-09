@@ -2,6 +2,7 @@
 
 Gameplay::Gameplay()
 {
+	isFinished = false; 
 	currentState = GAME;
 
 	currentKeyLevel = 0;
@@ -45,11 +46,14 @@ Gameplay::Gameplay()
 	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
 	sizeRemainingWaves = remainingWaves.size();
+
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
 }
 
 void Gameplay::OnEnter()
 {
-
+	isFinished = false; 
 }
 
 void Gameplay::Render()
@@ -64,7 +68,6 @@ void Gameplay::Update(float dt)
 	{
 	case GAME:
 
-		std::cout << SCORE.GetScore() << std::endl;
 		Scene::Update(dt);
 
 		for (int i = remainingWaves.size() - 1; i >= 0; i--)
@@ -110,16 +113,25 @@ void Gameplay::Update(float dt)
 		{
 			currentState = PAUSE;
 			ui[0]->GetRenderer()->NewText("PAUSED");
+			objects.insert(objects.end(), new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 400), "RESUME")); 
 		}
 
 		break;
 
 	case PAUSE:
 
-		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
+		for (Object* object : objects)
+		{
+			for (Object* other : objects)
+				object->OnCollisionEnter(other);
+		}
+
+
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED) || dynamic_cast<Button*>(objects.back())->GetActivated())
 		{
 			currentState = GAME;
 			ui[0]->GetRenderer()->NewText("  ");
+			objects.pop_back(); 
 		}
 
 		break;

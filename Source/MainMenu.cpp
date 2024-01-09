@@ -39,9 +39,8 @@ void MainMenu::Update(float dt)
 	}
 	else if (dynamic_cast<Button*>(objects[1])->GetActivated()) // ranking
 	{
-		std::cout << "RANKING" << std::endl; 
-		/*nextScene = RANKING;
-		isFinished = true;*/
+		nextScene = RANKING;
+		isFinished = true;
 	}
 	else if (dynamic_cast<Button*>(objects[2])->GetActivated()) // audio
 	{

@@ -77,6 +77,7 @@ public:
 
 		this->SetScale(Vector2(1.5, 1.5));
 		pressed = false; 
+		activated = false; 
 		return false; 
 	}
 
