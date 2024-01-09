@@ -43,10 +43,12 @@ protected:
 
 public:
 	EnemyPlane(int hp, int score, Transform* transform);
-	~EnemyPlane() {
+	~EnemyPlane()
+	{
 		AUDIO.FreeClip(shootId);
 		AUDIO.FreeClip(bulletId);
 	}
+
 	virtual void Update(float dt) override; 
 	void OnCollisionEnter(Object* other) override; 
 

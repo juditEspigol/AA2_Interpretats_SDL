@@ -9,12 +9,15 @@
 class AudioManager
 {
 private:
-	const int maxChannels = 400;
+	
+	const int maxChannels = 800;
+
 	std::unordered_map<int, Mix_Chunk*> clips; 
 	std::unordered_map<int, Mix_Music*> songs; 
 
-	bool muted; 
 	std::queue<int> avaliableIDs; 
+
+	bool muted; 
 
 	AudioManager();
 	~AudioManager(); 
@@ -38,6 +41,8 @@ public:
 
 	void FreeClip(int ID); 
 	void FreeMusic(int ID); 
+
+	void ClearClips();
 
 	void Mute();
 	void Unmute();

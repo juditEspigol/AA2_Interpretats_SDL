@@ -5,6 +5,7 @@
 // DEPENDENCIES
 #include "ScoreManager.h"
 #include "LivesManager.h"
+#include "HighScoreManager.h"
 
 // AGGREGATION
 #include "SeaBackground.h"
@@ -15,7 +16,7 @@
 #include "ShipBackground.h"
 #include "LevelLoader.h"
 
-enum StatesGameplay { GAME, PAUSE, FINISH_STATE, GAME_OVER };
+enum StatesGameplay { GAME, PAUSE, FINISH_STATE, HIT, GAME_OVER };
 
 class Gameplay : public Scene
 {
@@ -28,8 +29,8 @@ private:
 	Player* player;
 	ShipBackGround* ship; 
 
-	std::vector<Wave> remainingWaves;
-	std::vector<Wave> waves; 
+	std::vector<Wave*> remainingWaves;
+
 	int sizeRemainingWaves;
 	int levelWaves;
 

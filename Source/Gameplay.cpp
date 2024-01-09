@@ -23,8 +23,12 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
-		//PAUSED
+		//PAUSED OBJECT[0]!!!!!!
 	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
+		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
+		"Resources/PixelPowerline-11Mg.ttf"));
+		//NEXT LEVEL OBJECT[0]!!!!!!
+	ui.push_back(new TextObject("  ", 12, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// SCORE
@@ -50,7 +54,8 @@ void Gameplay::OnEnter()
 
 void Gameplay::Render()
 {
-	Scene::Render(); 
+	if(currentState != HIT)
+		Scene::Render(); 
 }
 
 void Gameplay::Update(float dt)
@@ -59,18 +64,19 @@ void Gameplay::Update(float dt)
 	{
 	case GAME:
 
+		std::cout << SCORE.GetScore() << std::endl;
 		Scene::Update(dt);
 
 		for (int i = remainingWaves.size() - 1; i >= 0; i--)
 		{
-			if (remainingWaves[i].WaveDone())
+			if (remainingWaves[i]->WaveDone())
 			{
 				remainingWaves.erase(remainingWaves.begin() + i);
 				continue;
 			}
-			remainingWaves[i].Update(dt);
+			remainingWaves[i]->Update(dt);
 		}
-		if (remainingWaves.size() == 1)
+		if (remainingWaves.size() < 1)
 		{
 			ship->Finished();
 		}
@@ -84,10 +90,21 @@ void Gameplay::Update(float dt)
 		}
 
 		if (player->IsPlayerPaused())
+		{
+			ui[1]->GetRenderer()->NewText("PRESS SPACE TO CONTINUE");
 			currentState = FINISH_STATE; 
+		}
+
+		if (player->PlayerHitted())
+		{
+			currentState = HIT;
+		}
 
 		if (LIVES_GAME.GetLives() == 0)
+		{
+			HIGHSCOREM.AddScores(SCORE.GetScore());
 			currentState = GAME_OVER; 
+		}
 
 		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
 		{
@@ -119,16 +136,46 @@ void Gameplay::Update(float dt)
 				currentKeyLevel++;
 
 			remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+			ui[1]->GetRenderer()->NewText("  ");
 			currentState = GAME; 
 		}
 
 		break;
+	case HIT:
+
+		player->Update(dt); 
+
+		for (int i = objects.size() - 1; i >= 0; i--)
+		{
+			if (dynamic_cast<SeaBackground*>(objects[i]) ||
+				dynamic_cast<ShipBackGround*>(objects[i]) ||
+				dynamic_cast<Player*>(objects[i]))
+				continue;
+
+			delete objects[i];
+			objects.erase(objects.begin() + i);
+		}
+
+		SPAWNER.ClearSpawnQueue(); 
+
+		if (!player->PlayerHitted())
+		{
+			currentState = GAME;
+		}
+
+
+		break; 
 	case GAME_OVER:
 
-		levelLoader.ReadAllLevels(player);
+		for (int i = remainingWaves.size() - 1; i >= 0; i--)
+			remainingWaves.erase(remainingWaves.begin() + i);
+
+		AUDIO.ClearClips();
 
 		LIVES_GAME.Reset();
+
 		SCORE.Reset();
+		SPAWNER.ClearSpawnQueue();
 
 		for (int i = objects.size() - 1; i >= 0; i--)
 		{
@@ -140,6 +187,10 @@ void Gameplay::Update(float dt)
 			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
+
+		levelLoader.clearLevels();
+
+		levelLoader.SetLevels(levelLoader.ReadAllLevels(player));
 		
 
 		currentKeyLevel = 0;

@@ -19,7 +19,7 @@
 
 class LevelLoader
 {
-	std::unordered_map<int, std::vector<Wave>> levels;
+	std::unordered_map<int, std::vector<Wave*>> levels;
 
 public:
 
@@ -29,9 +29,13 @@ public:
 		levels = ReadAllLevels(_player);
 	};
 
-	std::vector<Wave> LoadLevel(int key);
+	std::vector<Wave*> LoadLevel(int key);
 
-	std::unordered_map<int, std::vector<Wave>> ReadAllLevels(Player* _player);
+	std::unordered_map<int, std::vector<Wave*>> ReadAllLevels(Player* _player);
 
-	std::vector<Wave>ReadOneLevel(std::string _path, Player* _player);
+	std::vector<Wave*>ReadOneLevel(std::string _path, Player* _player);
+
+	void clearLevels();
+
+	inline void SetLevels(std::unordered_map<int, std::vector<Wave*>> _levels) { levels = _levels; }
 };
