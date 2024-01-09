@@ -1,12 +1,11 @@
 #pragma once
 #include "UserScore.h"
 
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <cassert>
-
 
 const std::string scoreFile = "HighScore.dat";
 #define SCOREM HighScoreManager::Instance()
@@ -20,10 +19,7 @@ private:
 	int numMaxOfHighScores;
 
 
-	HighScoreManager()
-		: numMaxOfHighScores(10) {
-		InitializeHighScores();
-	};
+	HighScoreManager() = default;
 
 	HighScoreManager(const HighScoreManager&) = delete;
 	HighScoreManager& operator =(const HighScoreManager&) = delete;
@@ -37,9 +33,15 @@ public:
 	}
 
 	void InitializeHighScores();
+	void CreateNewHighScore();
+
+
+	bool CheckIfThereIsHighScore();
 
 	void SaveScores(std::string path);
 	void LoadScores(std::string path);
 	void AddScores(UserScore uScore);
 	std::vector<UserScore> GetScores();
+
+	void bubbleSort(std::vector<UserScore>& vector);
 };

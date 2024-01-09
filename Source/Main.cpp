@@ -18,11 +18,13 @@ int main(int argc, char* args[])
     srand(NULL(TIME));
 
     RENDERER.Init(); 
+    SCOREM.InitializeHighScores();
 
     // CREATE SCENES
     SCENE_M.AddScene(GAMEPLAY, new Gameplay());
     SCENE_M.AddScene(MAIN, new MainMenu());
     SCENE_M.AddScene(RANKING, new Ranking());
+
 
     //SCENE_M.SetCurrentScene(GAMEPLAY);
     SCENE_M.SetCurrentScene(RANKING);
