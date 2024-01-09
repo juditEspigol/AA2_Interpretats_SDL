@@ -1,16 +1,19 @@
 #pragma once
 #include "Scene.h"
+#include "HighScoreManager.h"
 
 class Ranking : public Scene
 {
 private:
 
-	void LoadScores();
+	void LoadScores() {};
 public:
-	Ranking() = default;
+	Ranking();
 
-	void OnEnter() override;
-	std::string OnExit() override;
-	void Update(float dt) override;
-	void Render() override;
+	void OnEnter() override {};
+	std::string OnExit() override {
+		return "";
+	};
+	void Update(float dt) override {};
+	void Render() override {};
 };

@@ -6,6 +6,8 @@ struct UserScore
 	int score;
 	std::string name;
 
+	UserScore() = default;
+
 	UserScore(int score, std::string name)
 		: score(score), name(name) {}
 

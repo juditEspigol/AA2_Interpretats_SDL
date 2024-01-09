@@ -9,6 +9,7 @@
 
 
 const std::string scoreFile = "HighScore.dat";
+#define SCOREM HighScoreManager::Instance()
 
 class HighScoreManager
 {
@@ -20,7 +21,9 @@ private:
 
 
 	HighScoreManager()
-		: numMaxOfHighScores(10) {};
+		: numMaxOfHighScores(10) {
+		InitializeHighScores();
+	};
 
 	HighScoreManager(const HighScoreManager&) = delete;
 	HighScoreManager& operator =(const HighScoreManager&) = delete;
@@ -33,8 +36,10 @@ public:
 		return scoreM;
 	}
 
+	void InitializeHighScores();
+
 	void SaveScores(std::string path);
 	void LoadScores(std::string path);
-	void AddScores(int value, std::string name);
+	void AddScores(UserScore uScore);
 	std::vector<UserScore> GetScores();
 };

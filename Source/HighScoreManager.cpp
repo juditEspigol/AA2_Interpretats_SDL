@@ -1,6 +1,15 @@
 #include "HighScoreManager.h"
 
 
+void HighScoreManager::InitializeHighScores()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		UserScore user(0000, "---");
+		highScores.push_back(user);
+	}
+}
+
 void HighScoreManager::SaveScores(std::string path)
 {
 	std::ofstream myFileOut(path, std::ios::out | std::ios::binary | std::ios::trunc);
@@ -30,18 +39,18 @@ void HighScoreManager::LoadScores(std::string path)
 	myFileIn.close();
 }
 
-void HighScoreManager::AddScores(int value, std::string name)
+void HighScoreManager::AddScores(UserScore uScore)
 {
-	UserScore uScore(value, name);
-
 	int count = 0;
 
-	for (UserScore userScore : highScores)
+	std::vector<UserScore>::iterator it = highScores.begin();
+
+	for (it; it != highScores.end() - 1; it++)
 	{
-		if (uScore >= userScore)
+		if (uScore >= *it)
 		{
 			highScores.insert(highScores.begin() + count, uScore);
-			return;
+			break;
 		}
 		count++;                                                         
 	}
