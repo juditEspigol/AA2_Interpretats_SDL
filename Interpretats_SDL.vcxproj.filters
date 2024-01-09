@@ -299,9 +299,6 @@
     <ClInclude Include="Source\HighScoreManager.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UserScore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Ranking.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>

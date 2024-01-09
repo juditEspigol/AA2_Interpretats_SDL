@@ -51,4 +51,6 @@ public:
 		score = 0; 
 		AddScore(0); 
 	}
+
+	inline int GetScore() const { return score; }
 };

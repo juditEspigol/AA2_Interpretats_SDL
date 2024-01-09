@@ -1,6 +1,5 @@
 #include "HighScoreManager.h"
 
-
 void HighScoreManager::InitializeHighScores()
 {
 	numMaxOfHighScores = 10;
@@ -8,17 +7,16 @@ void HighScoreManager::InitializeHighScores()
 	if (CheckIfThereIsHighScore())
 		LoadScores(scoreFile);
 	else
-		InitializeHighScores();
+		CreateNewHighScore();
 }
 
 void HighScoreManager::CreateNewHighScore()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		UserScore user(0000, "---");
-		highScores.push_back(user);
+		highScores.push_back(000000);
 	}
-	SCOREM.SaveScores(scoreFile);
+	HIGHSCOREM.SaveScores(scoreFile);
 }
 
 bool HighScoreManager::CheckIfThereIsHighScore()
@@ -47,7 +45,7 @@ void HighScoreManager::SaveScores(std::string path)
 
 	int size = highScores.size();
 	myFileOut.write(reinterpret_cast<char*>(&size), sizeof(int));
-	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * size);
+	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(int) * size);
 
 	myFileOut.close();
 }
@@ -68,39 +66,24 @@ void HighScoreManager::LoadScores(std::string path)
 
 	highScores.resize(inSize);
 
-	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * inSize);
+	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(int) * inSize);
 	
 	myFileIn.close();
 }
 
-void HighScoreManager::AddScores(UserScore uScore)
+void HighScoreManager::AddScores(int score)
 {
-	bubbleSort(highScores);
-	highScores.push_back(uScore);
+	highScores.push_back(score);
 
+	std::sort(highScores.begin(), highScores.end(), std::greater <>());
 
 	if (highScores.size() > 10)
 		highScores.pop_back();
+
+	SaveScores(scoreFile);
 }
 
-std::vector<UserScore> HighScoreManager::GetScores()
+std::vector<int> HighScoreManager::GetScores()
 {
     return highScores;
-}
-
-void HighScoreManager::bubbleSort(std::vector<UserScore>& vector) 
-{
-	int n = vector.size();
-	bool swapped;
-	for (int i = 0; i < n - 1; i++) {
-		swapped = false;
-		for (int j = 0; j < n - i - 1; j++) {
-			if (vector[j] >= vector[j + 1]) {
-				std::swap(vector[j], vector[j + 1]);
-				swapped = true;
-			}
-		}
-		if (!swapped)
-			break;
-	}
 }

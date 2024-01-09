@@ -262,7 +262,6 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClInclude Include="Source\TextObject.h" />
     <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\TimeManager.h" />
-    <ClInclude Include="Source\UserScore.h" />
     <ClInclude Include="Source\Vector2.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Spawner.h" />

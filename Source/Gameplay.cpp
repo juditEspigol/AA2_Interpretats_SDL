@@ -64,6 +64,7 @@ void Gameplay::Update(float dt)
 	{
 	case GAME:
 
+		std::cout << SCORE.GetScore() << std::endl;
 		Scene::Update(dt);
 
 		for (int i = remainingWaves.size() - 1; i >= 0; i--)
@@ -100,7 +101,10 @@ void Gameplay::Update(float dt)
 		}
 
 		if (LIVES_GAME.GetLives() == 0)
+		{
+			HIGHSCOREM.AddScores(SCORE.GetScore());
 			currentState = GAME_OVER; 
+		}
 
 		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
 		{
@@ -169,6 +173,7 @@ void Gameplay::Update(float dt)
 		AUDIO.ClearClips();
 
 		LIVES_GAME.Reset();
+
 		SCORE.Reset();
 		SPAWNER.ClearSpawnQueue();
 

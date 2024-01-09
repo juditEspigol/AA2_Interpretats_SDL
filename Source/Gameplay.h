@@ -5,6 +5,7 @@
 // DEPENDENCIES
 #include "ScoreManager.h"
 #include "LivesManager.h"
+#include "HighScoreManager.h"
 
 // AGGREGATION
 #include "SeaBackground.h"
