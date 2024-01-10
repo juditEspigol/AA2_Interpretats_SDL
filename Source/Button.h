@@ -8,7 +8,13 @@ class Button : public GameObject
 private:
 	bool activated; 
 	bool pressed; 
+	bool isHovered;
+	bool hoverHasSounded;
 	TextObject* textButton; 
+
+	//Audio
+	int onHoverClip;
+	int onClickClip;
 
 public:
 	Button(Vector2 position, std::string text, SDL_Color color = {255, 255, 255})
@@ -16,6 +22,11 @@ public:
 		isPendingDestroy = false; 
 		activated = false;
 		pressed = false; 
+		isHovered = false;
+		hoverHasSounded = false;
+
+		onHoverClip = AUDIO.LoadClip("Resources/Audio/onHoverClip.mp3");
+		onClickClip = AUDIO.LoadClip("Resources/Audio/onClickClip.mp3");
 
 		// TRANSFORM 
 		transform = new Transform();
@@ -48,7 +59,7 @@ public:
 
 		if (rb->CheckCollision(other->GetRigidBody()))
 		{
-			if (IsMouse(other))
+			if (IsMouse(other)) 
 				return; 
 		}
 	}
@@ -57,13 +68,24 @@ public:
 	{
 		if (rb->CheckOverlappingPoint(Vector2(IM.GetMouseX(), IM.GetMouseY())))
 		{
+			isHovered = true;
+
+			if (isHovered && !hoverHasSounded)
+			{
+				AUDIO.PlayClip(onHoverClip);
+				hoverHasSounded = true;
+			}
+
 			this->SetScale(Vector2(1.8, 1.8)); 
 
 			int mouseX = IM.GetMouseX(); 
 			int mouseY = IM.GetMouseY(); 
 
+
+
 			if (SDL_GetMouseState(&mouseX, &mouseY) == SDL_BUTTON_LEFT && !activated && !pressed) 
 			{
+				AUDIO.PlayClip(onClickClip);
 				pressed = true; 
 				activated = true;
 			}
@@ -74,6 +96,9 @@ public:
 			
 			return true; 
 		}
+
+		isHovered = false;
+		hoverHasSounded = false;
 
 		this->SetScale(Vector2(1.5, 1.5));
 		pressed = false; 
