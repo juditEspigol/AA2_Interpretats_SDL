@@ -102,7 +102,8 @@ void Gameplay::Update(float dt)
 
 		if (LIVES_GAME.GetLives() == 0)
 		{
-			HIGHSCOREM.AddScores(SCORE.GetScore());
+			UserScore uScore(SCORE.GetScore(), "AAA");
+			HIGHSCOREM.AddScores(uScore);
 			currentState = GAME_OVER; 
 		}
 

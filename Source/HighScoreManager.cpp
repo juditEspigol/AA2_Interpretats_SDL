@@ -14,7 +14,8 @@ void HighScoreManager::CreateNewHighScore()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		highScores.push_back(000000);
+		UserScore uScore(000000, "---");
+		highScores.push_back(uScore);
 	}
 	HIGHSCOREM.SaveScores(scoreFile);
 }
@@ -45,7 +46,7 @@ void HighScoreManager::SaveScores(std::string path)
 
 	int size = highScores.size();
 	myFileOut.write(reinterpret_cast<char*>(&size), sizeof(int));
-	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(int) * size);
+	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * size);
 
 	myFileOut.close();
 }
@@ -66,24 +67,27 @@ void HighScoreManager::LoadScores(std::string path)
 
 	highScores.resize(inSize);
 
-	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(int) * inSize);
+	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * inSize);
 	
 	myFileIn.close();
 }
 
-void HighScoreManager::AddScores(int score)
+void HighScoreManager::AddScores(UserScore score)
 {
-	highScores.push_back(score);
+	std::vector<UserScore> vectorCopy = highScores;
 
-	std::sort(highScores.begin(), highScores.end(), std::greater <>());
+	vectorCopy.push_back(score);
 
-	if (highScores.size() > 10)
-		highScores.pop_back();
+	std::sort(vectorCopy.begin(), vectorCopy.end(), std::greater<UserScore>());
+
+	if (vectorCopy.size() > 10)
+		vectorCopy.pop_back();
+	highScores = vectorCopy;
 
 	SaveScores(scoreFile);
 }
 
-std::vector<int> HighScoreManager::GetScores()
+std::vector<UserScore> HighScoreManager::GetScores()
 {
     return highScores;
 }

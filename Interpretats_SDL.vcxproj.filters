@@ -320,5 +320,8 @@
     <ClInclude Include="Source\Button.h">
       <Filter>Header Files\Model\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\UserScore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
