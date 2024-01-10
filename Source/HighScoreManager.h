@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
+#include "UserScore.h"
 
 const std::string scoreFile = "HighScore.dat";
 #define HIGHSCOREM HighScoreManager::Instance()
@@ -14,7 +15,7 @@ class HighScoreManager
 {
 private:
 
-	std::vector<int> highScores;
+	std::vector<UserScore> highScores;
 
 	int numMaxOfHighScores;
 
@@ -38,11 +39,11 @@ public:
 
 	bool CheckIfThereIsHighScore();
 
-	inline bool CompareFunc(int& leftNumber, int& RightNumber) { return leftNumber > RightNumber; };
+	inline bool CompareFunc(UserScore& leftNumber, UserScore& RightNumber) { return leftNumber.score > RightNumber.score; };
 
 	void SaveScores(std::string path);
 	void LoadScores(std::string path);
-	void AddScores(int score);
-	std::vector<int> GetScores();
+	void AddScores(UserScore score);
+	std::vector<UserScore> GetScores();
 
 };
