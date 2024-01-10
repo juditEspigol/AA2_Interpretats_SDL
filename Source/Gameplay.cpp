@@ -130,7 +130,6 @@ void Gameplay::CheckCurrentState(float dt)
 
 		if (LIVES_GAME.GetLives() == 0)
 			ChangeCurrentState(GAME_OVER);
-			UserScore uScore(SCORE.GetScore(), "AAA");
 
 		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
 			ChangeCurrentState(PAUSE);
@@ -277,7 +276,8 @@ void Gameplay::HitState(float dt)
 
 void Gameplay::GameOver()
 {
-	HIGHSCOREM.AddScores(SCORE.GetScore());
+	UserScore uScore(SCORE.GetScore(), "AAA");
+	HIGHSCOREM.AddScores(uScore);
 
 	for (int i = remainingWaves.size() - 1; i >= 0; i--)
 		remainingWaves.erase(remainingWaves.begin() + i);

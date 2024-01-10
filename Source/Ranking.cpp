@@ -16,16 +16,16 @@ Ranking::Ranking()
 	HIGHSCOREM.InitializeHighScores(); 
 	Vector2 position = Vector2(RENDERER.GetSizeWindow().x * 0.55, RENDERER.GetSizeWindow().y * 0.17);
 	int i = 0; 
-	for (int score : HIGHSCOREM.GetScores())
+	for (UserScore score : HIGHSCOREM.GetScores())
 	{
 		if (i < 3)
 		{
 			//SCORE 
-			ui.push_back(new TextObject(std::to_string(score), 20, { 255, 255, 0 },
+			ui.push_back(new TextObject(std::to_string(score.score), 20, { 255, 255, 0 },
 				new Transform(position, 0, Vector2(1, 1), Vector2(30, 30), false),
 				"Resources/PixelPowerline-11Mg.ttf"));
 			// NAME
-			if (score != 0)
+			if (score.score != 0)
 			{
 				if(i == 0)
 					ui.push_back(new TextObject("RADEV", 20, { 255, 255, 0 },
@@ -50,11 +50,11 @@ Ranking::Ranking()
 		else
 		{
 			// SCORE
-			ui.push_back(new TextObject(std::to_string(score), 20, { 200, 200, 200 },
+			ui.push_back(new TextObject(std::to_string(score.score), 20, { 200, 200, 200 },
 				new Transform(position, 0, Vector2(1, 1), Vector2(30, 30), false),
 				"Resources/PixelPowerline-11Mg.ttf"));
 			// NAME
-			if (score != 0)
+			if (score.score != 0)
 			{
 				ui.push_back(new TextObject("ALEXIÑO", 20, { 200, 200, 200 },
 					new Transform(position - Vector2(150, 0), 0, Vector2(1, 1), Vector2(30, 30), false),

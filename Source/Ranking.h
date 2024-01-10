@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "HighScoreManager.h"
 #include "Button.h"
+#include "UserScore.h"
 
 class Ranking : public Scene
 {

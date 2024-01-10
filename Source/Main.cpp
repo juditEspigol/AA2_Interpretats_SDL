@@ -28,7 +28,7 @@ int main(int argc, char* args[])
     SCENE_M.AddScene(SPLASH, new SplashScreen());
     SCENE_M.AddScene(GAMEOVER, new SplashScreen());
 
-    SCENE_M.SetCurrentScene(GAMEPLAY);
+    SCENE_M.SetCurrentScene(MAIN);
     SCENE_M.GetCurrentScene()->OnEnter();
 
     while (!IM.GetQuitEvent())
