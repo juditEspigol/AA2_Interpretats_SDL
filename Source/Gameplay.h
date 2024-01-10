@@ -50,5 +50,17 @@ public:
 	virtual void Update(float dt) override;
 
 	void SpawnIsland();
+
+	void CheckCurrentState(float dt); 
+	void ChangeCurrentState(StatesGameplay nextState); 
+
+	void GameState(float dt); 
+	void UpdateIslands(float dt); 
+
+
+	void GamePaused(float dt); 
+	void FinishState(float dt);
+	void HitState(float dt);
+	void GameOver();
 };
 

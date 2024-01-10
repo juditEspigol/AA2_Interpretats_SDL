@@ -225,6 +225,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"
     <ClCompile Include="Source\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GameOver.h" />
     <ClInclude Include="Source\HighScoreManager.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\LevelLoader.h" />
