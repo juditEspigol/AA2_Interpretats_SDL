@@ -17,15 +17,14 @@ MainMenu::MainMenu()
 	objects.push_back(new GameObject(new ImageRenderer(mouseTransform,
 		Vector2(0, 1121), Vector2(51, 79)), mouseTransform));*/
 	//1 -> Button Play
-	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 100), "PLAY GAME"));
+	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 115), "PLAY GAME"));
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 200), "RANKING"));
-	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 300), "ENABLED AUDIO"));
-	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 400), "EXIT"));
+	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 285), "ENABLED AUDIO"));
+	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 370), "EXIT"));
 }
 
 void MainMenu::OnEnter()
 {
-	isFinished = false; 
 }
 
 void MainMenu::Update(float dt)
@@ -39,9 +38,8 @@ void MainMenu::Update(float dt)
 	}
 	else if (dynamic_cast<Button*>(objects[1])->GetActivated()) // ranking
 	{
-		std::cout << "RANKING" << std::endl; 
-		/*nextScene = RANKING;
-		isFinished = true;*/
+		nextScene = RANKING;
+		isFinished = true;
 	}
 	else if (dynamic_cast<Button*>(objects[2])->GetActivated()) // audio
 	{

@@ -13,6 +13,7 @@
 #define MAIN "Main Menu"
 #define SPLASH "Splash Screen"
 #define RANKING "Ranking"
+#define GAMEOVER "Game Over"
 
 class Scene
 {

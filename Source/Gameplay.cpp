@@ -2,6 +2,8 @@
 
 Gameplay::Gameplay()
 {
+	isFinished = false; 
+	nextScene = MAIN; 
 	currentState = GAME;
 
 	currentKeyLevel = 0;
@@ -40,172 +42,62 @@ Gameplay::Gameplay()
 		// LIVES PLAYER
 	ui.push_back(LIVES_GAME.GetLivesUI());
 
-	nextScene = MAIN;
 
 	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
 	sizeRemainingWaves = remainingWaves.size();
+
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
 }
 
 void Gameplay::OnEnter()
 {
-
+	currentState = GAME; 
+	currentTimeToSpawnIsland = 0; 
 }
 
 void Gameplay::Render()
 {
-	if(currentState != HIT)
-		Scene::Render(); 
+	if (currentState == HIT)
+		return; 
+	
+	Scene::Render(); 
 }
 
 void Gameplay::Update(float dt)
 {
+	CheckCurrentState(dt);
+
 	switch (currentState)
 	{
 	case GAME:
-
-		std::cout << SCORE.GetScore() << std::endl;
-		Scene::Update(dt);
-
-		for (int i = remainingWaves.size() - 1; i >= 0; i--)
-		{
-			if (remainingWaves[i]->WaveDone())
-			{
-				remainingWaves.erase(remainingWaves.begin() + i);
-				continue;
-			}
-			remainingWaves[i]->Update(dt);
-		}
-		if (remainingWaves.size() < 1)
-		{
-			ship->Finished();
-		}
-
-	currentTimeToSpawnIsland += dt;
-
-		if (currentTimeToSpawnIsland >= timeToSpawnIsland)
-		{
-			currentTimeToSpawnIsland = 0;
-			SpawnIsland();
-		}
-
-		if (player->IsPlayerPaused())
-		{
-			ui[1]->GetRenderer()->NewText("PRESS SPACE TO CONTINUE");
-			currentState = FINISH_STATE; 
-		}
-
-		if (player->PlayerHitted())
-		{
-			currentState = HIT;
-		}
-
-		if (LIVES_GAME.GetLives() == 0)
-		{
-			UserScore uScore(SCORE.GetScore(), "AAA");
-			HIGHSCOREM.AddScores(uScore);
-			currentState = GAME_OVER; 
-		}
-
-		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
-		{
-			currentState = PAUSE;
-			ui[0]->GetRenderer()->NewText("PAUSED");
-		}
-
+		Scene::Update(dt); 
+		GameState(dt); 
 		break;
 
 	case PAUSE:
-
-		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
-		{
-			currentState = GAME;
-			ui[0]->GetRenderer()->NewText("  ");
-		}
-
+		GamePaused(dt); 
 		break;
+
 	case FINISH_STATE:
-
-		player->Update(dt); 
-
-
-		if (!player->IsPlayerPaused())
-		{
-			if (currentKeyLevel == 2)
-				currentKeyLevel = 0;
-			else
-				currentKeyLevel++;
-
-			remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
-			ui[1]->GetRenderer()->NewText("  ");
-			currentState = GAME; 
-		}
-
+		player->Update(dt);
+		FinishState(dt); 
 		break;
+
 	case HIT:
-
-		player->Update(dt); 
-
-		for (int i = objects.size() - 1; i >= 0; i--)
-		{
-			if (dynamic_cast<SeaBackground*>(objects[i]) ||
-				dynamic_cast<ShipBackGround*>(objects[i]) ||
-				dynamic_cast<Player*>(objects[i]))
-				continue;
-
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-		}
-
-		SPAWNER.ClearSpawnQueue(); 
-
-		if (!player->PlayerHitted())
-		{
-			currentState = GAME;
-		}
-
-
+		player->Update(dt);
+		HitState(dt); 
 		break; 
+
 	case GAME_OVER:
-
-		for (int i = remainingWaves.size() - 1; i >= 0; i--)
-			remainingWaves.erase(remainingWaves.begin() + i);
-
-		AUDIO.ClearClips();
-
-		LIVES_GAME.Reset();
-
-		SCORE.Reset();
-		SPAWNER.ClearSpawnQueue();
-
-		for (int i = objects.size() - 1; i >= 0; i--)
-		{
-			if (dynamic_cast<SeaBackground*>(objects[i]) || 
-				dynamic_cast<ShipBackGround*>(objects[i]) ||
-				dynamic_cast<Player*>(objects[i]))
-				continue; 
-
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-		}
-
-		levelLoader.clearLevels();
-
-		levelLoader.SetLevels(levelLoader.ReadAllLevels(player));
-		
-
-		currentKeyLevel = 0;
-		remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
-
-		ship->Reset(); 
-		player->Reset(); 
-
-		currentState = GAME; 
-
+		ChangeCurrentState(GAME);
 		break;
+
 	default:
 		break;
 	}
+
 }
 
 void Gameplay::SpawnIsland()
@@ -222,4 +114,197 @@ void Gameplay::SpawnIsland()
 	IslandBackground* island = new IslandBackground(posX, posY);
 
 	objects.insert(objects.begin() + 2, island);
+}
+
+void Gameplay::CheckCurrentState(float dt)
+{
+	switch (currentState)
+	{
+	case GAME:
+
+		if (player->IsPlayerPaused())
+			ChangeCurrentState(FINISH_STATE);
+
+		if (player->PlayerHitted())
+			ChangeCurrentState(HIT);
+
+		if (LIVES_GAME.GetLives() == 0)
+			ChangeCurrentState(GAME_OVER);
+			UserScore uScore(SCORE.GetScore(), "AAA");
+
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
+			ChangeCurrentState(PAUSE);
+
+		break;
+
+	case PAUSE:
+
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED) || dynamic_cast<Button*>(objects.back())->GetActivated())
+			ChangeCurrentState(GAME);
+
+		break;
+	case FINISH_STATE:
+
+		if (!player->IsPlayerPaused())
+			ChangeCurrentState(GAME);
+		
+		break;
+	case HIT:
+
+		if (!player->PlayerHitted())
+			ChangeCurrentState(GAME);
+		break;
+
+	case GAME_OVER:
+
+		break;
+	default:
+		break;
+	}
+}
+
+void Gameplay::ChangeCurrentState(StatesGameplay nextState)
+{
+	if (currentState == nextState)
+		return; 
+
+	switch (nextState)
+	{
+	case GAME:
+
+		if (currentState == PAUSE)
+		{
+			ui[0]->GetRenderer()->NewText("  ");
+			objects.pop_back();
+		}
+		if (currentState == FINISH_STATE)
+		{
+			if (currentKeyLevel == 2)
+				currentKeyLevel = 0;
+			else
+				currentKeyLevel++;
+
+			remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+			ui[1]->GetRenderer()->NewText("  ");
+		}
+		break;
+
+	case PAUSE:
+		ui[0]->GetRenderer()->NewText("PAUSED");
+		objects.insert(objects.end(), new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 400), "RESUME"));
+		break;
+
+	case FINISH_STATE:
+		ui[1]->GetRenderer()->NewText("PRESS SPACE TO CONTINUE");
+		break;
+
+	case HIT:
+
+		break;
+
+	case GAME_OVER:
+
+		GameOver(); 
+
+		break;
+
+	default:
+		break;
+	}
+	currentState = nextState;
+}
+
+void Gameplay::GameState(float dt)
+{
+	UpdateIslands(dt);
+
+	//Control waves
+	for (int i = remainingWaves.size() - 1; i >= 0; i--)
+	{
+		if (remainingWaves[i]->WaveDone())
+		{
+			remainingWaves.erase(remainingWaves.begin() + i);
+			continue;
+		}
+		remainingWaves[i]->Update(dt);
+	}
+	if (remainingWaves.size() < 1)
+	{
+		ship->Finished();
+	}
+}
+void Gameplay::UpdateIslands(float dt)
+{
+	currentTimeToSpawnIsland += dt;
+	if (currentTimeToSpawnIsland >= timeToSpawnIsland)
+	{
+		currentTimeToSpawnIsland = 0;
+		SpawnIsland();
+	}
+}
+
+void Gameplay::GamePaused(float dt)
+{
+	// Detecta la collision para el boton
+	for (Object* object : objects)
+	{
+		for (Object* other : objects)
+			object->OnCollisionEnter(other);
+	}
+}
+
+void Gameplay::FinishState(float dt)
+{
+}
+
+void Gameplay::HitState(float dt)
+{
+	// Elimina todos los enemigos, powerups, bullets...
+	for (int i = objects.size() - 1; i >= 0; i--)
+	{
+		if (dynamic_cast<SeaBackground*>(objects[i]) ||
+			dynamic_cast<ShipBackGround*>(objects[i]) ||
+			dynamic_cast<Player*>(objects[i]))
+			continue;
+
+		delete objects[i];
+		objects.erase(objects.begin() + i);
+	}
+
+	//No spawnees lo que tenias que spawnear
+	SPAWNER.ClearSpawnQueue();
+}
+
+void Gameplay::GameOver()
+{
+	HIGHSCOREM.AddScores(SCORE.GetScore());
+
+	for (int i = remainingWaves.size() - 1; i >= 0; i--)
+		remainingWaves.erase(remainingWaves.begin() + i);
+
+	AUDIO.ClearClips();
+	LIVES_GAME.Reset();
+	SCORE.Reset();
+	SPAWNER.ClearSpawnQueue();
+
+	// Elimina todos los enemigos, powerups, bullets...
+	for (int i = objects.size() - 1; i >= 0; i--)
+	{
+		if (dynamic_cast<SeaBackground*>(objects[i]) ||
+			dynamic_cast<ShipBackGround*>(objects[i]) ||
+			dynamic_cast<Player*>(objects[i]))
+			continue;
+
+		delete objects[i];
+		objects.erase(objects.begin() + i);
+	}
+
+	levelLoader.clearLevels();
+	levelLoader.SetLevels(levelLoader.ReadAllLevels(player));
+
+	currentKeyLevel = 0;
+	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+
+	ship->Reset();
+	player->Reset();
 }
