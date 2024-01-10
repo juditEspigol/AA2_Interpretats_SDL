@@ -61,6 +61,6 @@ public:
 	void GamePaused(float dt); 
 	void FinishState(float dt);
 	void HitState(float dt);
-	void GameOver();
+	void ResetAll();
 };
 

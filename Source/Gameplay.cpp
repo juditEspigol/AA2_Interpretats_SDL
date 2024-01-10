@@ -46,15 +46,13 @@ Gameplay::Gameplay()
 	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
 	sizeRemainingWaves = remainingWaves.size();
-
-	Mix_HaltChannel(-1);
-	Mix_HaltMusic();
 }
 
 void Gameplay::OnEnter()
 {
 	currentState = GAME; 
 	currentTimeToSpawnIsland = 0; 
+	ResetAll(); 
 }
 
 void Gameplay::Render()
@@ -202,9 +200,11 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 		break;
 
 	case GAME_OVER:
-
-		GameOver(); 
-
+		{
+			UserScore uScore(SCORE.GetScore(), "AAA");
+			HIGHSCOREM.AddScores(uScore);
+		}
+		ResetAll(); 
 		break;
 
 	default:
@@ -274,11 +274,8 @@ void Gameplay::HitState(float dt)
 	SPAWNER.ClearSpawnQueue();
 }
 
-void Gameplay::GameOver()
+void Gameplay::ResetAll()
 {
-	UserScore uScore(SCORE.GetScore(), "AAA");
-	HIGHSCOREM.AddScores(uScore);
-
 	for (int i = remainingWaves.size() - 1; i >= 0; i--)
 		remainingWaves.erase(remainingWaves.begin() + i);
 
