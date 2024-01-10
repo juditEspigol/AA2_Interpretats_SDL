@@ -53,7 +53,6 @@ Gameplay::Gameplay()
 
 void Gameplay::OnEnter()
 {
-	isFinished = false; 
 }
 
 void Gameplay::Render()

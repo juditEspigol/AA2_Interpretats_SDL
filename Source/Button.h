@@ -11,7 +11,7 @@ private:
 	TextObject* textButton; 
 
 public:
-	Button(Vector2 position, std::string text, SDL_Color color = {255, 255, 255})
+	Button(Vector2 position, std::string text, Vector2 size = Vector2(200, 40))
 	{
 		isPendingDestroy = false; 
 		activated = false;
@@ -22,9 +22,9 @@ public:
 		transform->position = position;
 		transform->angle = 0.0f;
 		transform->scale = Vector2(1.5f, 1.5f);
-		transform->size = Vector2(200, 40);
+		transform->size = size;
 
-		textButton = new TextObject(text, 12, color, transform, "Resources/PixelPowerline-11Mg.ttf");
+		textButton = new TextObject(text, 12, {255, 255, 255}, transform, "Resources/PixelPowerline-11Mg.ttf");
 
 		// RENDER
 		renderers.emplace("Idle", new ImageRenderer(transform, Vector2(6, 625), Vector2(62, 13))); 
