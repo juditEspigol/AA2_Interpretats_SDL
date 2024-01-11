@@ -45,7 +45,7 @@ void Ranking::ReadScore()
 				"Resources/PixelPowerline-11Mg.ttf"));
 
 			// NAME
-				ui.push_back(new TextObject(score.GetName(), 20, { 255, 255, 0 },
+				ui.push_back(new TextObject(score.name, 20, { 255, 255, 0 },
 					new Transform(position - Vector2(150, 0), 0, Vector2(1, 1), Vector2(30, 30), false),
 					"Resources/PixelPowerline-11Mg.ttf"));
 		}
@@ -56,7 +56,7 @@ void Ranking::ReadScore()
 				new Transform(position, 0, Vector2(1, 1), Vector2(30, 30), false),
 				"Resources/PixelPowerline-11Mg.ttf"));
 			// NAME
-			ui.push_back(new TextObject(score.GetName(), 20, {200, 200, 200},
+			ui.push_back(new TextObject(score.name, 20, {200, 200, 200},
 				new Transform(position - Vector2(150, 0), 0, Vector2(1, 1), Vector2(30, 30), false),
 				"Resources/PixelPowerline-11Mg.ttf"));
 		}

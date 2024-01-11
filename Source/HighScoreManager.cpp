@@ -2,7 +2,7 @@
 
 void HighScoreManager::InitializeHighScores()
 {
-	numMaxOfHighScores = 10;
+	numMaxOfHighScores = 9;
 
 	if (CheckIfThereIsHighScore())
 		LoadScores(scoreFile);
@@ -12,7 +12,7 @@ void HighScoreManager::InitializeHighScores()
 
 void HighScoreManager::CreateNewHighScore()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < numMaxOfHighScores; i++)
 	{
 		UserScore uScore(000000, "---");
 		highScores.push_back(uScore);
@@ -24,15 +24,7 @@ bool HighScoreManager::CheckIfThereIsHighScore()
 {
 	std::ifstream myFileIn(scoreFile, std::ios::in | std::ios::binary);
 
-	bool _case;
-
-	if (!myFileIn.is_open())
-		_case = false;
-	else
-		_case = true;
-
-	myFileIn.close();
-	return _case;
+	return myFileIn.is_open();           
 }
 
 void HighScoreManager::SaveScores(std::string path)
@@ -44,16 +36,31 @@ void HighScoreManager::SaveScores(std::string path)
 		std::cout << "The file can't be opened";
 	}
 
-	int size = highScores.size();
-	myFileOut.write(reinterpret_cast<char*>(&size), sizeof(int));
-	myFileOut.write(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * size);
+	WriteUserScore(myFileOut);
 
 	myFileOut.close();
 }
 
+void HighScoreManager::WriteUserScore(std::ofstream& file)
+{
+	int size = highScores.size();
+	file.write(reinterpret_cast<char*>(&size), sizeof(int));
+
+	for (int i = 0; i < size; i++)
+	{
+		file.write(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
+
+		size_t wordSize = highScores[i].name.size();
+		file.write(reinterpret_cast<char*>(&wordSize), sizeof(wordSize));
+
+		//Write the actual string
+		file.write(highScores[i].name.c_str(), wordSize);
+	}
+}
+
 void HighScoreManager::LoadScores(std::string path)
 {
-	numMaxOfHighScores = 10;
+	numMaxOfHighScores = 9;
 
 	std::ifstream myFileIn(path, std::ios::in | std::ios::binary);
 
@@ -62,14 +69,33 @@ void HighScoreManager::LoadScores(std::string path)
 		std::cout << "The file can't be opened";
 	}
 
- 	int inSize = 0;
-	myFileIn.read(reinterpret_cast<char*>(&inSize), sizeof(int));
+	ReadUserScore(myFileIn);
 
-	highScores.resize(inSize);
-
-	myFileIn.read(reinterpret_cast<char*>(highScores.data()), sizeof(UserScore) * inSize);
-	
 	myFileIn.close();
+}
+
+void HighScoreManager::ReadUserScore(std::ifstream& file)
+{
+	int size = 0;
+	file.read(reinterpret_cast<char*>(&size), sizeof(int));
+
+	highScores.resize(size);
+
+	for (int i = 0; i < size; i++)
+	{
+		file.read(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
+
+		size_t stringSize = 0;
+		file.read(reinterpret_cast<char*>(&stringSize), sizeof(stringSize));
+
+		char* ptr = new char[stringSize + 1];
+		file.read(ptr, stringSize);
+
+		ptr[stringSize] = '\0';
+		highScores[i].name = ptr;
+
+		delete[] ptr;
+	}
 }
 
 void HighScoreManager::AddScores(UserScore score)
@@ -80,7 +106,7 @@ void HighScoreManager::AddScores(UserScore score)
 
 	std::sort(vectorCopy.begin(), vectorCopy.end(), std::greater<UserScore>());
 
-	if (vectorCopy.size() > 10)
+	if (vectorCopy.size() > numMaxOfHighScores)
 		vectorCopy.pop_back();
 	highScores = vectorCopy;
 
