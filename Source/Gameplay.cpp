@@ -53,6 +53,8 @@ void Gameplay::OnEnter()
 	RENDERER.SetWindowsColor(0, 95, 205);
 	currentState = GAME; 
 	currentTimeToSpawnIsland = 0; 
+	SCORE.Reset(); 
+	LIVES_GAME.Reset();
 	ResetAll(); 
 }
 
@@ -203,10 +205,6 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 		break;
 
 	case GAME_OVER:
-		{
-			UserScore uScore(SCORE.GetScore(), "AAA");
-			HIGHSCOREM.AddScores(uScore);
-		}
 		ResetAll(); 
 		break;
 
@@ -283,8 +281,7 @@ void Gameplay::ResetAll()
 		remainingWaves.erase(remainingWaves.begin() + i);
 
 	AUDIO.ClearClips();
-	LIVES_GAME.Reset();
-	SCORE.Reset();
+	// SCORE.Reset();
 	SPAWNER.ClearSpawnQueue();
 
 	// Elimina todos los enemigos, powerups, bullets...

@@ -12,9 +12,9 @@ void HighScoreManager::InitializeHighScores()
 
 void HighScoreManager::CreateNewHighScore()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < numMaxOfHighScores -1; i++)
 	{
-		UserScore uScore(000000, "---");
+		UserScore uScore(000000, ".......");
 		highScores.push_back(uScore);
 	}
 	HIGHSCOREM.SaveScores(scoreFile);

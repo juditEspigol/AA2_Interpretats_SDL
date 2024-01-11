@@ -15,4 +15,6 @@ struct UserScore
 	{
 		return score > uScore.score;
 	}
+
+	std::string GetName() const { return name; }
 };
