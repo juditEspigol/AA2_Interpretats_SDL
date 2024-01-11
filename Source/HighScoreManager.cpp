@@ -36,21 +36,26 @@ void HighScoreManager::SaveScores(std::string path)
 		std::cout << "The file can't be opened";
 	}
 
+	WriteUserScore(myFileOut);
+
+	myFileOut.close();
+}
+
+void HighScoreManager::WriteUserScore(std::ofstream& file)
+{
 	int size = highScores.size();
-	myFileOut.write(reinterpret_cast<char*>(&size), sizeof(int));
+	file.write(reinterpret_cast<char*>(&size), sizeof(int));
 
 	for (int i = 0; i < size; i++)
 	{
-		myFileOut.write(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
+		file.write(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
 
 		size_t wordSize = highScores[i].name.size();
-		myFileOut.write(reinterpret_cast<char*>(&wordSize), sizeof(wordSize));
+		file.write(reinterpret_cast<char*>(&wordSize), sizeof(wordSize));
 
 		//Write the actual string
-		myFileOut.write(highScores[i].name.c_str(), wordSize);
+		file.write(highScores[i].name.c_str(), wordSize);
 	}
-
-	myFileOut.close();
 }
 
 void HighScoreManager::LoadScores(std::string path)
@@ -64,28 +69,33 @@ void HighScoreManager::LoadScores(std::string path)
 		std::cout << "The file can't be opened";
 	}
 
+	ReadUserScore(myFileIn);
+
+	myFileIn.close();
+}
+
+void HighScoreManager::ReadUserScore(std::ifstream& file)
+{
 	int size = 0;
-	myFileIn.read(reinterpret_cast<char*>(&size), sizeof(int));
+	file.read(reinterpret_cast<char*>(&size), sizeof(int));
 
 	highScores.resize(size);
 
 	for (int i = 0; i < size; i++)
 	{
-		myFileIn.read(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
+		file.read(reinterpret_cast<char*>(&highScores[i].score), sizeof(int));
 
 		size_t stringSize = 0;
-		myFileIn.read(reinterpret_cast<char*>(&stringSize), sizeof(stringSize));
+		file.read(reinterpret_cast<char*>(&stringSize), sizeof(stringSize));
 
 		char* ptr = new char[stringSize + 1];
-		myFileIn.read(ptr, stringSize);
+		file.read(ptr, stringSize);
 
 		ptr[stringSize] = '\0';
 		highScores[i].name = ptr;
 
 		delete[] ptr;
 	}
-
-	myFileIn.close();
 }
 
 void HighScoreManager::AddScores(UserScore score)

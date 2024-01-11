@@ -41,7 +41,9 @@ public:
 	inline bool CompareFunc(UserScore& leftNumber, UserScore& RightNumber) { return leftNumber.score > RightNumber.score; };
 
 	void SaveScores(std::string path);
+	void WriteUserScore(std::ofstream& file);
 	void LoadScores(std::string path);
+	void ReadUserScore(std::ifstream& file);
 	void AddScores(UserScore score);
 	std::vector<UserScore> GetScores();
 
