@@ -41,6 +41,8 @@ private:
 
 	int currentKeyLevel;
 
+	std::vector<Button*> buttons; 
+
 public:
 
 	Gameplay();

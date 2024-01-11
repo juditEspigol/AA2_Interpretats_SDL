@@ -47,6 +47,10 @@ Gameplay::Gameplay()
 	ui.push_back(LIVES_GAME.GetLivesUI());
 
 
+	buttons.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 360), "RESUME"));
+	buttons.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 440), "BACK TO MAIN"));
+
+
 	timeToSpawnIsland = 20 + rand() % 20;
 	currentTimeToSpawnIsland = 0;
 	sizeRemainingWaves = remainingWaves.size();
@@ -68,6 +72,12 @@ void Gameplay::Render()
 		return; 
 	
 	Scene::Render(); 
+
+	if (currentState == PAUSE)
+	{
+		for (Button* button : buttons)
+			button->Render();
+	}
 }
 
 void Gameplay::Update(float dt)
@@ -145,8 +155,13 @@ void Gameplay::CheckCurrentState(float dt)
 
 	case PAUSE:
 
-		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED) || buttons[0]->GetActivated())
 			ChangeCurrentState(GAME);
+		else if (buttons[1]->GetActivated())
+		{
+			nextScene = MAIN; 
+			isFinished = true; 
+		}
 
 		break;
 	case FINISH_STATE:
@@ -182,7 +197,6 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 		if (currentState == PAUSE)
 		{
 			ui[0]->GetRenderer()->NewText("  ");
-			objects.pop_back();
 		}
 		if (currentState == FINISH_STATE)
 		{
@@ -251,6 +265,11 @@ void Gameplay::UpdateIslands(float dt)
 
 void Gameplay::GamePaused(float dt)
 {
+	for (Button* button : buttons)
+	{
+		for (Button* other : buttons)
+			button->OnCollisionEnter(other); 
+	}
 }
 
 void Gameplay::FinishState(float dt)
@@ -304,4 +323,5 @@ void Gameplay::ResetAll()
 
 	ship->Reset();
 	player->Reset();
+	ui[0]->GetRenderer()->NewText(" ");
 }
