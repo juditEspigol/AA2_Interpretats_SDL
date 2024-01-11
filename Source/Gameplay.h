@@ -63,5 +63,7 @@ public:
 	void FinishState(float dt);
 	void HitState(float dt);
 	void ResetAll();
+
+	int GetPlanesPerStage() const;
 };
 

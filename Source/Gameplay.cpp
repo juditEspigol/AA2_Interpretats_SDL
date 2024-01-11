@@ -18,6 +18,7 @@ Gameplay::Gameplay()
 	stageCompletedId = AUDIO.LoadClip("Resources/Audio/StageCompleted.mp3");
 
 	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+	SCORE.planesPerStage = GetPlanesPerStage();
 
 	objects.push_back(new SeaBackground());
 	objects.push_back(new SeaBackground(RENDERER.GetSizeWindow().y));
@@ -320,8 +321,22 @@ void Gameplay::ResetAll()
 
 	currentKeyLevel = 0;
 	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+	SCORE.planesPerStage = GetPlanesPerStage();
 
 	ship->Reset();
 	player->Reset();
 	ui[0]->GetRenderer()->NewText(" ");
+}
+
+int Gameplay::GetPlanesPerStage() const
+{
+	int planesPerStage = 0;
+	int size = remainingWaves.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		planesPerStage += remainingWaves[i]->GetWaveSize();
+	}
+
+	return planesPerStage;
 }

@@ -6,12 +6,16 @@ GameOver::GameOver()
 	nextScene = MAIN; 
 	writtingName = true; 
 	inputText = " ";
+
 }
 
 void GameOver::OnEnter()
 {
 	ChangeWritting(true); 
 	RENDERER.SetWindowsColor(0, 0, 0);
+	SCORE.CalculatePercentage();
+
+
 }
 
 void GameOver::Update(float dt)
@@ -213,7 +217,7 @@ void GameOver::ChangeWritting(bool write)
 		// New UI
 		int textSize = 15;
 		SDL_Color textColor = { 255, 255, 255 }; 
-		ui.push_back(new TextObject(std::to_string(LIVES_GAME.GetLives()) + "UP", textSize, textColor,
+		ui.push_back(new TextObject("1UP", textSize, textColor,
 			new Transform(Vector2(RENDERER.GetSizeWindow().x * 0.15, 50), 0, Vector2(1, 1), Vector2(30, 30), true),
 			"Resources/PixelPowerline-11Mg.ttf"));
 
@@ -236,9 +240,16 @@ void GameOver::ChangeWritting(bool write)
 		ui.push_back(new TextObject("SHOOTING DOWN", textSize, textColor,
 			new Transform(Vector2(RENDERER.GetSizeWindow().x * 0.15, 125), 0, Vector2(1, 1), Vector2(30, 30), false),
 			"Resources/PixelPowerline-11Mg.ttf"));
+		ui.push_back(new TextObject(std::to_string((int)SCORE.planesShootedDown), textSize, textColor,
+			new Transform(Vector2(RENDERER.GetSizeWindow().x * 0.75, 125), 0, Vector2(1, 1), Vector2(30, 30), false),
+			"Resources/PixelPowerline-11Mg.ttf"));
 		
 		ui.push_back(new TextObject("PERCENTATGE", textSize, textColor,
 			new Transform(Vector2(RENDERER.GetSizeWindow().x * 0.15, 150), 0, Vector2(1, 1), Vector2(30, 30), false),
+			"Resources/PixelPowerline-11Mg.ttf"));
+
+		ui.push_back(new TextObject(std::to_string((int)SCORE.percentage) + "%", textSize, textColor,
+			new Transform(Vector2(RENDERER.GetSizeWindow().x * 0.75, 150), 0, Vector2(1, 1), Vector2(30, 30), false),
 			"Resources/PixelPowerline-11Mg.ttf"));
 
 		ui.push_back(new TextObject(inputText, textSize, { 255, 255, 0},
