@@ -63,4 +63,6 @@ public:
 	inline bool WaveDone() { return planesAreSpawned && planesToSpawn.empty(); }
 
 	void ForceDestroyPlanes();
+
+	inline int GetWaveSize() const { return planesToSpawn.size(); }
 };

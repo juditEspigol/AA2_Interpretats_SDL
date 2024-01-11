@@ -31,6 +31,11 @@ public:
 		return manager;
 	}
 
+	float planesPerStage;
+	float planesShootedDown;
+	float percentage;
+
+
 	inline void AddScore(int amount) 
 	{ 
 		// SUM SCORE
@@ -53,4 +58,8 @@ public:
 	}
 
 	inline int GetScore() const { return score; }
+
+	void CalculatePercentage() {
+		percentage = (planesShootedDown / planesPerStage) * 100;
+	}
 };

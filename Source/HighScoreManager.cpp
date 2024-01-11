@@ -2,7 +2,7 @@
 
 void HighScoreManager::InitializeHighScores()
 {
-	numMaxOfHighScores = 9;
+	numMaxOfHighScores = 8;
 
 	if (CheckIfThereIsHighScore())
 		LoadScores(scoreFile);
@@ -60,7 +60,7 @@ void HighScoreManager::WriteUserScore(std::ofstream& file)
 
 void HighScoreManager::LoadScores(std::string path)
 {
-	numMaxOfHighScores = 9;
+	numMaxOfHighScores = 8;
 
 	std::ifstream myFileIn(path, std::ios::in | std::ios::binary);
 
