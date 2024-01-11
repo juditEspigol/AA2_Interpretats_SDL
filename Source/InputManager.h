@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <unordered_map>
+#include <string>
 
 #define IM InputManager::Instance()
 
@@ -34,6 +35,7 @@ public:
 	}
 
 	void Listen(); 
+
 	// No preparada per treballar amb empty
 	inline bool CheckKeyState(Sint32 _key, KeyState _keyState) { return (keys[_key] & _keyState) > 0; }
 	inline bool GetQuitEvent() const { return quitEvent; }

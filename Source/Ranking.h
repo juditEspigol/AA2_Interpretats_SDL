@@ -14,4 +14,6 @@ public:
 	void OnEnter() override; 
 
 	void Update(float dt) override;
+	void ReadScore(); 
+	void EasterEgg(Vector2 pos); 
 };
