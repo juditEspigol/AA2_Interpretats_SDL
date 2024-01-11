@@ -62,6 +62,8 @@ void Ranking::ReadScore()
 		}
 		i++;
 	}
+
+	SuperEasterEgg(position + Vector2(0, 30)); 
 }
 
 void Ranking::EasterEgg(Vector2 pos)
@@ -75,6 +77,17 @@ void Ranking::EasterEgg(Vector2 pos)
 		"Resources/PixelPowerline-11Mg.ttf"));
 
 	ui.push_back(new TextObject("9999999999999999999", 20, { 255, 255, 0 },
+		new Transform(pos, 0, Vector2(1, 1), Vector2(30, 30), false),
+		"Resources/PixelPowerline-11Mg.ttf"));
+}
+
+void Ranking::SuperEasterEgg(Vector2 pos)
+{
+	ui.push_back(new TextObject("RICHARD", 20, { 200, 200, 200 },
+		new Transform(pos - Vector2(150, 0), 0, Vector2(1, 1), Vector2(30, 30), false),
+		"Resources/PixelPowerline-11Mg.ttf"));
+
+	ui.push_back(new TextObject("MANCO", 20, { 200, 200, 200 },
 		new Transform(pos, 0, Vector2(1, 1), Vector2(30, 30), false),
 		"Resources/PixelPowerline-11Mg.ttf"));
 }
