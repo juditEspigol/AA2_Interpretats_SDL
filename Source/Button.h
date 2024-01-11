@@ -81,8 +81,6 @@ public:
 			int mouseX = IM.GetMouseX(); 
 			int mouseY = IM.GetMouseY(); 
 
-
-
 			if (SDL_GetMouseState(&mouseX, &mouseY) == SDL_BUTTON_LEFT && !activated && !pressed) 
 			{
 				AUDIO.PlayClip(onClickClip);

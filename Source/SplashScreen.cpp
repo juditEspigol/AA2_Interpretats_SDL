@@ -20,7 +20,7 @@ SplashScreen::SplashScreen()
 }
 void SplashScreen::OnEnter()
 {
-	isFinished = false;
+	RENDERER.SetWindowsColor(0, 0, 0);
 
 	timeWaiting = 0.0f;
 	objects[0]->SetScale(Vector2(1, 1));

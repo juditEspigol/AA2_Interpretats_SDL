@@ -74,6 +74,7 @@ Ranking::Ranking()
 
 void Ranking::OnEnter()
 {
+	RENDERER.SetWindowsColor(0, 0, 0);
 }
 
 void Ranking::Update(float dt)

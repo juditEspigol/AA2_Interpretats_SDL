@@ -1,12 +1,17 @@
 #pragma once
 #include "Scene.h"
 
+// DEPENDENCIES
+#include "HighScoreManager.h"
+#include "Button.h"
+#include "UserScore.h"
+
 class GameOver : public Scene
 {
 public:
-	GameOver() {}
+	GameOver(); 
 
-	void OnEnter() override {}
+	void OnEnter() override; 
 
-	void Update(float dt) override {}
+	void Update(float dt) override;
 };

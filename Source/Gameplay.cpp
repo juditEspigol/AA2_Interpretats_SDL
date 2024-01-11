@@ -50,6 +50,7 @@ Gameplay::Gameplay()
 
 void Gameplay::OnEnter()
 {
+	RENDERER.SetWindowsColor(0, 95, 205);
 	currentState = GAME; 
 	currentTimeToSpawnIsland = 0; 
 	ResetAll(); 
@@ -89,7 +90,8 @@ void Gameplay::Update(float dt)
 		break; 
 
 	case GAME_OVER:
-		ChangeCurrentState(GAME);
+		nextScene = GAMEOVER; 
+		isFinished = true; 
 		break;
 
 	default:
@@ -148,8 +150,9 @@ void Gameplay::CheckCurrentState(float dt)
 		break;
 	case HIT:
 
-		if (!player->PlayerHitted())
+		if (!player->PlayerHitted() && LIVES_GAME.GetLives() != 0)
 			ChangeCurrentState(GAME);
+
 		break;
 
 	case GAME_OVER:

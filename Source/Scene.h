@@ -1,14 +1,18 @@
 #pragma once
+#include <cassert>
 #include <vector>
-#include "Object.h"
-#include "TextObject.h"
-#include "GameObject.h"
+
+// Managers
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "AudioManager.h"
 #include "Spawner.h"
 
-//Scenes names
+// Objects childs
+#include "TextObject.h"
+#include "GameObject.h"
+
+// Scenes names
 #define GAMEPLAY "Gameplay"
 #define MAIN "Main Menu"
 #define SPLASH "Splash Screen"

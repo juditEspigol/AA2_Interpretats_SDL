@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+
+// DEPENDENCIES
 #include "HighScoreManager.h"
 #include "Button.h"
 #include "UserScore.h"

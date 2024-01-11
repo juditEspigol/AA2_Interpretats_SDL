@@ -16,7 +16,7 @@ MainMenu::MainMenu()
 	);
 	objects.push_back(new GameObject(new ImageRenderer(mouseTransform,
 		Vector2(0, 1121), Vector2(51, 79)), mouseTransform));*/
-	//1 -> Button Play
+	//0, 1, 2, 3 -> Buttons!!! Don't move
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 115), "PLAY GAME"));
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 200), "RANKING"));
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 285), "ENABLED AUDIO"));
@@ -25,6 +25,7 @@ MainMenu::MainMenu()
 
 void MainMenu::OnEnter()
 {
+	RENDERER.SetWindowsColor(0, 0, 0);
 }
 
 void MainMenu::Update(float dt)

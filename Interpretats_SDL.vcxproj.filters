@@ -171,6 +171,9 @@
     <ClCompile Include="Source\SplashScreen.cpp">
       <Filter>Source Files\Controller\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -296,9 +299,6 @@
     <ClInclude Include="Source\HighScoreManager.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Ranking.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Pattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -324,6 +324,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameOver.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ranking.h">
       <Filter>Header Files\Controller\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
