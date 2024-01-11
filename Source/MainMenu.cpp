@@ -19,7 +19,7 @@ MainMenu::MainMenu()
 	//0, 1, 2, 3 -> Buttons!!! Don't move
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 115), "PLAY GAME"));
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 200), "RANKING"));
-	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 285), "ENABLED AUDIO"));
+	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 285), "DISABLE AUDIO"));
 	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 370), "EXIT"));
 }
 
@@ -46,13 +46,13 @@ void MainMenu::Update(float dt)
 	{
 		if (enableAudio)
 		{
-			dynamic_cast<Button*>(objects[2])->GetText()->GetRenderer()->NewText("DISABLE AUDIO"); 
+			dynamic_cast<Button*>(objects[2])->GetText()->GetRenderer()->NewText("ENABLE AUDIO"); 
 			AUDIO.Mute();
 			enableAudio = false; 
 		}
 		else
 		{
-			dynamic_cast<Button*>(objects[2])->GetText()->GetRenderer()->NewText("ENABLE AUDIO");
+			dynamic_cast<Button*>(objects[2])->GetText()->GetRenderer()->NewText("DISABLE AUDIO");
 			AUDIO.Unmute();
 			enableAudio = true;
 		}

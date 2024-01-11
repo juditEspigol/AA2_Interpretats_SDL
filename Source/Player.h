@@ -88,6 +88,7 @@ public:
 	inline int GetHealth() const { return health; }
 	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
 	inline bool GetDoubleFireEnabled()const { return doubleFire; }
+	inline int GetAvaliableRolls() const { return avaliableRolls; }
 	inline bool IsPlayerPaused() const { return currentState == STOP;  }
 	inline bool PlayerHitted() const { return playerHitted; }
 	void Reset()
