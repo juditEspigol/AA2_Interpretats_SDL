@@ -12,9 +12,9 @@ void HighScoreManager::InitializeHighScores()
 
 void HighScoreManager::CreateNewHighScore()
 {
-	for (int i = 0; i < numMaxOfHighScores -1; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		UserScore uScore(000000, ".......");
+		UserScore uScore(000000, "---");
 		highScores.push_back(uScore);
 	}
 	HIGHSCOREM.SaveScores(scoreFile);
@@ -62,7 +62,7 @@ void HighScoreManager::LoadScores(std::string path)
 		std::cout << "The file can't be opened";
 	}
 
-	int inSize = 0;
+ 	int inSize = 0;
 	myFileIn.read(reinterpret_cast<char*>(&inSize), sizeof(int));
 
 	highScores.resize(inSize);
