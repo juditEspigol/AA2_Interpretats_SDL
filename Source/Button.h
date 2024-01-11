@@ -54,9 +54,6 @@ public:
 
 	virtual void OnCollisionEnter(Object* other)
 	{
-		if (dynamic_cast<TextObject*>(other))
-			return;
-
 		if (rb->CheckCollision(other->GetRigidBody()))
 		{
 			if (IsMouse(other)) 

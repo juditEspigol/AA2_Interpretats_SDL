@@ -5,7 +5,7 @@ Ranking::Ranking()
 	isFinished = false;
 	nextScene = MAIN;
 
-	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.50, 450), "BACK", Vector2(100, 40)));
+	objects.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.50, 460), "BACK", Vector2(100, 40)));
 }
 
 void Ranking::OnEnter()

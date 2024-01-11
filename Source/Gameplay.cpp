@@ -25,19 +25,23 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
-		//PAUSED OBJECT[0]!!!!!!
+		// PAUSED OBJECT[0]!!!!!!
 	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
-		//NEXT LEVEL OBJECT[0]!!!!!!
+		// NEXT LEVEL OBJECT[1]!!!!!!
 	ui.push_back(new TextObject("  ", 12, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
+		"Resources/PixelPowerline-11Mg.ttf"));
+		// ROLLS!!!!
+	ui.push_back(new TextObject("R: " + std::to_string(player->GetAvaliableRolls()), 15, {255, 255, 255},
+		new Transform(Vector2(RENDERER.GetSizeWindow().x - 70, RENDERER.GetSizeWindow().y - 30), 0, Vector2(1, 1), Vector2(15, 15), false),
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// SCORE
 	ui.push_back(SCORE.GetScoreUI());
 		// NAME PLAYER
-	ui.push_back(new TextObject("Player 01", 15, { 255, 255, 255 },
-		new Transform(Vector2(10, 5), 0, Vector2(1, 1), Vector2(15, 15), false),
+	ui.push_back(new TextObject("1UP", 15, { 255, 255, 255 },
+		new Transform(Vector2(35, 5), 0, Vector2(1, 1), Vector2(15, 15), false),
 		"Resources/PixelPowerline-11Mg.ttf"));
 		// LIVES PLAYER
 	ui.push_back(LIVES_GAME.GetLivesUI());
@@ -68,6 +72,7 @@ void Gameplay::Render()
 
 void Gameplay::Update(float dt)
 {
+
 	CheckCurrentState(dt);
 
 	switch (currentState)
@@ -140,7 +145,7 @@ void Gameplay::CheckCurrentState(float dt)
 
 	case PAUSE:
 
-		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED) || dynamic_cast<Button*>(objects.back())->GetActivated())
+		if (IM.CheckKeyState(SDLK_p, PRESSED) || IM.CheckKeyState(SDLK_ESCAPE, PRESSED))
 			ChangeCurrentState(GAME);
 
 		break;
@@ -193,7 +198,6 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 
 	case PAUSE:
 		ui[0]->GetRenderer()->NewText("PAUSED");
-		objects.insert(objects.end(), new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 400), "RESUME"));
 		break;
 
 	case FINISH_STATE:
@@ -217,6 +221,8 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 void Gameplay::GameState(float dt)
 {
 	UpdateIslands(dt);
+
+	ui[2]->GetRenderer()->NewText("R: " + std::to_string(player->GetAvaliableRolls()));
 
 	//Control waves
 	for (int i = remainingWaves.size() - 1; i >= 0; i--)
@@ -245,12 +251,6 @@ void Gameplay::UpdateIslands(float dt)
 
 void Gameplay::GamePaused(float dt)
 {
-	// Detecta la collision para el boton
-	for (Object* object : objects)
-	{
-		for (Object* other : objects)
-			object->OnCollisionEnter(other);
-	}
 }
 
 void Gameplay::FinishState(float dt)

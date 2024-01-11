@@ -18,7 +18,7 @@ private:
 		for (int i = lives; i > 0; i--)
 			priintLives.append("O");
 
-		livesUI = new TextObject(priintLives, 15, { 0, 255, 0 },
+		livesUI = new TextObject(priintLives, 15, { 255, 255, 255 },
 			new Transform(Vector2(10, RENDERER.GetSizeWindow().y - 30), 0, Vector2(1, 1), Vector2(15, 15), false),
 			"Resources/PixelPowerline-11Mg.ttf");
 	};
@@ -36,7 +36,7 @@ public:
 	{
 		// SUM SCORE
 		lives -= amount;
-
+		 
 		// UPDATE TEXT SCORE
 		std::string priintLives = "HP: ";
 		for (int i = lives; i > 0; i--)
