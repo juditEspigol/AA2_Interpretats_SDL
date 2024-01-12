@@ -62,4 +62,7 @@ public:
 	void CalculatePercentage() {
 		percentage = (planesShootedDown / planesPerStage) * 100;
 	}
+	void ChangeScoreColor(SDL_Color color = { 255, 255, 0}) {
+		scoreUI->GetRenderer()->SetText(scoreUI->GetRenderer()->GetText(), 15, color); 
+	}
 };

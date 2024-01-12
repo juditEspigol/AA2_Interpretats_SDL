@@ -39,6 +39,7 @@ public:
 	bool CheckIfThereIsHighScore();
 
 	inline bool CompareFunc(UserScore& leftNumber, UserScore& RightNumber) { return leftNumber.score > RightNumber.score; };
+	inline int GetFirstScore() const { return highScores[0].score; }
 
 	void SaveScores(std::string path);
 	void WriteUserScore(std::ofstream& file);

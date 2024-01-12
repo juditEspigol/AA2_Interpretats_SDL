@@ -26,19 +26,19 @@ Gameplay::Gameplay()
 	objects.push_back(player);  
 
 	// TEXT OBJECTS
-		// PAUSED OBJECT[0]!!!!!!
+		// 0 -> PAUSED OBJECT[0]!!!!!!
 	ui.push_back(new TextObject("  ", 30, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
-		// NEXT LEVEL OBJECT[1]!!!!!!
+		// 1 -> NEXT LEVEL OBJECT[1]!!!!!!
 	ui.push_back(new TextObject("  ", 12, { 255, 255, 255 },
 		new Transform(RENDERER.GetSizeWindow() * 0.5, 0, Vector2(1, 1), Vector2(30, 30), true),
 		"Resources/PixelPowerline-11Mg.ttf"));
-		// ROLLS!!!!
+		// 2 -> ROLLS!!!!
 	ui.push_back(new TextObject("R: " + std::to_string(player->GetAvaliableRolls()), 15, {255, 255, 255},
 		new Transform(Vector2(RENDERER.GetSizeWindow().x - 70, RENDERER.GetSizeWindow().y - 30), 0, Vector2(1, 1), Vector2(15, 15), false),
 		"Resources/PixelPowerline-11Mg.ttf"));
-		// SCORE
+		// 3 -> SCORE
 	ui.push_back(SCORE.GetScoreUI());
 		// NAME PLAYER
 	ui.push_back(new TextObject("1UP", 15, { 255, 255, 255 },
@@ -64,6 +64,7 @@ void Gameplay::OnEnter()
 	currentTimeToSpawnIsland = 0; 
 	SCORE.Reset(); 
 	LIVES_GAME.Reset();
+	SCORE.ChangeScoreColor({255, 255, 255});
 	ResetAll(); 
 }
 
@@ -91,6 +92,7 @@ void Gameplay::Update(float dt)
 	case GAME:
 		Scene::Update(dt); 
 		GameState(dt); 
+
 		break;
 
 	case PAUSE:
@@ -217,6 +219,7 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 
 	case FINISH_STATE:
 		ui[1]->GetRenderer()->NewText("PRESS SPACE TO CONTINUE");
+		player->ResetRolls(); 
 		break;
 
 	case HIT:
@@ -236,6 +239,9 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 void Gameplay::GameState(float dt)
 {
 	UpdateIslands(dt);
+
+	if (HIGHSCOREM.GetFirstScore() <= SCORE.GetScore())
+		SCORE.ChangeScoreColor(); 
 
 	ui[2]->GetRenderer()->NewText("R: " + std::to_string(player->GetAvaliableRolls()));
 
