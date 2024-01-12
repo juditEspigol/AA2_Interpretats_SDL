@@ -22,6 +22,8 @@ Player::Player(ShipBackGround* _ship)
 	movementState = 0;
 
 	avaliableRolls = 3;
+	rollingUp = true;
+	lastRollingTime = 0.0f;
 
 	doubleFire = false;
 
@@ -72,8 +74,6 @@ void Player::Update(float dt)
 {
 	GameObject::Update(dt); 
 	UpdateSupportPlanes(dt);
-	lastFireTime += dt; 
-
 	lastFireTime += dt; 
 
 	CheckStatePlayer(dt); 
@@ -133,9 +133,73 @@ void Player::CheckStatePlayer(float dt)
 		rb->SetVeclocity(Vector2(0, -18));
 		break;
 	case ROLLING:
-		if(nextState == FLYING)
+		if (nextState == FLYING)
+		{
 			MoveInputs();
-		Roll(nextState); 
+
+			lastRollingTime += dt;
+
+			Vector2 inputForce = Vector2();
+			if (rollingUp)
+			{
+				if (lastRollingTime < 0.25f)
+				{
+					ChangeAnimation("Idle");
+					if (transform->position.y - 18 >= 0)
+					{
+						inputForce.y -= 1;
+					}
+					else if (transform->position.y - 18 <= 0)
+					{
+						rb->SetVeclocity(Vector2());
+						transform->position.y += 1;
+					}
+				}
+				else
+				{
+					Roll(ROLLING);
+					if (renderer->LastFrame())
+					{
+						rollingUp = false;
+					}
+				}
+			}
+			else
+			{
+				if (lastRollingTime < 0.25f)
+				{
+					transform->angle = 180.0f;
+					ChangeAnimation("Idle");
+					if (transform->position.y + 18 <= RENDERER.GetSizeWindow().y)
+					{
+						inputForce.y += 1;
+					}
+					else if (transform->position.y + 18 >= RENDERER.GetSizeWindow().y)
+					{
+						rb->SetVeclocity(Vector2());
+						transform->position.y -= 1;
+					}
+				}
+				else
+				{
+					Roll(nextState);
+					if (renderer->LastFrame())
+					{
+						transform->angle = 0.0f;
+						rollingUp = true;
+					}
+				}
+			}
+
+			inputForce.Normalize();
+			inputForce = inputForce * force;
+			AddMovement(inputForce);
+			
+		}
+		else
+		{
+			Roll(nextState);
+		}
 		movementTime = 0; 
 		break;
 
@@ -174,25 +238,28 @@ void Player::MoveInputs()
 	Vector2 inputForce = Vector2();
 
 	//VERTICAL
-	if (transform->position.y - 18 >= 0 && IM.CheckKeyState(SDLK_UP, HOLD))
+	if (currentState != ROLLING)
 	{
-		inputForce.y -= 1;
-	}
-	else if (transform->position.y - 18 <= 0)
-	{
-		rb->SetVeclocity(Vector2(0, 0));
-		transform->position.y += 1;
-	}
-	
+		if (transform->position.y - 18 >= 0 && IM.CheckKeyState(SDLK_UP, HOLD))
+		{
+			inputForce.y -= 1;
+		}
+		else if (transform->position.y - 18 <= 0)
+		{
+			rb->SetVeclocity(Vector2(0, 0));
+			transform->position.y += 1;
+		}
 
-	if (transform->position.y + 18 <= RENDERER.GetSizeWindow().y && IM.CheckKeyState(SDLK_DOWN, HOLD))
-	{
-		inputForce.y += 1;
-	}
-	else if (transform->position.y + 18 >= RENDERER.GetSizeWindow().y)
-	{
-		rb->SetVeclocity(Vector2(0, 0));
-		transform->position.y -= 1;
+
+		if (transform->position.y + 18 <= RENDERER.GetSizeWindow().y && IM.CheckKeyState(SDLK_DOWN, HOLD))
+		{
+			inputForce.y += 1;
+		}
+		else if (transform->position.y + 18 >= RENDERER.GetSizeWindow().y)
+		{
+			rb->SetVeclocity(Vector2(0, 0));
+			transform->position.y -= 1;
+		}
 	}
 
 	//HORIZONTAL
@@ -220,6 +287,7 @@ void Player::MoveInputs()
 	//ROLL
 	if (avaliableRolls > 0 && currentState == FLYING && IM.CheckKeyState(SDLK_x, PRESSED))
 	{
+		lastRollingTime = 0.0f; 
 		currentState = ROLLING; 
 		avaliableRolls--;
 	}
@@ -328,6 +396,7 @@ void Player::Roll(StatesPlayer nextState)
 
 	if (renderer->LastFrame())
 	{
+		lastRollingTime = 0.0f;
 		movementState++;
 		currentState = nextState;
 	}
