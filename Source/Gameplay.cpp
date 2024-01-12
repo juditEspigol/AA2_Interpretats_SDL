@@ -52,7 +52,7 @@ Gameplay::Gameplay()
 	buttons.push_back(new Button(Vector2(RENDERER.GetSizeWindow().x * 0.5, 440), "BACK TO MAIN"));
 
 
-	timeToSpawnIsland = 20 + rand() % 20;
+	timeToSpawnIsland = 0/*20 + rand() % 20*/;
 	currentTimeToSpawnIsland = 0;
 	sizeRemainingWaves = remainingWaves.size();
 }
@@ -122,12 +122,19 @@ void Gameplay::Update(float dt)
 
 void Gameplay::SpawnIsland()
 {
-	timeToSpawnIsland = 20 + rand() % 20;
+	timeToSpawnIsland = 0/*20 + rand() % 20*/;
 
 	int maxX = RENDERER.GetSizeWindow().x;
 	int maxY = RENDERER.GetSizeWindow().y;
 
-	float posX = 24 + rand() % (maxX - 208);
+	int _case = rand() % 2;
+
+	float posX = 0;
+	if (_case == 0)
+		posX = 24 + rand() % (maxX) + 280;
+	else
+		posX = 24 + rand() % (int)(maxX) - 325;
+
 	float posY = rand() % (maxY - 88) + 8;
 
 	Vector2 pos = Vector2(posX, posY);

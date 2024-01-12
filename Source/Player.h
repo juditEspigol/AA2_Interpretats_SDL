@@ -102,7 +102,7 @@ public:
 		doubleFire = false;
 		movementTime = 0; 
 		movementState = 0; 
-		avaliableRolls = 70;
+		avaliableRolls = 3;
 		playerHitted = false; 
 
 		AUDIO.FreeClip(shootID);
