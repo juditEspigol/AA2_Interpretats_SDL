@@ -32,6 +32,8 @@ private:
 	float fireTime, lastFireTime;
 
 	int avaliableRolls;
+	bool rollingUp;
+	float lastRollingTime;
 
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
@@ -100,7 +102,7 @@ public:
 		doubleFire = false;
 		movementTime = 0; 
 		movementState = 0; 
-		avaliableRolls = 3;
+		avaliableRolls = 70;
 		playerHitted = false; 
 
 		AUDIO.FreeClip(shootID);
