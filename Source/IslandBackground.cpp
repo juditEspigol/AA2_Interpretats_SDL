@@ -2,7 +2,7 @@
 
 void IslandBackground::Movement()
 {
-	rb->SetVeclocity(Vector2(0, 160));
+	rb->SetVeclocity(Vector2(0, 16));
 }
 
 IslandBackground::IslandBackground(float posX, float posY)
