@@ -127,7 +127,14 @@ void Gameplay::SpawnIsland()
 	int maxX = RENDERER.GetSizeWindow().x;
 	int maxY = RENDERER.GetSizeWindow().y;
 
-	float posX = 24 + rand() % (maxX - 208);
+	int _case = rand() % 2;
+
+	float posX = 0;
+	if (_case == 0)
+		posX = rand() % (120) + 334;
+	else
+		posX = rand() % (120) - 171;
+
 	float posY = rand() % (maxY - 88) + 8;
 
 	Vector2 pos = Vector2(posX, posY);
@@ -267,6 +274,7 @@ void Gameplay::GameState(float dt)
 void Gameplay::UpdateIslands(float dt)
 {
 	currentTimeToSpawnIsland += dt;
+	std::cout << currentTimeToSpawnIsland << " " << timeToSpawnIsland << std::endl;
 	if (currentTimeToSpawnIsland >= timeToSpawnIsland)
 	{
 		currentTimeToSpawnIsland = 0;
