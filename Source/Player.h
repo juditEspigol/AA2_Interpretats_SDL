@@ -103,6 +103,16 @@ public:
 		avaliableRolls = 3;
 		playerHitted = false; 
 
+		AUDIO.FreeClip(shootID);
+		AUDIO.FreeClip(CollisionId);
+		AUDIO.FreeClip(loseStageId);
+		AUDIO.FreeClip(bulletId);
+
+		shootID = AUDIO.LoadClip("Resources/Audio/PlayerShoot.wav");
+		CollisionId = AUDIO.LoadClip("Resources/Audio/EnemyCollision.mp3");
+		bulletId = AUDIO.LoadClip("Resources/Audio/BulletCollision.mp3");
+		loseStageId = AUDIO.LoadClip("Resources/Audio/LoseStage.mp3");
+
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
 	}
 };

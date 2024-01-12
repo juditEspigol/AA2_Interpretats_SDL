@@ -209,6 +209,8 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 				currentKeyLevel++;
 
 			remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
+			SCORE.planesPerStage += GetPlanesPerStage();
+
 			ui[1]->GetRenderer()->NewText("  ");
 		}
 		break;
@@ -220,6 +222,8 @@ void Gameplay::ChangeCurrentState(StatesGameplay nextState)
 	case FINISH_STATE:
 		ui[1]->GetRenderer()->NewText("PRESS SPACE TO CONTINUE");
 		player->ResetRolls(); 
+		ship->ResetShip();
+
 		break;
 
 	case HIT:
@@ -327,7 +331,7 @@ void Gameplay::ResetAll()
 
 	currentKeyLevel = 0;
 	remainingWaves = levelLoader.LoadLevel(currentKeyLevel);
-	SCORE.planesPerStage = GetPlanesPerStage();
+	SCORE.planesPerStage += GetPlanesPerStage();
 
 	ship->Reset();
 	player->Reset();
