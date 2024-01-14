@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Model\PowerUps">
       <UniqueIdentifier>{e6d4b154-9b27-4fd2-8f71-1b808780c7f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Controller\Scenes">
+      <UniqueIdentifier>{c61ded2a-c155-43ba-8bee-70910f808f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller\Scenes">
+      <UniqueIdentifier>{16d7ed98-cb5c-476b-8baa-769af1b9ee63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -81,29 +87,17 @@
     <ClCompile Include="Source\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Source\RigidBody.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ImageRenderer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="Source\TextRenderer.cpp">
       <Filter>Source Files\View</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MainMenu.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Gameplay.cpp">
-      <Filter>Source Files\Controller</Filter>
     </ClCompile>
     <ClCompile Include="Source\AudioManager.cpp">
       <Filter>Source Files\Controller</Filter>
@@ -156,6 +150,27 @@
     <ClCompile Include="Source\LevelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HighScoreManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Ranking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Gameplay.cpp">
+      <Filter>Source Files\Controller\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Source Files\Controller\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files\Controller\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files\Controller\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SplashScreen.cpp">
+      <Filter>Source Files\Controller\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Vector2.h">
@@ -179,29 +194,17 @@
     <ClInclude Include="Source\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AABB.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Source\RigidBody.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ImageRenderer.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MainMenu.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TextRenderer.h">
       <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Gameplay.h">
-      <Filter>Header Files\Controller</Filter>
     </ClInclude>
     <ClInclude Include="Source\AudioManager.h">
       <Filter>Header Files\Controller</Filter>
@@ -272,9 +275,6 @@
     <ClInclude Include="Source\WaveType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MovementPattern.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\StatesPlayer.h">
       <Filter>Header Files\Model\GameObjects\Characters</Filter>
     </ClInclude>
@@ -289,6 +289,39 @@
     </ClInclude>
     <ClInclude Include="Source\LevelLoader.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HighScoreManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Ranking.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gameplay.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SplashScreen.h">
+      <Filter>Header Files\Controller\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Button.h">
+      <Filter>Header Files\Model\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UserScore.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

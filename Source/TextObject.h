@@ -11,6 +11,7 @@ public:
 	TextObject(std::string text, int fontSize, SDL_Color color, Transform* transform, std::string resourcePath)
 	{
 		renderer = new TextRenderer(text, fontSize, color, transform, resourcePath); 
+		rb = new RigidBody(transform);  
 	}
 	virtual ~TextObject()
 	{

@@ -1,17 +1,23 @@
 #pragma once
+#include <cassert>
 #include <vector>
-#include "Object.h"
-#include "TextObject.h"
+
+// Managers
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "AudioManager.h"
 #include "Spawner.h"
 
-//Scenes names
+// Objects childs
+#include "TextObject.h"
+#include "GameObject.h"
+
+// Scenes names
 #define GAMEPLAY "Gameplay"
 #define MAIN "Main Menu"
-#define SPLASH "SplashScreen"
+#define SPLASH "Splash Screen"
 #define RANKING "Ranking"
+#define GAMEOVER "Game Over"
 
 class Scene
 {

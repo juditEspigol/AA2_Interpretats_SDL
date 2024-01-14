@@ -60,6 +60,7 @@ public:
 		{
 			isPendingDestroy = true;
 			SCORE.AddScore(score);
+			SCORE.planesShootedDown++;
 		}
 	}
 };

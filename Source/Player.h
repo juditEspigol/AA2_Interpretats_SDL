@@ -32,6 +32,8 @@ private:
 	float fireTime, lastFireTime;
 
 	int avaliableRolls;
+	bool rollingUp;
+	float lastRollingTime;
 
 	bool doubleFire; 
 	std::vector<SupportPlane*> supportPlanes; 
@@ -88,6 +90,8 @@ public:
 	inline int GetHealth() const { return health; }
 	inline bool GetHasSupportPlanes() const { return supportPlanes.size() == 2; }
 	inline bool GetDoubleFireEnabled()const { return doubleFire; }
+	inline int GetAvaliableRolls() const { return avaliableRolls; }
+	inline void ResetRolls() { avaliableRolls = 3; }
 	inline bool IsPlayerPaused() const { return currentState == STOP;  }
 	inline bool PlayerHitted() const { return playerHitted; }
 	void Reset()
@@ -100,6 +104,16 @@ public:
 		movementState = 0; 
 		avaliableRolls = 3;
 		playerHitted = false; 
+
+		AUDIO.FreeClip(shootID);
+		AUDIO.FreeClip(CollisionId);
+		AUDIO.FreeClip(loseStageId);
+		AUDIO.FreeClip(bulletId);
+
+		shootID = AUDIO.LoadClip("Resources/Audio/PlayerShoot.wav");
+		CollisionId = AUDIO.LoadClip("Resources/Audio/EnemyCollision.mp3");
+		bulletId = AUDIO.LoadClip("Resources/Audio/BulletCollision.mp3");
+		loseStageId = AUDIO.LoadClip("Resources/Audio/LoseStage.mp3");
 
 		transform->position = Vector2(RENDERER.GetSizeWindow().x * 0.5, RENDERER.GetSizeWindow().y);
 	}

@@ -18,6 +18,7 @@ public:
 	ShipBackGround();
 	void Update(float _dt) override;
 	void Finished() { isFinished = true; }
+	void ResetShip() { isFinished = false; }
 
 	bool GetPlayerCanLand() const { return playerCanLand; }
 	void PlayerLanded() { playerCanLand = false;  }

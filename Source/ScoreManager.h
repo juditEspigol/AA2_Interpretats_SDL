@@ -17,7 +17,7 @@ private:
 			printScore.append("0");
 		printScore.append(std::to_string(score));
 
-		scoreUI = new TextObject(printScore, 15, { 255, 255, 0 },
+		scoreUI = new TextObject(printScore, 15, { 255, 255, 255 },
 			new Transform(Vector2(10, 30), 0, Vector2(1, 1), Vector2(15, 15), false),
 			"Resources/PixelPowerline-11Mg.ttf"); 
 	};
@@ -30,6 +30,11 @@ public:
 		static ScoreManager manager;
 		return manager;
 	}
+
+	float planesPerStage;
+	float planesShootedDown;
+	float percentage;
+
 
 	inline void AddScore(int amount) 
 	{ 
@@ -50,5 +55,14 @@ public:
 	{
 		score = 0; 
 		AddScore(0); 
+	}
+
+	inline int GetScore() const { return score; }
+
+	void CalculatePercentage() {
+		percentage = (planesShootedDown / planesPerStage) * 100;
+	}
+	void ChangeScoreColor(SDL_Color color = { 255, 255, 0}) {
+		scoreUI->GetRenderer()->SetText(scoreUI->GetRenderer()->GetText(), 15, color); 
 	}
 };

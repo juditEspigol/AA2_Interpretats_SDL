@@ -19,4 +19,5 @@ public:
 	}
 	void SetText(std::string text, int fontSize = 0, SDL_Color color = {0, 0, 0});
 	inline void NewText(const std::string text) { SetText(text, fontSize, color); }
+	std::string GetText() const { return text; }
 };

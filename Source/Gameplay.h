@@ -1,12 +1,13 @@
 #pragma once
-#include <cassert>
 #include "Scene.h"
 
 // DEPENDENCIES
 #include "ScoreManager.h"
 #include "LivesManager.h"
+#include "HighScoreManager.h"
 
 // AGGREGATION
+#include "Button.h"
 #include "SeaBackground.h"
 #include "IslandBackground.h"
 #include "LevelLoader.h"
@@ -40,6 +41,8 @@ private:
 
 	int currentKeyLevel;
 
+	std::vector<Button*> buttons; 
+
 public:
 
 	Gameplay();
@@ -48,5 +51,19 @@ public:
 	virtual void Update(float dt) override;
 
 	void SpawnIsland();
+
+	void CheckCurrentState(float dt); 
+	void ChangeCurrentState(StatesGameplay nextState); 
+
+	void GameState(float dt); 
+	void UpdateIslands(float dt); 
+
+
+	void GamePaused(float dt); 
+	void FinishState(float dt);
+	void HitState(float dt);
+	void ResetAll();
+
+	int GetPlanesPerStage() const;
 };
 
