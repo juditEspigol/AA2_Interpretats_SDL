@@ -274,7 +274,7 @@ void Gameplay::GameState(float dt)
 void Gameplay::UpdateIslands(float dt)
 {
 	currentTimeToSpawnIsland += dt;
-	std::cout << currentTimeToSpawnIsland << " " << timeToSpawnIsland << std::endl;
+
 	if (currentTimeToSpawnIsland >= timeToSpawnIsland)
 	{
 		currentTimeToSpawnIsland = 0;
